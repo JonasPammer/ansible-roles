@@ -1,0 +1,1 @@
+image::https://github.com/semantic-release/semantic-release/raw/master/media/bender.png[kill all humans]
