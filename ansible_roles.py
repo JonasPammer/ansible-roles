@@ -14,7 +14,7 @@ from jinja2 import select_autoescape
 from rich.console import Console
 from rich.traceback import install as install_rich_traceback
 
-console = Console()
+console = Console(width=240)
 github_api = Github()
 # TODO make the github action cache the cache this directory for its future runs
 # note: cache is used solely to avoid github api rate limits
