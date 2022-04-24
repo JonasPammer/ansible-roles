@@ -71,6 +71,7 @@ repos:
     rev: v0.942
     hooks:
       - id: mypy
+        additional_dependencies: ["attrs>=21.0,<22"] # as per setup.cfg
 
   # pip-compile`s 'requirements.in' files as its recommended to have the 'requirements.txt' version
   # checked into source control too.
