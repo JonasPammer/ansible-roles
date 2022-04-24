@@ -92,7 +92,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             continue  # no dependencies
         for role_req in role.requirements_yml["roles"]:
             role.computed_dependencies.append(role_req["name"])
-        console.print(role.computed_dependencies)
+        console.log(
+            f"computed dependencies of {role.galaxy_role_name}: "
+            f"{role.computed_dependencies}"
+        )
 
     with open("README.adoc", "w") as f:
         f.write(env.get_template("README.adoc.jinja2").render(all_roles=all_roles))
