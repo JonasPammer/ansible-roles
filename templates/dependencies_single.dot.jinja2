@@ -3,14 +3,14 @@ digraph hierarchy {
   overlap=false
 
   {
-{% for galaxy_role_name, role in all_roles.items() %}
+{%- for galaxy_role_name, role in all_roles.items() %}
     "{{ galaxy_role_name }}" [fillcolor={{role.get_dependency_layer_color()}} style=filled {%if galaxy_role_name == input_role.galaxy_role_name%}penwidth=3{%endif%}]
-{% endfor %}
+{%- endfor %}
   }
 
 {% for galaxy_role_name, role in all_roles.items() %}
 {%-   if role.computed_dependencies|length > 0 %}
   "{{ galaxy_role_name }}" -> {% raw %}{"{% endraw %}{{ '" "'.join(role.computed_dependencies) }}{% raw %}"}{% endraw %}
 {%-   endif -%}
-{% endfor %}
+{%- endfor %}
 }
