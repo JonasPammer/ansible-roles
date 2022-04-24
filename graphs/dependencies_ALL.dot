@@ -3,15 +3,16 @@ digraph hierarchy {
 
   {
 
-    "jonaspammer.bootstrap" [fillcolor=green style=filled]
+    "jonaspammer.bootstrap" [fillcolor=red style=filled]
 
-    "jonaspammer.core_dependencies" [fillcolor=yellow style=filled]
+    "jonaspammer.core_dependencies" [fillcolor=red style=filled]
 
-    "jonaspammer.pip" [fillcolor=orange style=filled]
+    "jonaspammer.pip" [fillcolor=red style=filled]
 
   }
 
 
-  "jonaspammer.core_dependencies" -> {"jonaspammer.bootstrap"}
-  "jonaspammer.pip" -> {"jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
+  "jonaspammer.bootstrap" -> {"jonaspammer.bootstrap" "jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
+  "jonaspammer.core_dependencies" -> {"jonaspammer.bootstrap" "jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
+  "jonaspammer.pip" -> {"jonaspammer.bootstrap" "jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
 }
