@@ -1,3 +1,6 @@
+.ansible_fetched_role_info_cache
+.ansible_roles_diskcache
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,jetbrains+all,virtualenv,linux,ansible,svn,windows,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,jetbrains+all,virtualenv,linux,ansible,svn,windows,python
 

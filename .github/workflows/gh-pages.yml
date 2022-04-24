@@ -30,17 +30,26 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: install graphviz
+        run: apt-get install -y graphviz
+
       - name: Install Project from setup.cfg.
         run: pip3 install .
 
-      - name: Re-Generate Documents from Jinja2 Templates.
+      - name: Generate Documents from Jinja2 Templates.
         run: ansible-roles
 
-      - name: Commit generated documents back to repository.
+      - name: Generate png's from generated dot's.
+        run: |
+          for file in $(ls graphs/*.dot) ; do \
+            dot "${file}" -Tpng -Nfontname="Open Sans" -Efontname="Open Sans" -Gfontname="Open Sans" -o "${file%.*}".png ; \
+          done
+
+      - name: Commit generated files back to repository.
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "docs: re-generate"
-          file_pattern: "*.adoc"
+          commit_message: "chore: re-generate"
+          file_pattern: "*.adoc *.png"
 
       - name: setup ruby
         uses: ruby/setup-ruby@v1
