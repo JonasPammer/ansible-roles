@@ -43,7 +43,7 @@ These soft dependencies are used in the relevant CI Tests to prepare the machine
 You can choose to use those roles if you like them.
 Here is an overview of these soft dependencies:
 
-image:./graphs/dependencies_ALL.png[requriements.yml dependency graph of all roles]
+image:./graphs/dependencies_ALL.svg[requriements.yml dependency graph of all roles]
 
 
 === Distributions
