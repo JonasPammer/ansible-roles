@@ -1,5 +1,5 @@
 ---
-name: build self-contained README
+name: re-generate files
 
 "on":
   push:
