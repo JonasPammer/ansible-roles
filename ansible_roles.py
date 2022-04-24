@@ -11,7 +11,6 @@ from github import Github
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 from jinja2 import select_autoescape
-from rich import inspect
 from rich.console import Console
 from rich.traceback import install as install_rich_traceback
 
@@ -31,7 +30,9 @@ class AnsibleRole:
     repo_pull_url: str
     requirements_yml: dict[str, Any] = {}
 
-    computed_dependencies: list[str] = []  # list of galaxy_role_name's
+    computed_dependencies: list[str] = attrs.field(
+        default=attrs.Factory(list)
+    )  # list of galaxy_role_name's
 
     @property
     def role_name(self) -> str:
@@ -93,13 +94,6 @@ def main(argv: Sequence[str] | None = None) -> int:
             continue  # no dependencies
         for role_req in role.requirements_yml["roles"]:
             role.computed_dependencies.append(role_req["name"])
-        console.log(
-            f"computed dependencies of {role.galaxy_role_name}: "
-            f"{role.computed_dependencies}"
-        )
-
-    # TODO only temporary
-    inspect(all_roles)
 
     with open("README.adoc", "w") as f:
         f.write(env.get_template("README.adoc.jinja2").render(all_roles=all_roles))
