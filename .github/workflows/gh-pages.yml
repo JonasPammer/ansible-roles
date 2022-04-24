@@ -7,13 +7,14 @@ name: build self-contained README
       - master
     paths:
       - ".github/workflows/gh-pages.yml"
-      - "CHANGELOG.adoc"
-      - "CODE_OF_CONDUCT.md"
-      - "CONTRIBUTING.adoc"
-      - "DEVELOPMENT.adoc"
-      - "LICENSE"
-      - "README.adoc"
+      - "templates/README.adoc.jinja2"
       - "all-repos-in.json"
+      - "ansible_roles.py"
+      - "setup.cfg"
+      - "setup.py"
+  schedule:
+    # At 05:00am
+    - cron: "0 5 * * *"
 
 jobs:
   gh-pages:
