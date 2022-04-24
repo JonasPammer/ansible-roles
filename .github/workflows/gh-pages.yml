@@ -18,7 +18,7 @@ name: re-generate files
 
 jobs:
   gh-pages:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: check out the codebase
         uses: actions/checkout@v3
