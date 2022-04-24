@@ -31,7 +31,7 @@ jobs:
           python-version: "3.x"
 
       - name: install graphviz
-        run: apt-get install -y graphviz
+        run: sudo apt-get install -y graphviz
 
       - name: Install Project from setup.cfg.
         run: pip3 install .
