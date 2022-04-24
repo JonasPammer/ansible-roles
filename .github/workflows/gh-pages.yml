@@ -63,6 +63,9 @@ jobs:
       - name: Generate HTML of Asciidoctor files to /docs.
         run: asciidoctor --backend=html5 --destination-dir docs --out-file index.html README.adoc
 
+      - name: Copy '/graphs' into '/docs'
+        run: cp -rf graphs/ docs/
+
       - name: Deploy /docs to GitHub Pages.
         uses: peaceiris/actions-gh-pages@v3
         with:
