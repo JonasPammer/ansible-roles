@@ -12,30 +12,47 @@ name: build self-contained README
       - "CONTRIBUTING.adoc"
       - "DEVELOPMENT.adoc"
       - "LICENSE"
-      - "README.adoc.jinja2"
+      - "README.adoc"
       - "all-repos-in.json"
 
 jobs:
   gh-pages:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the codebase.
+      - name: check out the codebase
         uses: actions/checkout@v3
+        with: # https://github.com/stefanzweifel/git-auto-commit-action#checkout-the-correct-branch
+          ref: ${{ github.head_ref }}
 
-      # TODO *Generate* README.adoc from README.adoc.jinja2 by executing some python file
+      - name: set up python 3
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
 
-      - name: Setup Ruby
+      - name: Install Project from setup.cfg.
+        run: pip3 install .
+
+      - name: Re-Generate Documents from Jinja2 Templates.
+        run: ansible-roles
+
+      - name: Commit generated documents back to repository.
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "docs: re-generate"
+          file_pattern: "*.adoc"
+
+      - name: setup ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "2.7.0"
 
-      - name: Install Asciidoctor
+      - name: install asciidoctor
         run: gem install --no-document asciidoctor rouge coderay
 
-      - name: Generate HTML
+      - name: Generate HTML of Asciidoctor files to /docs.
         run: asciidoctor --backend=html5 --destination-dir docs --out-file index.html README.adoc
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy /docs to GitHub Pages.
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
