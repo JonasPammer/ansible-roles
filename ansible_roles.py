@@ -66,30 +66,31 @@ def main(argv: Sequence[str] | None = None) -> int:
         all_repos_in = json.load(f)
 
     # initialize all_roles
-    all_roles: list[AnsibleRole] = []
+    all_roles: dict[str, AnsibleRole] = {}
     for key in all_repos_in:
         role = AnsibleRole(repo_name=key, repo_pull_url=all_repos_in[key])
         if not role.repo_name.startswith("ansible-role"):
             console.log(f"{role.repo_name} is not an ansible role, skipping...")
             continue
-        if cache.get(role.repo_name) is not None:
-            console.log(f"{role.repo_name} exists in cache, skipping...")
-            all_roles.append(cache.get(role.repo_name))
+        if cache.get(role.galaxy_role_name) is not None:
+            console.log(f"{role.galaxy_role_name} exists in cache, skipping...")
+            all_roles[role.galaxy_role_name] = cache.get(role.galaxy_role_name)
             continue
 
         console.log(
-            f"querying additional information of {role.repo_name} using github api..."
+            f"querying additional information of {role.galaxy_role_name} "
+            f"using github api..."
         )
         repo = github_api.get_repo(f"JonasPammer/{role.repo_name}")
         role.requirements_yml = yaml.safe_load(
             repo.get_contents("requirements.yml").decoded_content
         )
 
-        cache.set(key=role.repo_name, value=role, expire=60 * 60)
-        all_roles.append(role)
+        cache.set(key=role.galaxy_role_name, value=role, expire=60 * 60)
+        all_roles[role.galaxy_role_name] = role
 
     # compute values
-    for role in all_roles:
+    for galaxy_role_name, role in all_roles.items():
         if "roles" not in role.requirements_yml:
             continue  # no dependencies
         for role_req in role.requirements_yml["roles"]:
@@ -101,6 +102,29 @@ def main(argv: Sequence[str] | None = None) -> int:
         f.write(
             env.get_template("dependencies_ALL.dot.jinja2").render(all_roles=all_roles)
         )
+
+    template_dependencies_single = env.get_template("dependencies_single.dot.jinja2")
+    for input_galaxy_role_name, input_role in all_roles.items():
+
+        def recurse_add_dependencies(
+            role: AnsibleRole, _tmp_dict: dict[str, AnsibleRole] | None = None
+        ) -> dict[str, AnsibleRole]:
+            if _tmp_dict is None:
+                _tmp_dict = {}
+
+            _tmp_dict[role.galaxy_role_name] = role
+            for galaxy_dependency in role.computed_dependencies:
+                recurse_add_dependencies(all_roles[galaxy_dependency], _tmp_dict)
+            return _tmp_dict
+
+        filtered_roles = recurse_add_dependencies(input_role)
+
+        with open(f"graphs/dependencies_{input_role.role_name}.dot", "w") as f:
+            f.write(
+                template_dependencies_single.render(
+                    all_roles=filtered_roles, input_role=input_role
+                )
+            )
 
     return retv
 
