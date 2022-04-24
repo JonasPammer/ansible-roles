@@ -3,9 +3,7 @@ digraph hierarchy {
   overlap=false
 
   {
-
     "jonaspammer.bootstrap" [fillcolor=green style=filled penwidth=3]
-
   }
 
 

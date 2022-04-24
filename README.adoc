@@ -37,7 +37,14 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[
 
 === Dependencies
 
-// TODO auto-generate in python using dot by parsing requirements.yml of every repo
+Most roles have a “soft dependency” described in their `requirements.yml` file.
+These soft dependencies are used in the relevant CI Tests to prepare the machine for the execution of a given role.
+// or test interoperability.
+You can choose to use those roles if you like them.
+Here is an overview of these soft dependencies:
+
+image:./graphs/dependencies_ALL.png[requriements.yml dependency graph of all roles]
+
 
 === Distributions
 
