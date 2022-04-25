@@ -86,6 +86,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         role.requirements_yml = yaml.safe_load(
             repo.get_contents("requirements.yml").decoded_content
         )
+        role.meta_yml = yaml.safe_load(
+            repo.get_contents("meta/main.yml").decoded_content
+        )
 
         cache.set(key=role.galaxy_role_name, value=role, expire=60 * 60)
         all_roles[role.galaxy_role_name] = role

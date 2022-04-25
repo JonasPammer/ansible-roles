@@ -52,16 +52,85 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[
 
 === Dependencies
 
+==== Soft Dependencies
 Most roles have a “soft dependency” described in their `requirements.yml` file.
-These soft dependencies are used in the relevant CI Tests to prepare the machine for the execution of a given role.
-// or test interoperability.
+These soft dependencies are used in the relevant CI Tests
+to prepare the machine for the execution of a given role
+or to test some kind of interoperability.
 You can choose to use those roles if you like them.
-Here is an overview of these soft dependencies:
+Here is an overview of all roles with their soft dependencies:
 
-image:./graphs/dependencies_ALL.svg[requriements.yml dependency graph of all roles]
+image:./graphs/dependencies_ALL.svg[requriements.yml soft-dependency graph of all roles]
+
+The dependencies are soft for these reasons:
+
+* Better re-usability.
+* Easier to fork.
+* Lets the system developer assume a start-state of a machine.
+
+Because these dependencies are loose,
+you have to include them in your playbook yourself
+(assuming you want to use them):
+
+[source,yaml]
+----
+- name: make the best machine ever
+  hosts: all
+  become: yes
+
+  roles:
+    - role: jonaspammer.bootstrap
+    - role: jonaspammer.java
+----
+
+==== Hard Dependencies
+
+Some roles have a hard dependency on another role,
+mainly for a common handler or for variables that are set in the parent role and used in the child role.
+_These role dependencies
+(https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#using-role-dependencies[official documentation])
+are described in `meta/main.yml` file of a given role under `dependencies`._
+
+|===
+| Role name | Depends on | Reason
 
 
-=== Distributions
+
+
+
+
+
+
+
+
+
+
+
+
+|===
+
+Here is an overview of the hard dependencies:
+
+image:./graphs/dependencies_ALL-hard.svg[meta/main.yml hard-dependency graph of all roles]
+
+Because Ansible defines role dependencies as 'prerequisites' and not 'true dependencies',
+you still *have to* include them in your playbook yourself:
+
+[source,yaml]
+----
+- name: Converge
+  hosts: all
+  become: yes
+
+  roles:
+    # (preperation roles have been left out for this example)
+
+    - role: jonaspammer.httpd
+    - role: jonaspammer.php
+----
+
+
+=== Tested Distributions
 
 A role may work on different *distributions*, like Red Hat Enterprise Linux (RHEL),
 even though there is no test for this exact distribution.
@@ -96,7 +165,7 @@ these Linux distributions are included in the tests:
 | https://github.com/geerlingguy/docker-debian11-ansible/actions?query=workflow%3ABuild[image:https://github.com/geerlingguy/docker-debian11-ansible/workflows/Build/badge.svg?branch=master&event=push[CI]]
 |===
 
-=== Ansible versions
+=== Tested Ansible versions
 
 https://github.com/JonasPammer/cookiecutter-ansible-role/blob/master/ansible-role-%7B%7B%20cookiecutter.role_name%20%7D%7D/tox.ini[By default],
 these Ansible versions are included in the tests:
