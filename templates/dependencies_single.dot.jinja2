@@ -4,7 +4,7 @@ digraph hierarchy {
 
   {
 {%- for galaxy_role_name, role in all_roles.items() %}
-    "{{ galaxy_role_name }}" [fillcolor={{role.get_dependency_layer_color()}} style=filled {%if galaxy_role_name == input_role.galaxy_role_name%}penwidth=3{%endif%}]
+    "{{ galaxy_role_name }}" [fillcolor={{role.get_dependency_color()}} style=filled {%if galaxy_role_name == input_role.galaxy_role_name%}penwidth=3{%endif%}]
 {%- endfor %}
   }
 

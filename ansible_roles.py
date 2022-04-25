@@ -29,6 +29,7 @@ class AnsibleRole:
     repo_name: str
     repo_pull_url: str
     requirements_yml: dict[str, Any] = {}
+    meta_yml: dict[str, Any] = {}
 
     computed_dependencies: list[str] = attrs.field(
         default=attrs.Factory(list)
@@ -42,7 +43,7 @@ class AnsibleRole:
     def galaxy_role_name(self) -> str:
         return "jonaspammer." + self.role_name
 
-    def get_dependency_layer_color(self) -> str:
+    def get_dependency_color(self) -> str:
         layer_colors = {
             0: "green",
             1: "yellow",
