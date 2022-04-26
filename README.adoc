@@ -27,21 +27,21 @@ toc::[]
 | Role name | Action Status | Version | Open Issues | Open Pull Requests
 
 
-| ansible-role-bootstrap
+| https://github.com/JonasPammer/ansible-role-bootstrap[bootstrap]
 | https://github.com/JonasPammer/ansible-role-bootstrap/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-bootstrap/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-bootstrap/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-bootstrap/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-bootstrap/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-bootstrap/latest.svg[version]]
 | https://github.com/JonasPammer/ansible-role-bootstrap/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-bootstrap[issues]]
 | https://github.com/JonasPammer/ansible-role-bootstrap/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-bootstrap[pull requests]]
 
-| ansible-role-core_dependencies
+| https://github.com/JonasPammer/ansible-role-core_dependencies[core_dependencies]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-core_dependencies/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-core_dependencies/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-core_dependencies/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-core_dependencies/latest.svg[version]]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-core_dependencies[issues]]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-core_dependencies[pull requests]]
 
-| ansible-role-pip
+| https://github.com/JonasPammer/ansible-role-pip[pip]
 | https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-pip/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-pip/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-pip/latest.svg[version]]
