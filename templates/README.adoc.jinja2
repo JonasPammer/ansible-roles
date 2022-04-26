@@ -27,7 +27,7 @@ toc::[]
 | Role name | Action Status | Version | Open Issues | Open Pull Requests
 
 {% for galaxy_role_name, role in all_roles.items() %}
-| {{ role.repo_name }}
+| https://github.com/JonasPammer/{{ role.repo_name }}[{{ role.role_name }}]
 | https://github.com/JonasPammer/{{ role.repo_name }}/actions/workflows/ci.yml[image:https://github.com/JonasPammer/{{ role.repo_name }}/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/{{ role.repo_name }}/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/{{ role.repo_name }}/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/{{ role.repo_name }}/releases[image:https://img.shields.io/github/commits-since/JonasPammer/{{ role.repo_name }}/latest.svg[version]]
@@ -85,7 +85,7 @@ are described in `meta/main.yml` file of a given role under `dependencies`._
 {% for galaxy_role_name, role in all_roles.items() %}
 {%   if "dependencies" in role.meta_yml %}
 {%     for item in role.meta_yml["dependencies"] %}
-| {{ role.repo_name }}
+| https://github.com/JonasPammer/{{ role.repo_name }}[{{ role.role_name }}]
 | {{ item.name }}
 | {{ item._reason }}
 {%     endfor %}
