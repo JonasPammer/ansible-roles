@@ -62,6 +62,13 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-shellcheck/
 | https://github.com/JonasPammer/ansible-role-shellcheck/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-shellcheck[issues]]
 | https://github.com/JonasPammer/ansible-role-shellcheck/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-shellcheck[pull requests]]
 
+| https://github.com/JonasPammer/ansible-role-openssh[openssh]
+| https://github.com/JonasPammer/ansible-role-openssh/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-openssh/actions/workflows/ci.yml/badge.svg[Testing CI]]
+https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-openssh/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-openssh/master.svg[pre-commit.ci status]]
+| https://github.com/JonasPammer/ansible-role-openssh/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-openssh/latest.svg[version]]
+| https://github.com/JonasPammer/ansible-role-openssh/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-openssh[issues]]
+| https://github.com/JonasPammer/ansible-role-openssh/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-openssh[pull requests]]
+
 |===
 
 === Dependencies
@@ -109,6 +116,10 @@ are described in `meta/main.yml` file of a given role under `dependencies`._
 
 |===
 | Role name | Depends on | Reason
+
+
+
+
 
 
 
