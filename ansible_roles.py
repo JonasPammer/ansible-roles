@@ -28,6 +28,7 @@ cache = diskcache.Cache(".ansible_roles_diskcache")
 class AnsibleRole:
     repo_name: str
     repo_pull_url: str
+    galaxy_owner: str = "jonaspammer"
     requirements_yml: dict[str, Any] = {}
     meta_yml: dict[str, Any] = {}
 
@@ -41,7 +42,7 @@ class AnsibleRole:
 
     @property
     def galaxy_role_name(self) -> str:
-        return "jonaspammer." + self.role_name
+        return self.galaxy_owner + "." + self.role_name
 
     def get_dependency_color(self) -> str:
         layer_colors = {
@@ -121,7 +122,15 @@ def main(argv: Sequence[str] | None = None) -> int:
 
             _tmp_dict[role.galaxy_role_name] = role
             for galaxy_dependency in role.computed_dependencies:
-                recurse_add_dependencies(all_roles[galaxy_dependency], _tmp_dict)
+                if galaxy_dependency in all_roles:
+                    role_for_galaxy_dependency = all_roles[galaxy_dependency]
+                else:
+                    role_for_galaxy_dependency = AnsibleRole(
+                        repo_name=galaxy_dependency.split(".")[1],
+                        repo_pull_url="",
+                        galaxy_owner=galaxy_dependency.split(".")[0],
+                    )
+                recurse_add_dependencies(role_for_galaxy_dependency, _tmp_dict)
             return _tmp_dict
 
         filtered_roles = recurse_add_dependencies(input_role)

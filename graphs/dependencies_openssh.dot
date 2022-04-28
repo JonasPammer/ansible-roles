@@ -5,10 +5,9 @@ digraph hierarchy {
   {
     "jonaspammer.openssh" [fillcolor=orange style=filled penwidth=3]
     "jonaspammer.bootstrap" [fillcolor=green style=filled ]
-    "jonaspammer.core_dependencies" [fillcolor=yellow style=filled ]
+    "robertdebock.selinux" [fillcolor=green style=filled ]
   }
 
 
-  "jonaspammer.openssh" -> {"jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
-  "jonaspammer.core_dependencies" -> {"jonaspammer.bootstrap"}
+  "jonaspammer.openssh" -> {"jonaspammer.bootstrap" "robertdebock.selinux"}
 }
