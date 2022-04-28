@@ -41,6 +41,13 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-core_depend
 | https://github.com/JonasPammer/ansible-role-core_dependencies/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-core_dependencies[issues]]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-core_dependencies[pull requests]]
 
+| https://github.com/JonasPammer/ansible-role-motd[motd]
+| https://github.com/JonasPammer/ansible-role-motd/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-motd/actions/workflows/ci.yml/badge.svg[Testing CI]]
+https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-motd/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-motd/master.svg[pre-commit.ci status]]
+| https://github.com/JonasPammer/ansible-role-motd/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-motd/latest.svg[version]]
+| https://github.com/JonasPammer/ansible-role-motd/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-motd[issues]]
+| https://github.com/JonasPammer/ansible-role-motd/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-motd[pull requests]]
+
 | https://github.com/JonasPammer/ansible-role-pip[pip]
 | https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-pip/master.svg[pre-commit.ci status]]
@@ -48,7 +55,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[
 | https://github.com/JonasPammer/ansible-role-pip/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-pip[issues]]
 | https://github.com/JonasPammer/ansible-role-pip/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-pip[pull requests]]
 
-| ansible-role-shellcheck
+| https://github.com/JonasPammer/ansible-role-shellcheck[shellcheck]
 | https://github.com/JonasPammer/ansible-role-shellcheck/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-shellcheck/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-shellcheck/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-shellcheck/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-shellcheck/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-shellcheck/latest.svg[version]]
