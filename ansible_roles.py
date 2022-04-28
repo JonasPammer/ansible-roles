@@ -65,6 +65,9 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     with open("all-repos-in.json") as f:
         all_repos_in = json.load(f)
+    with open("all-repos-in.json", "w") as f:
+        f.write(json.dumps(all_repos_in, indent=2, sort_keys=True) + "\n")
+    # TODO extend functionality to sort above json file
 
     # initialize all_roles
     all_roles: dict[str, AnsibleRole] = {}

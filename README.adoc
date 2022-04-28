@@ -48,6 +48,13 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[
 | https://github.com/JonasPammer/ansible-role-pip/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-pip[issues]]
 | https://github.com/JonasPammer/ansible-role-pip/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-pip[pull requests]]
 
+| ansible-role-shellcheck
+| https://github.com/JonasPammer/ansible-role-shellcheck/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-shellcheck/actions/workflows/ci.yml/badge.svg[Testing CI]]
+https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-shellcheck/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-shellcheck/master.svg[pre-commit.ci status]]
+| https://github.com/JonasPammer/ansible-role-shellcheck/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-shellcheck/latest.svg[version]]
+| https://github.com/JonasPammer/ansible-role-shellcheck/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-shellcheck[issues]]
+| https://github.com/JonasPammer/ansible-role-shellcheck/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-shellcheck[pull requests]]
+
 |===
 
 === Dependencies
@@ -95,6 +102,14 @@ are described in `meta/main.yml` file of a given role under `dependencies`._
 
 |===
 | Role name | Depends on | Reason
+
+
+
+
+
+
+
+
 
 
 
