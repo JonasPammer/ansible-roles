@@ -4,5 +4,6 @@
   "ansible-role-motd": "git@github.com:JonasPammer/ansible-role-motd.git",
   "ansible-role-pip": "git@github.com:JonasPammer/ansible-role-pip.git",
   "ansible-role-shellcheck": "git@github.com:JonasPammer/ansible-role-shellcheck.git",
+  "ansible-role-openssh": "git@github.com:JonasPammer/ansible-role-openssh.git",
   "cookiecutter-ansible-role": "git@github.com:JonasPammer/cookiecutter-ansible-role.git"
 }
