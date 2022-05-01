@@ -188,8 +188,27 @@ https://github.com/JonasPammer/cookiecutter-ansible-role/blob/master/ansible-rol
 | 2024-06
 | https://github.com/geerlingguy/docker-centos7-ansible/actions?query=workflow%3ABuild[image:https://github.com/geerlingguy/docker-centos7-ansible/workflows/Build/badge.svg?branch=master&event=push[CI]]
 
+| RedHat
+| CentOS 8
+| 2019-09
+| 2024-05 (Stream)
+| https://github.com/geerlingguy/docker-centos8-ansible/actions?query=workflow%3ABuild[image:https://github.com/geerlingguy/docker-centos8-ansible/workflows/Build/badge.svg?branch=master&event=push[CI]]
+
+| RedHat
+| Fedora 35
+| 2021-11
+| 2022-11
+| https://github.com/geerlingguy/docker-fedora35-ansible/actions?query=workflow%3ABuild[image:https://github.com/geerlingguy/docker-fedora35-ansible/workflows/Build/badge.svg?branch=master&event=push[CI]]
+
+| Debian
+| Ubuntu 1604
+| 2016-04
+| 2026-04
+| https://github.com/geerlingguy/docker-ubuntu1604-ansible/actions?query=workflow%3ABuild[image:https://github.com/geerlingguy/docker-ubuntu1604-ansible/workflows/Build/badge.svg?branch=master&event=push[CI]]
+
 | Debian
 | Ubuntu 1804
+| 2018-04
 | 2028-04
 | https://github.com/geerlingguy/docker-ubuntu1804-ansible/actions?query=workflow%3ABuild[image:https://github.com/geerlingguy/docker-ubuntu1804-ansible/workflows/Build/badge.svg?branch=master&event=push[CI]]
 
