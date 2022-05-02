@@ -102,7 +102,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         if "roles" not in role.requirements_yml:
             continue  # no dependencies
         for role_req in role.requirements_yml["roles"]:
-            role.computed_dependencies.append(role_req["name"])
+            if "__not_mandatory_to_role_itself" not in role_req:
+                role.computed_dependencies.append(role_req["name"])
+            # role.dependencies_not_mandatory_to_role_itself.append(role_req["name"])
 
     with open("README.adoc", "w") as f:
         f.write(env.get_template("README.adoc.jinja2").render(all_roles=all_roles))
