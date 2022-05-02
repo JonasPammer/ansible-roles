@@ -119,7 +119,7 @@ you still *have to* include them in your playbook yourself:
 A role may work on different *distributions*, like Red Hat Enterprise Linux (RHEL),
 even though there is no test for this exact distribution.
 
-The following Linux distributions are included in the tests of each role
+The following Linux distributions are included in the tests of most roles
 https://github.com/JonasPammer/cookiecutter-ansible-role/blob/master/ansible-role-%7B%7B%20cookiecutter.role_name%20%7D%7D/.github/workflows/ci.yml[by default]:
 
 |===
@@ -189,40 +189,3 @@ https://github.com/JonasPammer/cookiecutter-ansible-role/blob/master/ansible-rol
 * 2.10
 * 2.11
 * 2.12
-
-
-== all-repos
-
-https://github.com/asottile/all-repos[all-repos] is a project by asotille
-to clone multiple repositories and apply sweeping changes at once.
-
-link:all-repos-in.json[] is an `all.repos.source.json_file` compatible file
-consisting of all of my ansible roles.
-It can be used in an all-repos configuration file as shown below:
-
-.all-repos.json
-[source%linenums,json,highlight=3..5]
-----
-{
-    "output_dir": ".",
-    "source": "all_repos.source.json_file",
-    "source_settings": {
-        "filename": "all-repos-in.json"
-    },
-    "push": "all_repos.push.github_pull_request",
-    "push_settings": {
-        "api_key": "...",
-        "username": "..."
-    }
-}
-----
-
-=== Example Commands
-
-----
-$ python3 -m pip install all-repos
-
-$ all-repos-clone
-
-// TODO add all-repos-sed examples here
-----
