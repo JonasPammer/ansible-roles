@@ -50,7 +50,7 @@ jobs:
       - name: Commit generated files back to repository.
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "chore: re-generate"
+          commit_message: "chore: re-generate \n https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
           file_pattern: "*.adoc *.dot *.png *.svg"
 
       - name: setup ruby
