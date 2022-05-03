@@ -26,6 +26,14 @@ toc::[]
 |===
 | Role name | Action Status | Version | Open Issues | Open Pull Requests
 
+| 🍪 https://github.com/JonasPammer/cookiecutter-ansible-role[cookiecutter-ansible-role] 🍪
+| https://github.com/JonasPammer/cookiecutter-ansible-role/actions/workflows/ci.yml[image:https://github.com/JonasPammer/cookiecutter-ansible-role/actions/workflows/ci.yml/badge.svg[Testing CI]]
+https://results.pre-commit.ci/latest/github/JonasPammer/cookiecutter-ansible-role/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/cookiecutter-ansible-role/master.svg[pre-commit.ci status]]
+| https://github.com/JonasPammer/cookiecutter-ansible-role/releases[image:https://img.shields.io/github/commits-since/JonasPammer/cookiecutter-ansible-role/latest.svg[version]]
+| https://github.com/JonasPammer/cookiecutter-ansible-role/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/cookiecutter-ansible-role[issues]]
+| https://github.com/JonasPammer/cookiecutter-ansible-role/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/cookiecutter-ansible-role[pull requests]]
+
+
 
 | https://github.com/JonasPammer/ansible-role-bootstrap[bootstrap]
 | https://github.com/JonasPammer/ansible-role-bootstrap/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-bootstrap/actions/workflows/ci.yml/badge.svg[Testing CI]]
