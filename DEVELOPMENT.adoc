@@ -1,3 +1,6 @@
+This documentation contains information used by myself (JonasPammer)
+to maintain all the repos.
+
 == all-repos
 
 https://github.com/asottile/all-repos[all-repos] is a project by asotille
@@ -11,7 +14,7 @@ It can be used in an all-repos configuration file as shown below:
 [source%linenums,json,highlight=3..5]
 ----
 {
-    "output_dir": ".",
+    "output_dir": "all-repos",
     "source": "all_repos.source.json_file",
     "source_settings": {
         "filename": "all-repos-in.json"
@@ -19,18 +22,39 @@ It can be used in an all-repos configuration file as shown below:
     "push": "all_repos.push.github_pull_request",
     "push_settings": {
         "api_key": "...",
-        "username": "..."
+        "username": "JonasPammer"
     }
 }
 ----
 
 
-=== Example Commands
+== Commands
 
+.step 1: clone
+[subs="attr"]
 ----
-$ python3 -m pip install all-repos
+~/dev$ git clone git@github.com:JonasPammer/ansible-roles.git
 
-$ all-repos-clone
+~/dev$ python3 -m pip install all-repos pre-commit cruft
 
-// TODO add all-repos-sed examples here
+~/dev$ cd ansible-roles
+
+~/dev/ansible-roles$ nano all-repos.json
+...(create file as shown in all-repos section)...
+...(do not worry, file is gitignore'd by ansible-roles)...
+
+~/dev/ansible-roles$ chmod 600 all-repos.json
+
+~/dev/ansible-roles$ all-repos-clone
+----
+
+.example maintenance: cruft update
+----
+~/dev/ansible-roles$
+~/dev/ansible-roles$ ./all-repos/cruft.bash
+----
+
+.example maintenance: alter text manually using sed
+----
+~/dev/ansible-roles$ // TODO add all-repos-sed examples here
 ----

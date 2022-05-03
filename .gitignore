@@ -1,3 +1,7 @@
+all-repos/*
+!all-repos/cruft.bash
+all-repos.json
+
 .ansible_fetched_role_info_cache
 .ansible_roles_diskcache
 
