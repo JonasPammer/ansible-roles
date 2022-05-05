@@ -59,7 +59,7 @@ It can be used in an all-repos configuration file as shown below:
 ====
 [subs="quotes"]
 ----
-(venv) ~/dev/ansible-roles$ *./all-repos/cruft.bash*
+(venv) ~/dev/ansible-roles$ *./all-repos/cruft.sh*
 ----
 ====
 
@@ -70,7 +70,7 @@ https://github.com/cli/cli#installation[GitHub CLI]
 
 [subs="quotes"]
 ----
-(venv) ~/dev/ansible-roles$ *./all-repos/secrets.bash*
+(venv) ~/dev/ansible-roles$ *./all-repos/secrets.sh*
 ----
 ====
 
