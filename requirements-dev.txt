@@ -1,5 +1,7 @@
+all-repos
 covdefaults
 coverage
+cruft
 pre-commit
 pytest
 pytest-env

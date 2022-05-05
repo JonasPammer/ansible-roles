@@ -30,31 +30,54 @@ It can be used in an all-repos configuration file as shown below:
 
 == Commands
 
-.step 1: clone
-[subs="attr"]
+.step 1: initially configure `all-repos`
+[subs="quotes"]
 ----
-~/dev$ git clone git@github.com:JonasPammer/ansible-roles.git
+~/dev$ *git clone git@github.com:JonasPammer/ansible-roles.git*
 
-~/dev$ python3 -m pip install all-repos pre-commit cruft
+~/dev$ *cd ansible-roles*
 
-~/dev$ cd ansible-roles
+~/dev/ansible-roles$ *_python -m venv venv_*
 
-~/dev/ansible-roles$ nano all-repos.json
+~/dev/ansible-roles$ *_source venv/bin/activate_*
+
+#(venv)# ~/dev/ansible-roles$ *python3 -m pip install -r requirements-dev.txt*
+
+(venv) ~/dev/ansible-roles$ *nano all-repos.json*
 ...(create file as shown in all-repos section)...
 ...(do not worry, file is gitignore'd by ansible-roles)...
 
-~/dev/ansible-roles$ chmod 600 all-repos.json
-
-~/dev/ansible-roles$ all-repos-clone
+(venv) ~/dev/ansible-roles$ *chmod 600 all-repos.json*
 ----
 
-.example maintenance: cruft update
+.step 2: clone (execute this command before any maintenance command)
 ----
-~/dev/ansible-roles$
-~/dev/ansible-roles$ ./all-repos/cruft.bash
+(venv) ~/dev/ansible-roles$ *all-repos-clone*
 ----
+
+.example maintenance: cruft update all
+====
+[subs="quotes"]
+----
+(venv) ~/dev/ansible-roles$ *./all-repos/cruft.bash*
+----
+====
+
+.example maintenance: update GitHub Secret `GALAXY_API_KEY`
+====
+Requires
+https://github.com/cli/cli#installation[GitHub CLI]
+
+[subs="quotes"]
+----
+(venv) ~/dev/ansible-roles$ *./all-repos/secrets.bash*
+----
+====
 
 .example maintenance: alter text manually using sed
+====
+[subs="quotes"]
 ----
-~/dev/ansible-roles$ // TODO add all-repos-sed examples here
+(venv) ~/dev/ansible-roles$ // TODO add all-repos-sed examples here
 ----
+====
