@@ -1,5 +1,4 @@
 all-repos/*
-!all-repos/*.bash
 all-repos.json
 
 .ansible_fetched_role_info_cache

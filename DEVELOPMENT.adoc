@@ -37,11 +37,11 @@ It can be used in an all-repos configuration file as shown below:
 
 ~/dev$ *cd ansible-roles*
 
-~/dev/ansible-roles$ *_python -m venv venv_*
+~/dev/ansible-roles$ *_python3 -m venv venv_*
 
 ~/dev/ansible-roles$ *_source venv/bin/activate_*
 
-#(venv)# ~/dev/ansible-roles$ *python3 -m pip install -r requirements-dev.txt*
+#(venv)# ~/dev/ansible-roles$ *pip3 install -r requirements-dev.txt*
 
 (venv) ~/dev/ansible-roles$ *nano all-repos.json*
 ...(create file as shown in all-repos section)...
@@ -59,7 +59,7 @@ It can be used in an all-repos configuration file as shown below:
 ====
 [subs="quotes"]
 ----
-(venv) ~/dev/ansible-roles$ *./all-repos/cruft.sh*
+(venv) ~/dev/ansible-roles$ *bash all-repos-scripts/cruft*
 ----
 ====
 
@@ -70,7 +70,7 @@ https://github.com/cli/cli#installation[GitHub CLI]
 
 [subs="quotes"]
 ----
-(venv) ~/dev/ansible-roles$ *./all-repos/secrets.sh*
+(venv) ~/dev/ansible-roles$ *bash all-repos-scripts/secrets*
 ----
 ====
 
