@@ -8,23 +8,12 @@ to clone multiple repositories and apply sweeping changes at once.
 
 link:all-repos-in.json[] is an `all.repos.source.json_file` compatible file
 consisting of all of my ansible roles.
-It can be used in an all-repos configuration file as shown below:
+It can be used in an all-repos configuration file as shown in `all-repos.example.json`:
 
 .all-repos.json
 [source%linenums,json,highlight=3..5]
 ----
-{
-    "output_dir": "all-repos",
-    "source": "all_repos.source.json_file",
-    "source_settings": {
-        "filename": "all-repos-in.json"
-    },
-    "push": "all_repos.push.github_pull_request",
-    "push_settings": {
-        "api_key": "...",
-        "username": "JonasPammer"
-    }
-}
+include::all-repos.example.json[]
 ----
 
 
@@ -43,9 +32,10 @@ It can be used in an all-repos configuration file as shown below:
 
 #(venv)# ~/dev/ansible-roles$ *pip3 install -r requirements-dev.txt*
 
+(venv) ~/dev/ansible-roles$ *cp all-repos.example.json all-repos.json*
+
 (venv) ~/dev/ansible-roles$ *nano all-repos.json*
-...(create file as shown in all-repos section)...
-...(do not worry, file is gitignore'd by ansible-roles)...
+...(fill in 'EDIT_ME' placeholders)...
 
 (venv) ~/dev/ansible-roles$ *chmod 600 all-repos.json*
 ----
