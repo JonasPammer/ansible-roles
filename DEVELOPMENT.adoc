@@ -41,6 +41,7 @@ include::all-repos.example.json[]
 ----
 
 .step 2: clone (execute this command before any maintenance command)
+[subs="quotes"]
 ----
 (venv) ~/dev/ansible-roles$ *all-repos-clone*
 ----
