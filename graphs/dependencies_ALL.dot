@@ -9,6 +9,7 @@ digraph hierarchy {
     "jonaspammer.pip" [fillcolor=yellow style=filled]
     "jonaspammer.shellcheck" [fillcolor=orange style=filled]
     "jonaspammer.checkmk_server" [fillcolor=orange style=filled]
+    "jonaspammer.apache2" [fillcolor=yellow style=filled]
   }
 
 
@@ -18,4 +19,5 @@ digraph hierarchy {
   "jonaspammer.pip" -> {"jonaspammer.bootstrap"}
   "jonaspammer.shellcheck" -> {"jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
   "jonaspammer.checkmk_server" -> {"jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
+  "jonaspammer.apache2" -> {"jonaspammer.bootstrap"}
 }

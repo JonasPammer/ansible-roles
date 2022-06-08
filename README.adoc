@@ -84,6 +84,13 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-checkmk_ser
 | https://github.com/JonasPammer/ansible-role-checkmk_server/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-checkmk_server[issues]]
 | https://github.com/JonasPammer/ansible-role-checkmk_server/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-checkmk_server[pull requests]]
 
+| https://github.com/JonasPammer/ansible-role-apache2[apache2]
+| https://github.com/JonasPammer/ansible-role-apache2/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-apache2/actions/workflows/ci.yml/badge.svg[Testing CI]]
+https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-apache2/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-apache2/master.svg[pre-commit.ci status]]
+| https://github.com/JonasPammer/ansible-role-apache2/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-apache2/latest.svg[version]]
+| https://github.com/JonasPammer/ansible-role-apache2/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-apache2[issues]]
+| https://github.com/JonasPammer/ansible-role-apache2/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-apache2[pull requests]]
+
 |===
 
 === Dependencies
@@ -131,6 +138,10 @@ are described in `meta/main.yml` file of a given role under `dependencies`._
 
 |===
 | Role name | Depends on | Reason
+
+
+
+
 
 
 
