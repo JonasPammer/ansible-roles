@@ -6,5 +6,6 @@
   "ansible-role-pip": "git@github.com:JonasPammer/ansible-role-pip.git",
   "ansible-role-shellcheck": "git@github.com:JonasPammer/ansible-role-shellcheck.git",
   "ansible-role-checkmk_server": "git@github.com:JonasPammer/ansible-role-checkmk_server.git",
+  "ansible-role-apache2": "git@github.com:JonasPammer/ansible-role-apache2.git",
   "cookiecutter-ansible-role": "git@github.com:JonasPammer/cookiecutter-ansible-role.git"
 }
