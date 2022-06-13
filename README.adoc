@@ -121,7 +121,7 @@ you have to include them in your playbook yourself
 ----
 - name: make the best machine ever
   hosts: all
-  become: yes
+  become: true
 
   roles:
     - role: jonaspammer.bootstrap
@@ -185,7 +185,7 @@ you still *have to* include them in your playbook yourself:
 ----
 - name: Converge
   hosts: all
-  become: yes
+  become: true
 
   roles:
     # (preperation roles have been left out for this example)
