@@ -8,6 +8,7 @@ import attrs
 import diskcache
 import yaml
 from github import Github
+from github import GithubException
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 from jinja2 import select_autoescape
@@ -87,12 +88,16 @@ def main(argv: Sequence[str] | None = None) -> int:
             f"using github api..."
         )
         repo = github_api.get_repo(f"JonasPammer/{role.repo_name}")
-        role.requirements_yml = yaml.safe_load(
-            repo.get_contents("requirements.yml").decoded_content
-        )
-        role.meta_yml = yaml.safe_load(
-            repo.get_contents("meta/main.yml").decoded_content
-        )
+
+        try:
+            role.requirements_yml = yaml.safe_load(
+                repo.get_contents("requirements.yml").decoded_content
+            )
+            role.meta_yml = yaml.safe_load(
+                repo.get_contents("meta/main.yml").decoded_content
+            )
+        except GithubException:
+            pass
 
         cache.set(key=role.galaxy_role_name, value=role, expire=60 * 60)
         all_roles[role.galaxy_role_name] = role
