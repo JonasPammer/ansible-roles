@@ -98,8 +98,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
         # allow for yet-just-created / WIP ansible roles of mine
         except GithubException as ex:
-            console.log(ex.data)
-            if "empty" not in ex.data.message:
+            if "empty" not in str(ex):
                 raise ex
 
         cache.set(key=role.galaxy_role_name, value=role, expire=60 * 60)
