@@ -96,6 +96,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             role.meta_yml = yaml.safe_load(
                 repo.get_contents("meta/main.yml").decoded_content
             )
+        # allow for yet-just-created / WIP ansible roles of mine
         except GithubException as ex:
             if not "empty" in ex.message:
                 raise ex
