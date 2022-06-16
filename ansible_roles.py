@@ -96,8 +96,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             role.meta_yml = yaml.safe_load(
                 repo.get_contents("meta/main.yml").decoded_content
             )
-        except GithubException:
-            pass
+        except GithubException as ex:
+            if not "empty" in ex.message:
+                raise ex
 
         cache.set(key=role.galaxy_role_name, value=role, expire=60 * 60)
         all_roles[role.galaxy_role_name] = role
