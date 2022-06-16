@@ -1,11 +1,15 @@
 {
+  "ansible-role-apache2": "git@github.com:JonasPammer/ansible-role-apache2.git",
   "ansible-role-bootstrap": "git@github.com:JonasPammer/ansible-role-bootstrap.git",
+  "ansible-role-checkmk_agent": "git@github.com:JonasPammer/ansible-role-checkmk_server.git",
+  "ansible-role-checkmk_server": "git@github.com:JonasPammer/ansible-role-checkmk_server.git",
   "ansible-role-core_dependencies": "git@github.com:JonasPammer/ansible-role-core_dependencies.git",
+  "ansible-role-goaccess": "git@github.com:JonasPammer/ansible-role-goaccess.git",
+  "ansible-role-mediawiki": "git@github.com:JonasPammer/ansible-role-mediawiki.git",
   "ansible-role-motd": "git@github.com:JonasPammer/ansible-role-motd.git",
   "ansible-role-openssh": "git@github.com:JonasPammer/ansible-role-openssh.git",
+  "ansible-role-openssl": "git@github.com:JonasPammer/ansible-role-openssl.git",
   "ansible-role-pip": "git@github.com:JonasPammer/ansible-role-pip.git",
   "ansible-role-shellcheck": "git@github.com:JonasPammer/ansible-role-shellcheck.git",
-  "ansible-role-checkmk_server": "git@github.com:JonasPammer/ansible-role-checkmk_server.git",
-  "ansible-role-apache2": "git@github.com:JonasPammer/ansible-role-apache2.git",
   "cookiecutter-ansible-role": "git@github.com:JonasPammer/cookiecutter-ansible-role.git"
 }
