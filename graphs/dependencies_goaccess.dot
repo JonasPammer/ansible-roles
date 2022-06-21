@@ -3,8 +3,10 @@ digraph hierarchy {
   overlap=false
 
   {
-    "jonaspammer.goaccess" [fillcolor=green style=filled penwidth=3]
+    "jonaspammer.goaccess" [fillcolor=yellow style=filled penwidth=3]
+    "jonaspammer.bootstrap" [fillcolor=green style=filled ]
   }
 
 
+  "jonaspammer.goaccess" -> {"jonaspammer.bootstrap"}
 }

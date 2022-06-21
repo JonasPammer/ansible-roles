@@ -12,7 +12,7 @@ digraph hierarchy {
     "jonaspammer.motd" [fillcolor=orange style=filled]
     "jonaspammer.apache2" [fillcolor=yellow style=filled]
     "jonaspammer.openssl" [fillcolor=orange style=filled]
-    "jonaspammer.goaccess" [fillcolor=green style=filled]
+    "jonaspammer.goaccess" [fillcolor=yellow style=filled]
     "jonaspammer.mediawiki" [fillcolor=green style=filled]
   }
 
@@ -26,4 +26,5 @@ digraph hierarchy {
   "jonaspammer.motd" -> {"jonaspammer.bootstrap" "jonaspammer.shellcheck"}
   "jonaspammer.apache2" -> {"jonaspammer.bootstrap"}
   "jonaspammer.openssl" -> {"jonaspammer.pip" "jonaspammer.bootstrap"}
+  "jonaspammer.goaccess" -> {"jonaspammer.bootstrap"}
 }
