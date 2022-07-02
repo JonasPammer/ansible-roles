@@ -113,9 +113,9 @@ def main(argv: Sequence[str] | None = None) -> int:
                 role.computed_dependencies.append(role_req["name"])
             # role.dependencies_not_mandatory_to_role_itself.append(role_req["name"])
 
-    with open("README.adoc", "w") as f:
+    with open("README.adoc", "w", encoding="utf-8") as f:
         f.write(env.get_template("README.adoc.jinja2").render(all_roles=all_roles))
-    with open("graphs/dependencies_ALL.dot", "w") as f:
+    with open("graphs/dependencies_ALL.dot", "w", encoding="utf-8") as f:
         f.write(
             env.get_template("dependencies_ALL.dot.jinja2").render(all_roles=all_roles)
         )
