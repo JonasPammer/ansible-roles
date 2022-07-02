@@ -1,22 +1,25 @@
+from __future__ import annotations
 
+import json
 import os
+from typing import Any
+
 import attrs
 import diskcache
-from github import BadCredentialsException, Github
-import github
-from rich.console import Console
-from github import GithubException
-from typing import Any
 import yaml
-import json
+from github import BadCredentialsException
+from github import Github
+from github import GithubException
+from rich.console import Console
 
 
 console = Console(width=240)
 github_api = Github()
 """See :func:`utils.init_github_api`"""
-all_roles: dict[str, "AnsibleRole"] = {}
+
+all_roles: dict[str, AnsibleRole] = {}
 """
-A dictionary of all ansible roles found in `all-repos-in.json` 
+A dictionary of all ansible roles found in `all-repos-in.json`
 in which the key is the `galaxy_role_name`.
 
 See :func:`utils.init_all_roles`
@@ -24,6 +27,7 @@ See :func:`utils.init_all_roles`
 # TODO make the github action cache the cache this directory for its future runs
 # note: cache is used solely to avoid github api rate limits
 __all_roles_cache = diskcache.Cache(".ansible_roles_diskcache")
+
 
 # TODO seperate the fetched variables into an own object (without any logic)
 #      and cache that one
@@ -40,11 +44,9 @@ class AnsibleRole:
     meta_yml: dict[str, Any] = {}
     """ decoded content of this role's `meta/meta.yml` file """
 
-    computed_dependencies: list[str] = attrs.field(
-        default=attrs.Factory(list)
-    )
+    computed_dependencies: list[str] = attrs.field(default=attrs.Factory(list))
     """ list of `galaxy_role_name`'s """
-    
+
     @property
     def role_name(self) -> str:
         """Utility function to get the actual name of the role.
@@ -75,38 +77,42 @@ class AnsibleRole:
         }
         return layer_colors[len(self.computed_dependencies)]
 
+
 def init_github_api() -> None:
-    """
-    Tries to search for a `all-repos.json` locally and 
-    implant its token in the global module variable `github_api`
-    """
+    """Tries to search for a `all-repos.json` locally and implant its token in
+    the global module variable `github_api`"""
     global github_api
-    
+
     if not os.path.exists("all-repos.json"):
-        console.log("No `all-repos.json` file found. Using Github API without token or login!")
+        console.log(
+            "No `all-repos.json` file found. Using Github API without token or login!"
+        )
         return
-    
+
     with open("all-repos.json") as f:
         all_repos = json.load(f)
     try:
         github_api = Github(all_repos["push_settings"]["api_key"])
         console.log("Using API key found in `all-repos.json`!")
     except (FileNotFoundError, KeyError):
-        console.log("No API key found in `all-repos.json`. Using Github API without token or login!")
+        console.log(
+            "No API key found in `all-repos.json`."
+            "Using Github API without token or login!"
+        )
         return
-    
+
     try:
         github_api.get_user().name
     except BadCredentialsException:
-        console.log("API key found in `all-repos.json` is invalid. "
-                    "Reverting to use Github API without token or login!")
+        console.log(
+            "API key found in `all-repos.json` is invalid. "
+            "Reverting to use Github API without token or login!"
+        )
         github_api = Github()
-    
+
 
 def init_all_roles() -> None:
-    """
-    Initializes the global module variable `all_roles`.
-    """
+    """Initializes the global module variable `all_roles`."""
     with open("all-repos-in.json") as f:
         all_repos_in = json.load(f)
 
@@ -118,7 +124,9 @@ def init_all_roles() -> None:
             continue
         if __all_roles_cache.get(role.galaxy_role_name) is not None:
             console.log(f"{role.galaxy_role_name} exists in cache, skipping...")
-            all_roles[role.galaxy_role_name] = __all_roles_cache.get(role.galaxy_role_name)
+            all_roles[role.galaxy_role_name] = __all_roles_cache.get(
+                role.galaxy_role_name
+            )
             continue
 
         console.log(
@@ -151,29 +159,30 @@ def init_all_roles() -> None:
                 role.computed_dependencies.append(role_req["name"])
             # role.dependencies_not_mandatory_to_role_itself.append(role_req["name"])
 
+
 def init() -> None:
-    """ Initialize all Variables global to this module. """
+    """Initialize all Variables global to this module."""
     init_github_api()
     init_all_roles()
 
+
 def recurse_add_dependencies(
-    role: AnsibleRole, 
-    __tmp_dict: dict[str, AnsibleRole] | None = None
+    role: AnsibleRole, __tmp_dict: dict[str, AnsibleRole] | None = None
 ) -> dict[str, AnsibleRole]:
     """
     :param role: AnsibleRole which to dig through it's `computed_dependencies`.
-    :return: 
+    :return:
         A list of all computed soft role dependencies
         in form of a dict in which the key represent the role's `galaxy_role_name`.
-        
+
         Note that a entry in this role may not be a fully qualified AnsibleRole
-        and only contain marginal information if said role is not found 
+        and only contain marginal information if said role is not found
         in the global module variable `all_roles`
     """
     if __tmp_dict is None:
         __tmp_dict = {}
     __tmp_dict[role.galaxy_role_name] = role
-    
+
     for galaxy_dependency in role.computed_dependencies:
         if galaxy_dependency in all_roles:
             role_for_galaxy_dependency = all_roles[galaxy_dependency]
@@ -185,4 +194,3 @@ def recurse_add_dependencies(
             )
         recurse_add_dependencies(role_for_galaxy_dependency, __tmp_dict)
     return __tmp_dict
-
