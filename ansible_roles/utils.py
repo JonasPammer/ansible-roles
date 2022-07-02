@@ -1,4 +1,5 @@
 
+import os
 import attrs
 import diskcache
 from github import Github
@@ -11,6 +12,7 @@ import json
 
 console = Console(width=240)
 github_api = Github()
+"""See :func:`utils.init_github_api`"""
 all_roles: dict[str, "AnsibleRole"] = {}
 """
 A dictionary of all ansible roles found in `all-repos-in.json` 
@@ -72,6 +74,26 @@ class AnsibleRole:
         }
         return layer_colors[len(self.computed_dependencies)]
 
+def init_github_api() -> None:
+    """
+    Tries to search for a `all-repos.json` locally and 
+    implant its token in the global module variable `github_api`
+    """
+    global github_api
+    
+    if not os.path.exists("all-repos.json"):
+        console.log("No `all-repos.json` file found. Using Github API without token or login!")
+        return
+    
+    with open("all-repos.json") as f:
+        all_repos = json.load(f)
+    try:
+        github_api = Github(all_repos["push_settings"]["api_key"])
+        console.log("Using API Key found in `all-repos.json`!")
+    except (FileNotFoundError, KeyError):
+        console.log("No API key found in `all-repos.json`. Using Github API without token or login!")
+        return
+    
 
 def init_all_roles() -> None:
     """
@@ -123,6 +145,7 @@ def init_all_roles() -> None:
 
 def init() -> None:
     """ Initialize all Variables global to this module. """
+    init_github_api()
     init_all_roles()
 
 def recurse_add_dependencies(
