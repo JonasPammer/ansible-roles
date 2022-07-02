@@ -10,7 +10,7 @@ name: re-generate files
       - ".github/workflows/gh-pages.yml"
       - "templates/README.adoc.jinja2"
       - "all-repos-in.json"
-      - "ansible_roles.py"
+      - "ansible_roles/*.py"
       - "setup.cfg"
       - "setup.py"
   schedule:
