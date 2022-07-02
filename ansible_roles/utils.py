@@ -2,7 +2,8 @@
 import os
 import attrs
 import diskcache
-from github import Github
+from github import BadCredentialsException, Github
+import github
 from rich.console import Console
 from github import GithubException
 from typing import Any
@@ -89,10 +90,17 @@ def init_github_api() -> None:
         all_repos = json.load(f)
     try:
         github_api = Github(all_repos["push_settings"]["api_key"])
-        console.log("Using API Key found in `all-repos.json`!")
+        console.log("Using API key found in `all-repos.json`!")
     except (FileNotFoundError, KeyError):
         console.log("No API key found in `all-repos.json`. Using Github API without token or login!")
         return
+    
+    try:
+        github_api.get_user().name
+    except BadCredentialsException:
+        console.log("API key found in `all-repos.json` is invalid. "
+                    "Reverting to use Github API without token or login!")
+        github_api = Github()
     
 
 def init_all_roles() -> None:
