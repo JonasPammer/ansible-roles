@@ -4,7 +4,7 @@
   "ansible-role-pip": "git@github.com:JonasPammer/ansible-role-pip.git",
   "ansible-role-shellcheck": "git@github.com:JonasPammer/ansible-role-shellcheck.git",
   "ansible-role-checkmk_server": "git@github.com:JonasPammer/ansible-role-checkmk_server.git",
-  "ansible-role-checkmk_agent": "git@github.com:JonasPammer/ansible-role-checkmk_server.git",
+  "ansible-role-checkmk_agent": "git@github.com:JonasPammer/ansible-role-checkmk_agent.git",
   "ansible-role-openssh": "git@github.com:JonasPammer/ansible-role-openssh.git",
   "ansible-role-motd": "git@github.com:JonasPammer/ansible-role-motd.git",
   "ansible-role-apache2": "git@github.com:JonasPammer/ansible-role-apache2.git",
