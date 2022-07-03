@@ -5,19 +5,17 @@ from typing import Sequence
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 from jinja2 import select_autoescape
-from rich.traceback import install as install_rich_traceback
 
 from ansible_roles import utils
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     retv = 0
-    install_rich_traceback(show_locals=True)
+    utils.init()
     env = Environment(
         loader=FileSystemLoader("templates"),
         autoescape=select_autoescape(),
     )
-    utils.init()
 
     with open("README.adoc", "w", encoding="utf-8") as f:
         f.write(

@@ -46,11 +46,11 @@ include::all-repos.example.json[]
 (venv) ~/dev/ansible-roles$ *all-repos-clone*
 ----
 
-.example maintenance: cruft update all
+.example maintenance: cruft update / pre-commit run all
 ====
 [subs="quotes"]
 ----
-(venv) ~/dev/ansible-roles$ *bash all-repos-scripts/cruft*
+(venv) ~/dev/ansible-roles$ *ansible-roles-cruft*
 ----
 ====
 

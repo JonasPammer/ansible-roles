@@ -1,19 +1,26 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 from typing import Any
+from typing import Callable
 
 import attrs
+import click
 import diskcache
+import verboselogs
 import yaml
 from github import BadCredentialsException
 from github import Github
 from github import GithubException
 from rich.console import Console
+from rich.logging import RichHandler
+from rich.traceback import install as install_rich_traceback
 
 
 console = Console(width=240)
+logger = verboselogs.VerboseLogger("ansible-roles")
 github_api = Github()
 """See :func:`utils.init_github_api`"""
 
@@ -71,6 +78,94 @@ class AnsibleRole:
             5: "blue",
         }
         return layer_colors[len(self.computed_dependencies)]
+
+
+def get_click_silent_option() -> Callable[[click.FC], click.FC]:
+    return click.option(
+        "-s",
+        "--silent",
+        "-q",
+        "--quiet",
+        "silent",
+        default=False,
+        is_flag=True,
+        help="Disable LOGGING to console (print's will still be made).",
+    )
+
+
+def get_click_verbosity_option() -> Callable[[click.FC], click.FC]:
+    return click.option(
+        "-v",
+        "--verbose",
+        "verbosity",
+        count=True,
+        help="""
+        Can be used up to 3 times (i.e., '-vvv') to
+        incrementally increase verbosity of log output (VERBOSE -> DEBUG -> SPAM).
+        File Log Output (if existant) is always DEBUG except when verbosity is over 3,
+        in which scenario it also shows SPAM logs.
+        """,
+    )
+
+
+def get_log_levels_from_verbosity_or_silent_cli_argument(
+    verbosity: int = 0, silent: bool = False
+) -> tuple[int, int]:
+    """
+    :param verbosity:
+      0:
+        INFO    | VERBOSE
+      1:
+        VERBOSE | DEBUG
+      2:
+        DEBUG   | DEBUG
+      3 and above:
+        SPAM    | SPAM
+    :param silent:
+        Sets the returned console_log_level to be NOTSET
+        (no-matter what `verbosity` level was given).
+    :return:
+        A tuple containing
+        1) the determined console log level and
+        2) the determined rotating log level.
+    """
+
+    console_log_level = logging.INFO
+    rotate_log_level = verboselogs.VERBOSE
+    if verbosity == 1:
+        # Detailed information that should be understandable to experienced users
+        # to provide insight in the software’s behavior;
+        # a sort of high level debugging information.
+        console_log_level = verboselogs.VERBOSE
+        rotate_log_level = logging.DEBUG
+    elif verbosity == 2:
+        # Detailed information, typically of interest only when diagnosing problems.
+        console_log_level = logging.DEBUG
+        console_log_level = logging.DEBUG
+    elif verbosity >= 3:
+        # Way too verbose for regular debugging,
+        # but nice to have when someone is getting desperate
+        # in a late night debugging session and decides
+        # that they want as much instrumentation as possible! :-)
+        console_log_level = verboselogs.SPAM
+        rotate_log_level = verboselogs.SPAM
+
+    if silent:
+        console_log_level = logging.NOTSET
+
+    return console_log_level, rotate_log_level
+
+
+def init_logger(verbosity: int = 0, silent: bool = False) -> None:
+    (
+        console_log_level,
+        rotate_log_level,
+    ) = get_log_levels_from_verbosity_or_silent_cli_argument(verbosity, silent)
+    logger.addHandler(
+        RichHandler(level=logging.getLevelName(console_log_level), markup=True)
+    )
+    logger.setLevel(console_log_level)
+    install_rich_traceback(show_locals=True)
 
 
 def init_github_api() -> None:
@@ -174,8 +269,9 @@ def init_all_roles() -> None:
             # role.dependencies_not_mandatory_to_role_itself.append(role_req["name"])
 
 
-def init() -> None:
+def init(verbosity: int = 0, silent: bool = False) -> None:
     """Initialize all Variables global to this module."""
+    init_logger(verbosity, silent)
     init_github_api()
     init_all_roles()
 
