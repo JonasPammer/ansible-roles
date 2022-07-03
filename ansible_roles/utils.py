@@ -24,8 +24,6 @@ in which the key is the `galaxy_role_name`.
 
 See :func:`utils.init_all_roles`
 """
-# TODO make the github action cache the cache this directory for its future runs
-# note: cache is used solely to avoid github api rate limits
 __all_roles_cache = diskcache.Cache(".ansible_roles_diskcache")
 
 
@@ -76,9 +74,24 @@ class AnsibleRole:
 
 
 def init_github_api() -> None:
-    """Tries to search for a `all-repos.json` locally and implant its token in
-    the global module variable `github_api`"""
+    """
+    Tries to search for either the GITHUB_TOKEN environment variable or an `all-repos.json` file and 
+    implant the found token in the global module variable `github_api`.
+    """
     global github_api
+    
+    if os.environ['GITHUB_TOKEN'] is not None:
+        console.log("Using API key found `GITHUB_TOKEN` environment variable!")
+        github_api = Github(all_repos["push_settings"]["api_key"])
+        try:
+            github_api.get_user().name
+        except BadCredentialsException:
+            console.log(
+                "API key found in `GITHUB_TOKEN` environment variable is invalid. "
+                "Reverting to use Github API without token or login!"
+            )
+            github_api = Github()
+        return
 
     if not os.path.exists("all-repos.json"):
         console.log(
