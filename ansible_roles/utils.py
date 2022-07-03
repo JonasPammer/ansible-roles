@@ -74,15 +74,14 @@ class AnsibleRole:
 
 
 def init_github_api() -> None:
-    """
-    Tries to search for either the GITHUB_TOKEN environment variable or an `all-repos.json` file and 
-    implant the found token in the global module variable `github_api`.
-    """
+    """Tries to search for either the GITHUB_TOKEN environment variable or an
+    `all-repos.json` file and implant the found token in the global module
+    variable `github_api`."""
     global github_api
-    
+
     if "GITHUB_TOKEN" in os.environ:
         console.log("Using API key found `GITHUB_TOKEN` environment variable!")
-        github_api = Github(all_repos["push_settings"]["api_key"])
+        github_api = Github(os.environ["GITHUB_TOKEN"])
         try:
             github_api.get_user().name
         except BadCredentialsException:
