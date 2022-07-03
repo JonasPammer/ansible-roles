@@ -80,7 +80,7 @@ def init_github_api() -> None:
     """
     global github_api
     
-    if os.environ['GITHUB_TOKEN'] is not None:
+    if "GITHUB_TOKEN" in os.environ:
         console.log("Using API key found `GITHUB_TOKEN` environment variable!")
         github_api = Github(all_repos["push_settings"]["api_key"])
         try:
