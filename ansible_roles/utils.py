@@ -91,6 +91,11 @@ def init_github_api() -> None:
             )
             github_api = Github()
         return
+    
+    console.log(
+        "No `GITHUB_TOKEN` environemnt variable found."
+        "Trying to look for `all-repos.json`..."
+    )
 
     if not os.path.exists("all-repos.json"):
         console.log(
