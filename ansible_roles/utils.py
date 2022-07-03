@@ -29,9 +29,6 @@ See :func:`utils.init_all_roles`
 __all_roles_cache = diskcache.Cache(".ansible_roles_diskcache")
 
 
-# TODO seperate the fetched variables into an own object (without any logic)
-#      and cache that one
-#      caching entire class is no good
 @attrs.define
 class AnsibleRole:
     repo_name: str
@@ -147,7 +144,7 @@ def init_all_roles() -> None:
             if "empty" not in str(ex):
                 raise ex
 
-        __all_roles_cache.set(key=role.galaxy_role_name, value=role, expire=60 * 60)
+        __all_roles_cache.set(key=role.galaxy_role_name, value=role, expire=60 * 30)
         all_roles[role.galaxy_role_name] = role
 
     # compute values
