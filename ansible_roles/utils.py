@@ -175,25 +175,25 @@ def init_github_api() -> None:
     global github_api
 
     if "GITHUB_TOKEN" in os.environ:
-        console.log("Using API key found `GITHUB_TOKEN` environment variable!")
+        logger.info("Using API key found `GITHUB_TOKEN` environment variable!")
         github_api = Github(os.environ["GITHUB_TOKEN"])
         try:
             github_api.get_user().name
         except BadCredentialsException:
-            console.log(
+            logger.warning(
                 "API key found in `GITHUB_TOKEN` environment variable is invalid. "
                 "Reverting to use Github API without token or login!"
             )
             github_api = Github()
         return
 
-    console.log(
-        "No `GITHUB_TOKEN` environemnt variable found."
+    logger.notice(
+        "No `GITHUB_TOKEN` environemnt variable found. "
         "Trying to look for `all-repos.json`..."
     )
 
     if not os.path.exists("all-repos.json"):
-        console.log(
+        logger.notice(
             "No `all-repos.json` file found. Using Github API without token or login!"
         )
         return
@@ -202,9 +202,9 @@ def init_github_api() -> None:
         all_repos = json.load(f)
     try:
         github_api = Github(all_repos["push_settings"]["api_key"])
-        console.log("Using API key found in `all-repos.json`!")
+        logger.info("Using API key found in `all-repos.json`!")
     except (FileNotFoundError, KeyError):
-        console.log(
+        logger.notice(
             "No API key found in `all-repos.json`."
             "Using Github API without token or login!"
         )
@@ -213,7 +213,7 @@ def init_github_api() -> None:
     try:
         github_api.get_user().name
     except BadCredentialsException:
-        console.log(
+        logger.warning(
             "API key found in `all-repos.json` is invalid. "
             "Reverting to use Github API without token or login!"
         )
@@ -229,16 +229,16 @@ def init_all_roles() -> None:
     for key in all_repos_in:
         role = AnsibleRole(repo_name=key, repo_pull_url=all_repos_in[key])
         if not role.repo_name.startswith("ansible-role"):
-            console.log(f"{role.repo_name} is not an ansible role, skipping...")
+            logger.debug(f"{role.repo_name} is not an ansible role, skipping...")
             continue
         if __all_roles_cache.get(role.galaxy_role_name) is not None:
-            console.log(f"{role.galaxy_role_name} exists in cache, skipping...")
+            logger.verbose(f"{role.galaxy_role_name} exists in cache, skipping...")
             all_roles[role.galaxy_role_name] = __all_roles_cache.get(
                 role.galaxy_role_name
             )
             continue
 
-        console.log(
+        logger.verbose(
             f"querying additional information of {role.galaxy_role_name} "
             f"using github api..."
         )
@@ -258,8 +258,9 @@ def init_all_roles() -> None:
 
         __all_roles_cache.set(key=role.galaxy_role_name, value=role, expire=60 * 30)
         all_roles[role.galaxy_role_name] = role
+        logger.success(f"Sucessfully fetched {role.galaxy_role_name}!")
 
-    # compute values
+    # compute relationship-dependant values
     for galaxy_role_name, role in all_roles.items():
         if "roles" not in role.requirements_yml:
             continue  # no dependencies
@@ -267,6 +268,10 @@ def init_all_roles() -> None:
             if "__not_mandatory_to_role_itself" not in role_req:
                 role.computed_dependencies.append(role_req["name"])
             # role.dependencies_not_mandatory_to_role_itself.append(role_req["name"])
+
+    logger.success(
+        f"Successfully fetched {len(all_roles)} roles from 'all-repos-in.json'!"
+    )
 
 
 def init(verbosity: int = 0, silent: bool = False) -> None:
