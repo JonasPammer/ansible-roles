@@ -30,6 +30,8 @@ include::all-repos.example.json[]
 
 ~/dev/ansible-roles$ *_source venv/bin/activate_*
 
+#(venv)# ~/dev/ansible-roles$ *pip3 install -e .*
+
 #(venv)# ~/dev/ansible-roles$ *pip3 install -r requirements-dev.txt*
 
 (venv) ~/dev/ansible-roles$ *cp all-repos.example.json all-repos.json*
