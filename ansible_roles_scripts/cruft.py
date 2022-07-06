@@ -31,7 +31,7 @@ def check_rejected_files(path: Path) -> bool:
     return False
 
 
-def cruft_update(path: Path) -> bool:
+def cruft_update(path: Path, push: bool) -> bool:
     def _is_real_commit_error(ex: subprocess.CalledProcessError) -> bool:
         return not any(
             match in ex.stdout.decode() for match in ["nichts zu", "nothing to"]
@@ -70,7 +70,19 @@ def cruft_update(path: Path) -> bool:
         is_real_error=_is_real_commit_error,
     )
 
-    # execute(["git", "push"], path)
+    stdout = execute(["git", "status"], path)
+    # """
+    # Ihr Branch ist 1 Commit vor 'origin/master'.
+    # (benutzen Sie "git push", um lokale Commits zu publizieren)
+    # """
+    if "git push" not in stdout:
+        if push:
+            execute(["git", "push"], path)
+            logger.success("Successfully pushed the results.")
+        else:
+            logger.notice("Not pushing the results.")
+    else:
+        logger.info("Nothing to push.")
 
     logger.info(f"Successfully ended procedure for '{path}'")
     return True
@@ -81,9 +93,10 @@ def cruft_update(path: Path) -> bool:
         max_content_width=120, help_option_names=["--help", "--usage"]
     )
 )
+@click.option("-P", "--push/--no-push", "push", default=False, help="Default: False")
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()
-def main(silent: bool, verbosity: int) -> int:
+def main(push: bool, silent: bool, verbosity: int) -> int:
     utils.init(verbosity=verbosity, silent=silent)
     retv = 1
 
@@ -91,22 +104,25 @@ def main(silent: bool, verbosity: int) -> int:
         return 127
 
     all_repos: list[Path] = script_utils.get_all_cloned_ansible_repositories()
-    all_ok = True
+    not_ok = set()
     for repo in all_repos:
         try:
-            ok = cruft_update(repo)
+            ok = cruft_update(repo, push)
             if not ok:
-                all_ok = False
+                not_ok.add(repo)
         except subprocess.CalledProcessError:
             # initially catched by function,
             # thrown again to abort that function
-            all_ok = False
+            not_ok.add(repo)
             retv = 1
             pass
-    if all_ok:
+    if len(not_ok) == 0:
         logger.success("Sucessfully run procedure on all repositories!")
     else:
-        logger.error("Some Repositories error'd. Please see above!")
+        logger.error(
+            f"The following repos did not succeed: "
+            f"{', '.join([repo.name for repo in not_ok])}"
+        )
 
     return retv
 
