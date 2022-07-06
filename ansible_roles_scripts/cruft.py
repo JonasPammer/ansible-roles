@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import subprocess
 from pathlib import Path
+from subprocess import CalledProcessError
 
 import attrs
 import click
@@ -42,7 +42,7 @@ def check_rejected_files(path: Path) -> bool:
 def cruft_update(path: Path, push: bool) -> CruftUpdateResult:
     retv: CruftUpdateResult = CruftUpdateResult(path=path)
 
-    def _is_real_commit_error(ex: subprocess.CalledProcessError) -> bool:
+    def _is_real_commit_error(ex: CalledProcessError) -> bool:
         return not any(
             match in ex.stdout.decode() for match in ["nichts zu", "nothing to"]
         )
@@ -122,7 +122,7 @@ def main(push: bool, silent: bool, verbosity: int) -> int:
     for repo_path in all_repos:
         try:
             results[repo_path.name] = cruft_update(repo_path, push)
-        except subprocess.CalledProcessError:
+        except CalledProcessError:
             # initially catched by function,
             # thrown again to abort that function
             retv = 1
