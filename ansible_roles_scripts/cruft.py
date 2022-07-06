@@ -85,7 +85,7 @@ def cruft_update(path: Path, push: bool) -> CruftUpdateResult:
     # Ihr Branch ist 1 Commit vor 'origin/master'.
     # (benutzen Sie "git push", um lokale Commits zu publizieren)
     # """
-    if "git push" not in stdout:
+    if "git push" in stdout:
         if push:
             execute(["git", "push"], path)
             logger.success("Successfully pushed the results.")
