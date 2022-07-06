@@ -1,52 +1,20 @@
 from __future__ import annotations
 
-import os
-import pathlib
-import platform
-import shutil
 import subprocess
-from typing import Any
-from typing import Callable
-from typing import Sequence
+from pathlib import Path
 
 import click
 
 from ansible_roles import utils
 from ansible_roles.utils import console
 from ansible_roles.utils import logger
+from ansible_roles_scripts import script_utils
+from ansible_roles_scripts.script_utils import check_conflict_files
+from ansible_roles_scripts.script_utils import COMMIT_MSG
+from ansible_roles_scripts.script_utils import execute
 
 
-COMMIT_MSG = f"""
-Commit Authored by https://github.com/JonasPammer/ansible-roles python script
-on {platform.node()} by {os.getlogin()}
-"""
-
-
-def execute(
-    args: Sequence[str | os.PathLike[Any]],
-    path: pathlib.Path,
-    is_real_error: Callable[[subprocess.CalledProcessError], bool] | None = None,
-) -> str:
-    cmd_str = " ".join([str(_) for _ in args])
-    logger.verbose(f"Executing '{cmd_str}'...")
-    result = None
-    try:
-        result = subprocess.check_output(args, cwd=path.absolute())
-        logger.verbose(result.decode())
-        return result.decode()
-    except subprocess.CalledProcessError as ex:
-        if is_real_error is not None and not is_real_error(ex):
-            logger.verbose(ex.stdout.decode())
-            return ex.stdout.decode()
-        logger.error(f"stdout: \n {ex.stdout.decode()}")
-        logger.error(
-            f"'{cmd_str}' for '{path}' returned non-zero exit status {ex.returncode}! "
-            f"See above for more information."
-        )
-        raise ex
-
-
-def check_rejected_files(path: pathlib.Path) -> bool:
+def check_rejected_files(path: Path) -> bool:
     cruft_rejected_files = [f for f in path.glob("**/*") if ".rej" in f.name]
     if len(cruft_rejected_files) > 0:
         logger.error(
@@ -63,19 +31,11 @@ def check_rejected_files(path: pathlib.Path) -> bool:
     return False
 
 
-def check_conflict_files(path: pathlib.Path) -> bool:
-    result = execute(["git", "ls-files", "-u"], path)
-    if len(result) > 0:
-        logger.error(
-            f"'{path}' contains git merge conflicts." f"Please resolve by hand."
-        )
-        return True
-    return False
-
-
-def cruft_update(path: pathlib.Path) -> bool:
+def cruft_update(path: Path) -> bool:
     def _is_real_commit_error(ex: subprocess.CalledProcessError) -> bool:
-        return "nothing to commit" not in ex.stdout.decode()
+        return not any(
+            match in ex.stdout.decode() for match in ["nichts zu", "nothing to"]
+        )
 
     console.rule(f"{path}")
     logger.info(f"Start procedure for '{path}'")
@@ -110,7 +70,7 @@ def cruft_update(path: pathlib.Path) -> bool:
         is_real_error=_is_real_commit_error,
     )
 
-    execute(["git", "push"], path)
+    # execute(["git", "push"], path)
 
     logger.info(f"Successfully ended procedure for '{path}'")
     return True
@@ -123,40 +83,15 @@ def cruft_update(path: pathlib.Path) -> bool:
 )
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()
-def main(
-    silent: bool,
-    verbosity: int,
-) -> int:
+def main(silent: bool, verbosity: int) -> int:
     utils.init(verbosity=verbosity, silent=silent)
-    retv = 0
+    retv = 1
 
-    tools_ok = True
-
-    def _check_tool_exists(name: str) -> bool:
-        if shutil.which(name) is None:
-            logger.critical(f"Could not find program '{name}'.")
-            return False
-        return True
-
-    for tool in ["git", "pre-commit", "cruft"]:
-        ret = _check_tool_exists(tool)
-        if not ret:
-            tools_ok = False
-    if not tools_ok:
-        logger.critical("Not all environment requirements are met! See above.")
+    if not script_utils.check_tools_ok(["git", "cruft", "pre-commit"]):
         return 127
 
+    all_repos: list[Path] = script_utils.get_all_cloned_ansible_repositories()
     all_ok = True
-
-    def _is_ansible_role(path: pathlib.Path) -> bool:
-        if not path.is_dir():
-            return False
-        cruft = path.joinpath(".cruft.json")
-        return cruft.exists() and "cookiecutter-ansible-role.git" in cruft.read_text()
-
-    all_repos = [
-        repo for repo in pathlib.Path("all-repos").iterdir() if _is_ansible_role(repo)
-    ]
     for repo in all_repos:
         try:
             ok = cruft_update(repo)
