@@ -82,6 +82,34 @@ def check_tools_ok(tools_in: list[str]) -> bool:
     return True
 
 
+def get_all_cloned_github_repositories() -> list[Path]:
+    """Recurse the 'all-repos' directory and return each directory that has
+    github info.
+
+    :return: A list of directories of which origin/master points to github
+    """
+
+    def __is_upstream_github(path: pathlib.Path) -> bool:
+        if not path.is_dir():
+            return False
+
+        # without this, the following git commands
+        # will use any parent git fount (i.e., "ansible-roles")
+        dotgit = path.joinpath(".git")
+        if not dotgit.exists():
+            return False
+
+        result = execute(["git", "remote", "--verbose"], path)
+        return "github.com" in result and "/ansible-roles" not in result
+
+    all_repos = [
+        repo
+        for repo in pathlib.Path("all-repos").iterdir()
+        if __is_upstream_github(repo)
+    ]
+    return all_repos
+
+
 def get_all_cloned_ansible_repositories() -> list[Path]:
     """Recurse the 'all-repos' directory and return each directory that has
     cookiecutter info.
