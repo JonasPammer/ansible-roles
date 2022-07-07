@@ -47,7 +47,9 @@ def is_user_dependabot_bot(user: NamedUser) -> bool:
     )
 
 
-def close_fake_precommit_ci_request(pr: PullRequest) -> None:
+def close_fake_precommit_ci_request(repo: Repository, pr: PullRequest) -> None:
+    # never happened but you never know how sleepy or "ok next" you may one time be
+    logger.warn(f"Closing fake pre-commit.ci pull request {pr} found in {repo} LOL.")
     pr.create_comment(
         f"""
         Closing this 'pre-commit.ci' pull request as it was deemed fake!
@@ -122,10 +124,7 @@ def run_procedure_for(path: Path) -> MergeProcedureResult:
         logger.verbose(f"Checking pull request {pr} of {repo}...")
         if "<!--pre-commit.ci start-->" in pr.body and pr.changed_files == 1:
             if not is_user_precommit_bot(pr.user):
-                logger.warning(
-                    "Recognized {pr} as an fake pre-commit.ci request. Closing it!"
-                )
-                close_fake_precommit_ci_request(pr)
+                close_fake_precommit_ci_request(repo, pr)
                 continue
             logger.verbose(
                 f"Recognized {pr} of {repo} as an authentic pre-commit.ci request!"
