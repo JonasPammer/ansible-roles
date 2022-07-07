@@ -37,16 +37,44 @@ def is_user_precommit_bot(user: NamedUser) -> bool:
     )
 
 
+def is_user_dependabot_bot(user: NamedUser) -> bool:
+    return (
+        user.type == "Bot"
+        and user.id == 49699333
+        and user.suspended_at is None
+        and user.login == "dependabot[bot]"
+        and user.subscriptions_url is not None
+    )
+
+
 def close_fake_precommit_ci_request(pr: PullRequest) -> None:
     pr.create_comment(
         f"""
-                      Closing this 'pre-commit.ci' pull request as it was deemed fake!
-                      Nice try.
+        Closing this 'pre-commit.ci' pull request as it was deemed fake!
+        Nice try.
 
-                      {script_utils.COMMIT_MSG}
-                      """
+        {script_utils.COMMIT_MSG}
+        """
     )
     pr.edit(status="closed")
+
+
+def merge_dependabot_request(repo: Repository, pr: PullRequest) -> bool:
+    commit_title = pr.title
+    if not commit_title.startswith("chore(deps)"):
+        commit_title = "chore(deps): " + commit_title
+    commit_title += f" (#{pr.number})"
+    commit_title += f"\n {script_utils.COMMIT_MSG}"
+
+    logger.verbose(f"Attempting to squash-merge {pr} of {repo}...")
+    result: PullRequestMergeStatus = pr.merge(
+        commit_title=commit_title, merge_method="squash"
+    )
+    if not result.merged:
+        logger.error(f"{pr} reported that it did not merge! Message: {result.message}")
+        return False
+    logger.success(f"Successfully merged {pr} for {repo}.")
+    return True
 
 
 def merge_precommit_ci_request(repo: Repository, pr: PullRequest) -> bool:
@@ -87,24 +115,35 @@ def run_procedure_for(path: Path) -> MergeProcedureResult:
         logger.info(f"{repo} has no pull requests.")
         return retv
 
-    for pr in pull_requests:
-        logger.verbose(f"Checking pull request {pr}...")
-        if not ("<!--pre-commit.ci start-->" in pr.body and pr.changed_files == 1):
-            continue
-        if not is_user_precommit_bot(pr.user):
-            logger.warning(
-                "Recognized {pr} as an fake pre-commit.ci request. Closing it!"
-            )
-            close_fake_precommit_ci_request(pr)
-            continue
-        logger.verbose(f"Recognized {pr} as an authentic pre-commit.ci request!")
-        retv.all_ok = merge_precommit_ci_request(repo, pr)
-        retv.changed = True
-        # return as I and this procedure assume that
-        # only one PR from pre-commit.ci may exist
-        return retv
+    # TODO add check to only merge if all CI checks are ok
+    # PullRequest has no adhoc thing to check for this the way githubs UI warns/does
 
-    logger.info(f"Could not find a pre-commit.ci Pull Request in {repo}.")
+    for pr in pull_requests:
+        logger.verbose(f"Checking pull request {pr} of {repo}...")
+        if "<!--pre-commit.ci start-->" in pr.body and pr.changed_files == 1:
+            if not is_user_precommit_bot(pr.user):
+                logger.warning(
+                    "Recognized {pr} as an fake pre-commit.ci request. Closing it!"
+                )
+                close_fake_precommit_ci_request(pr)
+                continue
+            logger.verbose(
+                f"Recognized {pr} of {repo} as an authentic pre-commit.ci request!"
+            )
+            retv.all_ok = merge_precommit_ci_request(repo, pr)
+            if retv.all_ok:
+                retv.changed = retv.all_ok
+            continue
+        if is_user_dependabot_bot(pr.user):
+            logger.verbose(
+                f"Recognized {pr} of {repo} as an authentic dependabot request!"
+            )
+            retv.all_ok = merge_dependabot_request(repo, pr)
+            if retv.all_ok:
+                retv.changed = retv.all_ok
+            continue
+
+    logger.info(f"Could not find a matching Bot Pull Request in {repo}.")
     retv.all_ok = True
     return retv
 
