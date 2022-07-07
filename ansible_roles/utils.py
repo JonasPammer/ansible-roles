@@ -5,6 +5,7 @@ import logging
 import os
 from typing import Any
 from typing import Callable
+from typing import Literal
 
 import attrs
 import click
@@ -18,10 +19,10 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.traceback import install as install_rich_traceback
 
-
 console = Console(width=240)
 logger = verboselogs.VerboseLogger("ansible-roles")
-github_api = Github()
+github_api: Github = None
+github_api_used_token: Literal["all-repos", "env", "None"] = "None"
 """See :func:`utils.init_github_api`"""
 
 all_roles: dict[str, AnsibleRole] = {}
@@ -173,12 +174,14 @@ def init_github_api() -> None:
     `all-repos.json` file and implant the found token in the global module
     variable `github_api`."""
     global github_api
+    global github_api_used_token
 
     if "GITHUB_TOKEN" in os.environ:
-        logger.info("Using API key found `GITHUB_TOKEN` environment variable!")
         github_api = Github(os.environ["GITHUB_TOKEN"])
         try:
             github_api.get_user().name
+            logger.success("Using API key found `GITHUB_TOKEN` environment variable!")
+            github_api_used_token = "env"
         except BadCredentialsException:
             logger.warning(
                 "API key found in `GITHUB_TOKEN` environment variable is invalid. "
@@ -196,28 +199,33 @@ def init_github_api() -> None:
         logger.notice(
             "No `all-repos.json` file found. Using Github API without token or login!"
         )
+        github_api = Github()
         return
 
     with open("all-repos.json") as f:
         all_repos = json.load(f)
     try:
         github_api = Github(all_repos["push_settings"]["api_key"])
-        logger.info("Using API key found in `all-repos.json`!")
     except (FileNotFoundError, KeyError):
         logger.notice(
             "No API key found in `all-repos.json`."
             "Using Github API without token or login!"
         )
+        github_api = Github()
         return
 
     try:
         github_api.get_user().name
+        logger.success("Using API key found in `all-repos.json`!")
+        github_api_used_token = "all-repos"
+        return
     except BadCredentialsException:
         logger.warning(
             "API key found in `all-repos.json` is invalid. "
             "Reverting to use Github API without token or login!"
         )
         github_api = Github()
+        return
 
 
 def init_all_roles() -> None:
