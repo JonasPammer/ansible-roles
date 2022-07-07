@@ -14,7 +14,7 @@ from typing import Sequence
 from ansible_roles.utils import logger
 
 COMMIT_MSG = f"""
-Commit Authored by https://github.com/JonasPammer/ansible-roles python script
+Co-Authored-by: https://github.com/JonasPammer/ansible-roles python script
 on {platform.node()} by {getpass.getuser()}
 """
 
