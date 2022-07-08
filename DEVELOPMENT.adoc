@@ -56,21 +56,23 @@ include::all-repos.example.json[]
 ----
 ====
 
-.example maintenance: update GitHub Secret `GALAXY_API_KEY`
+.example maintenance: merge all pre-commit.ci / dependabot pull requests
 ====
-Requires
-https://github.com/cli/cli#installation[GitHub CLI]
-
 [subs="quotes"]
 ----
-(venv) ~/dev/ansible-roles$ *bash all-repos-scripts/secrets*
+(venv) ~/dev/ansible-roles$ *ansible-roles-merge_bot_pull_requests*
 ----
 ====
 
 .example maintenance: alter text manually using sed
 ====
+// TODO add all-repos-sed examples here
+====
+
+.example maintenance: update GitHub Secret `GALAXY_API_KEY`
+====
 [subs="quotes"]
 ----
-(venv) ~/dev/ansible-roles$ // TODO add all-repos-sed examples here
+(venv) ~/dev/ansible-roles$ *ansible-roles-sync_meta --galaxy*
 ----
 ====
