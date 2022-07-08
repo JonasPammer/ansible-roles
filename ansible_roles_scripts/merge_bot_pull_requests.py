@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from pathlib import Path
 from subprocess import CalledProcessError
 
 import attrs
 import click
-import github
 import yaml
 from github import GithubException
 from github.NamedUser import NamedUser
@@ -16,15 +14,14 @@ from github.Repository import Repository
 from ansible_roles import utils
 from ansible_roles.utils import console
 from ansible_roles.utils import logger
-from ansible_roles_scripts import script_utils
+from ansible_roles_scripts.script_utils import get_all_cloned_github_repositories
+from ansible_roles_scripts.script_utils import ProcedureResultGenericRepo
+from ansible_roles_scripts.script_utils import SCRIPT_CO_AUTHOR_COMMIT_MSG
 
 
 @attrs.define
-class MergeProcedureResult:
-    path: Path
-    repo: github.Repository | None = None
-    all_ok: bool = False
-    changed: bool = False
+class MergeProcedureResult(ProcedureResultGenericRepo):
+    pass
 
 
 def is_user_precommit_bot(user: NamedUser) -> bool:
@@ -55,7 +52,7 @@ def close_fake_precommit_ci_request(repo: Repository, pr: PullRequest) -> None:
         Closing this 'pre-commit.ci' pull request as it was deemed fake!
         Nice try.
 
-        {script_utils.COMMIT_MSG}
+        {SCRIPT_CO_AUTHOR_COMMIT_MSG}
         """
     )
     pr.edit(status="closed")
@@ -66,7 +63,7 @@ def merge_dependabot_request(repo: Repository, pr: PullRequest) -> bool:
     if not commit_title.startswith("chore(deps)"):
         commit_title = "chore(deps): " + commit_title
     commit_title += f" (#{pr.number})"
-    commit_title += f"\n {script_utils.COMMIT_MSG}"
+    commit_title += f"\n {SCRIPT_CO_AUTHOR_COMMIT_MSG}"
 
     logger.verbose(f"Attempting to squash-merge {pr} of {repo}...")
     result: PullRequestMergeStatus = pr.merge(
@@ -92,7 +89,7 @@ def merge_precommit_ci_request(repo: Repository, pr: PullRequest) -> bool:
             "\n"
         )[0]
     autoupdate_commit_msg += f" (#{pr.number})"
-    autoupdate_commit_msg += f"\n {script_utils.COMMIT_MSG}"
+    autoupdate_commit_msg += f"\n {SCRIPT_CO_AUTHOR_COMMIT_MSG}"
 
     logger.verbose(f"Attempting to squash-merge {pr} of {repo}...")
     result: PullRequestMergeStatus = pr.merge(
@@ -105,15 +102,14 @@ def merge_precommit_ci_request(repo: Repository, pr: PullRequest) -> bool:
     return True
 
 
-def run_procedure_for(path: Path) -> MergeProcedureResult:
-    console.rule(f"{path}")
-    logger.verbose(f"Start procedure for '{path}'")
-    retv = MergeProcedureResult(path=path)
-    repo = retv.repo = utils.github_api.get_repo(f"JonasPammer/{ path.name }")
+def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
+    console.rule(f"{retv}")
+    logger.verbose(f"Start procedure for '{retv}'")
+    repo = retv.repo
 
     pull_requests = repo.get_pulls()
     if pull_requests.totalCount == 0:
-        retv.all_ok = True
+        retv.set_ok_if_none()
         logger.info(f"{repo} has no pull requests.")
         return retv
 
@@ -129,21 +125,22 @@ def run_procedure_for(path: Path) -> MergeProcedureResult:
             logger.verbose(
                 f"Recognized {pr} of {repo} as an authentic pre-commit.ci request!"
             )
-            retv.all_ok = merge_precommit_ci_request(repo, pr)
-            if retv.all_ok:
-                retv.changed = retv.all_ok
+            merge_result = merge_precommit_ci_request(repo, pr)
+            if merge_result:
+                retv.set_ok_if_none
+                retv.changed = True
             continue
         if is_user_dependabot_bot(pr.user):
             logger.verbose(
                 f"Recognized {pr} of {repo} as an authentic dependabot request!"
             )
-            retv.all_ok = merge_dependabot_request(repo, pr)
-            if retv.all_ok:
-                retv.changed = retv.all_ok
+            merge_result = merge_dependabot_request(repo, pr)
+            if merge_result:
+                retv.set_ok_if_none
+                retv.changed = True
             continue
 
     logger.info(f"Could not find a matching Bot Pull Request in {repo}.")
-    retv.all_ok = True
     return retv
 
 
@@ -165,24 +162,25 @@ def main(silent: bool, verbosity: int) -> int:
         )
         return retv
 
-    all_repos: list[Path] = script_utils.get_all_cloned_github_repositories()
     results = {
-        repo_path.name: MergeProcedureResult(path=repo_path) for repo_path in all_repos
+        repo_path.name: MergeProcedureResult(repo_name_in=repo_path.name)
+        for repo_path in get_all_cloned_github_repositories()
     }
-    for repo_path in all_repos:
+    for result in results.values():
         try:
-            results[repo_path.name] = run_procedure_for(repo_path)
+            results[result.path.name] = run_procedure_for(result)
         except CalledProcessError:
             retv = 1
-            results[repo_path.name].all_ok = False
+            results[result.path.name].all_ok = False
             # error information logging handled by `script_utils.execute`:
             pass
         except GithubException:
             retv = 1
-            results[repo_path.name].all_ok = False
+            results[result.path.name].all_ok = False
             # exc_info will printStackTrace the current exception
             logger.error(
-                f"GithubException occured for procedure of {repo_path}.", exc_info=True
+                f"GithubException occured for procedure of {result.path.name}.",
+                exc_info=True,
             )
             pass
 

@@ -9,16 +9,16 @@ import click
 from ansible_roles import utils
 from ansible_roles.utils import console
 from ansible_roles.utils import logger
-from ansible_roles_scripts import script_utils
 from ansible_roles_scripts.script_utils import check_conflict_files
-from ansible_roles_scripts.script_utils import COMMIT_MSG
+from ansible_roles_scripts.script_utils import check_tools_ok
 from ansible_roles_scripts.script_utils import execute
+from ansible_roles_scripts.script_utils import get_all_cloned_ansible_repositories
+from ansible_roles_scripts.script_utils import ProcedureResultGenericRepo
+from ansible_roles_scripts.script_utils import SCRIPT_CO_AUTHOR_COMMIT_MSG
 
 
 @attrs.define
-class CruftUpdateResult:
-    path: Path
-    all_ok: bool = False
+class CruftProcedureResult(ProcedureResultGenericRepo):
     is_something_to_push: bool = False
 
 
@@ -39,55 +39,67 @@ def check_rejected_files(path: Path) -> bool:
     return False
 
 
-def cruft_update(path: Path, push: bool) -> CruftUpdateResult:
-    retv: CruftUpdateResult = CruftUpdateResult(path=path)
-
+def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureResult:
     def _is_real_commit_error(ex: CalledProcessError) -> bool:
         return not any(
             match in ex.stdout.decode() for match in ["nichts zu", "nothing to"]
         )
 
-    console.rule(f"{path}")
-    logger.info(f"Start procedure for '{path}'")
+    console.rule(f"{retv.role.repo_name}")
+    logger.info(f"Start procedure for '{retv.role.repo_name}'")
 
-    if check_rejected_files(path) or check_conflict_files(path):
+    if check_rejected_files(retv.path) or check_conflict_files(retv.path):
         return retv
 
-    execute(["git", "add", "."], path)
+    execute(["git", "add", "."], retv.path)
     execute(
-        ["git", "commit", "-m", "chore: cruft update fix", "-m", COMMIT_MSG],
-        path,
+        [
+            "git",
+            "commit",
+            "-m",
+            "chore: cruft update fix",
+            "-m",
+            SCRIPT_CO_AUTHOR_COMMIT_MSG,
+        ],
+        retv.path,
         is_real_error=_is_real_commit_error,
     )
 
-    execute(["git", "pull", "--rebase"], path)
+    execute(["git", "pull", "--rebase"], retv.path)
 
-    execute(["cruft", "update", "-y"], path)
-    if check_rejected_files(path) or check_conflict_files(path):
+    execute(["cruft", "update", "-y"], retv.path)
+    if check_rejected_files(retv.path) or check_conflict_files(retv.path):
         return retv
-    execute(["git", "add", "."], path)
+    execute(["git", "add", "."], retv.path)
     execute(
-        ["git", "commit", "-m", "chore: cruft update", "-m", COMMIT_MSG],
-        path,
+        [
+            "git",
+            "commit",
+            "-m",
+            "chore: cruft update",
+            "-m",
+            SCRIPT_CO_AUTHOR_COMMIT_MSG,
+        ],
+        retv.path,
         is_real_error=_is_real_commit_error,
     )
 
-    execute(["pre-commit", "run", "--all-files"], path)
-    execute(["git", "add", "."], path)
+    execute(["pre-commit", "run", "--all-files"], retv.path)
+    execute(["git", "add", "."], retv.path)
     execute(
-        ["git", "commit", "-m", "chore: pre-commit", "-m", COMMIT_MSG],
-        path,
+        ["git", "commit", "-m", "chore: pre-commit", "-m", SCRIPT_CO_AUTHOR_COMMIT_MSG],
+        retv.path,
         is_real_error=_is_real_commit_error,
     )
 
-    stdout = execute(["git", "status"], path)
+    stdout = execute(["git", "status"], retv.path)
     # """
     # Ihr Branch ist 1 Commit vor 'origin/master'.
     # (benutzen Sie "git push", um lokale Commits zu publizieren)
     # """
     if "git push" in stdout:
         if push:
-            execute(["git", "push"], path)
+            execute(["git", "push"], retv.path)
             logger.success("Successfully pushed the results.")
         else:
             retv.is_something_to_push = True
@@ -96,7 +108,7 @@ def cruft_update(path: Path, push: bool) -> CruftUpdateResult:
         logger.info("Nothing to push.")
 
     retv.all_ok = True
-    logger.info(f"Successfully ended procedure for '{path}'")
+    logger.info(f"Successfully ended procedure for '{retv.path}'")
     return retv
 
 
@@ -112,24 +124,24 @@ def main(push: bool, silent: bool, verbosity: int) -> int:
     utils.init(verbosity=verbosity, silent=silent)
     retv = 1
 
-    if not script_utils.check_tools_ok(["git", "cruft", "pre-commit"]):
+    if not check_tools_ok(["git", "cruft", "pre-commit"]):
         return 127
 
-    all_repos: list[Path] = script_utils.get_all_cloned_ansible_repositories()
     results = {
-        repo_path.name: CruftUpdateResult(path=repo_path) for repo_path in all_repos
+        repo_path.name: CruftProcedureResult(repo_name_in=repo_path.name)
+        for repo_path in get_all_cloned_ansible_repositories()
     }
-    for repo_path in all_repos:
+    for result in results.values():
         try:
-            results[repo_path.name] = cruft_update(repo_path, push)
+            results[result.path.name] = run_procedure_for(result, push)
         except CalledProcessError:
             # initially catched by function,
             # thrown again to abort that function
             retv = 1
             pass
 
-    not_ok_results: list[CruftUpdateResult] = [
-        result for result in results.values() if not result.all_ok
+    not_ok_results: list[CruftProcedureResult] = [
+        result for result in results.values() if not result.is_all_ok()
     ]
     if len(not_ok_results) == 0:
         logger.success("Sucessfully run procedure on all repositories!")
@@ -142,7 +154,7 @@ def main(push: bool, silent: bool, verbosity: int) -> int:
             + "Please see the respective sections and their logs for more information."
         )
 
-    pushable_results: list[CruftUpdateResult] = [
+    pushable_results: list[CruftProcedureResult] = [
         result for result in results.values() if result.is_something_to_push
     ]
     if len(pushable_results) != 0:

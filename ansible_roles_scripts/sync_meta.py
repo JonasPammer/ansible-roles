@@ -1,42 +1,25 @@
 from __future__ import annotations
 
-from pathlib import Path
 from subprocess import CalledProcessError
 
 import attrs
 import click
 from github import GithubException
-from github.Repository import Repository
 
 from ansible_roles import utils
-from ansible_roles.utils import AnsibleRole
 from ansible_roles.utils import console
 from ansible_roles.utils import logger
+from ansible_roles_scripts.script_utils import ProcedureResultRole
 
 
 @attrs.define
-class SyncProcedureResult:
-    role: AnsibleRole
-    path: Path | None = None
-    all_ok: bool | None = None
-    changed: bool = False
-
-    @property
-    def repo(self) -> Repository:
-        return utils.github_api.get_repo(f"JonasPammer/{ self.role.repo_name }")
-
-    def set_ok_if_none(self) -> None:
-        if self.all_ok is None:
-            self.all_ok = True
-
-    def is_all_ok(self) -> bool:
-        return self.all_ok is True
+class SyncProcedureResult(ProcedureResultRole):
+    pass
 
 
-def run_procedure_for(role: AnsibleRole) -> SyncProcedureResult:
-    console.rule(f"{role.repo_name}")
-    logger.verbose(f"Start procedure for '{role.repo_name}'")
-    retv = SyncProcedureResult(role)
+def run_procedure_for(retv: SyncProcedureResult) -> SyncProcedureResult:
+    console.rule(f"{retv.role.repo_name}")
+    logger.verbose(f"Start procedure for '{retv.role.repo_name}'")
     repo = retv.repo
 
     if (
@@ -111,23 +94,24 @@ def main(silent: bool, verbosity: int) -> int:
         return retv
 
     results = {
-        role.galaxy_role_name: SyncProcedureResult(role)
+        role.galaxy_role_name: SyncProcedureResult(role_in=role)
         for role in utils.all_roles.values()
     }
-    for role in utils.all_roles.values():
+    for result in results.values():
         try:
-            results[role.galaxy_role_name] = run_procedure_for(role)
+            results[result.role.galaxy_role_name] = run_procedure_for(result)
         except CalledProcessError:
             retv = 1
-            results[role.galaxy_role_name].all_ok = False
+            results[result.role.galaxy_role_name].all_ok = False
             # error information logging handled by `script_utils.execute`:
             pass
         except GithubException:
             retv = 1
-            results[role.galaxy_role_name].all_ok = False
+            results[result.role.galaxy_role_name].all_ok = False
             # exc_info will printStackTrace the current exception
             logger.error(
-                f"GithubException occured for procedure of {role}.", exc_info=True
+                f"GithubException occured for procedure of {result.role}.",
+                exc_info=True,
             )
             pass
 

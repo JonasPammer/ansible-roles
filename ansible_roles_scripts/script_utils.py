@@ -11,12 +11,83 @@ from typing import Any
 from typing import Callable
 from typing import Sequence
 
+import attrs
+from github.Repository import Repository
+
+from ansible_roles import utils
+from ansible_roles.utils import AnsibleRole
 from ansible_roles.utils import logger
 
-COMMIT_MSG = f"""
+SCRIPT_CO_AUTHOR_COMMIT_MSG = f"""
 Co-Authored-by: https://github.com/JonasPammer/ansible-roles python script
 on {platform.node()} by {getpass.getuser()}
 """
+
+
+class ProcedureResultBase:
+    all_ok: bool | None = None
+    changed: bool = False
+
+    def set_ok_if_none(self) -> None:
+        if self.all_ok is None:
+            self.all_ok = True
+
+    def is_all_ok(self) -> bool:
+        return self.all_ok is True
+
+
+@attrs.define()
+class ProcedureResultRole(ProcedureResultBase):
+    role_in: AnsibleRole
+
+    @property
+    def role(self) -> AnsibleRole:
+        return self.role_in
+
+    @property
+    def repo(self) -> Repository:
+        return utils.github_api.get_repo(f"JonasPammer/{ self.role_in.repo_name }")
+
+    @property
+    def path(self) -> Path:
+        """May exist (have been cloned), may not."""
+        return Path("all-repos").joinpath(self.repo.name)
+
+    def set_ok_if_none(self) -> None:
+        if self.all_ok is None:
+            self.all_ok = True
+
+    def is_all_ok(self) -> bool:
+        return self.all_ok is True
+
+
+@attrs.define()
+class ProcedureResultGenericRepo(ProcedureResultBase):
+    repo_name_in: str
+
+    @property
+    def repo(self) -> Repository:
+        return utils.github_api.get_repo(f"JonasPammer/{ self.repo_name_in }")
+
+    @property
+    def path(self) -> Path:
+        """May exist (have been cloned), may not."""
+        return Path("all-repos").joinpath(self.repo.name)
+
+    @property
+    def role(self) -> AnsibleRole:
+        return next(
+            filter(
+                lambda role: role.repo_name == self.repo.name, utils.all_roles.values()
+            )
+        )
+
+    def set_ok_if_none(self) -> None:
+        if self.all_ok is None:
+            self.all_ok = True
+
+    def is_all_ok(self) -> bool:
+        return self.all_ok is True
 
 
 def execute(
