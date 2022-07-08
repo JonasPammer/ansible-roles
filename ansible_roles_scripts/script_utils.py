@@ -26,6 +26,10 @@ on {platform.node()} by {getpass.getuser()}
 
 class ProcedureResultBase:
     all_ok: bool | None = None
+    """
+    Only directly modify this to False!
+    Use `set_ok_if_none` for setting it to True.
+    """
     changed: bool = False
 
     def set_ok_if_none(self) -> None:
