@@ -76,6 +76,9 @@ class ProcedureResultGenericRepo(ProcedureResultBase):
 
     @property
     def role(self) -> AnsibleRole:
+        """
+        :raises StopIteration: If this repository does not exist in `utils.all_roles`.
+        """
         return next(
             filter(
                 lambda role: role.repo_name == self.repo.name, utils.all_roles.values()
