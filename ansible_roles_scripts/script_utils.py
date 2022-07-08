@@ -53,13 +53,6 @@ class ProcedureResultRole(ProcedureResultBase):
         """May exist (have been cloned), may not."""
         return Path("all-repos").joinpath(self.repo.name)
 
-    def set_ok_if_none(self) -> None:
-        if self.all_ok is None:
-            self.all_ok = True
-
-    def is_all_ok(self) -> bool:
-        return self.all_ok is True
-
 
 @attrs.define()
 class ProcedureResultGenericRepo(ProcedureResultBase):
@@ -84,13 +77,6 @@ class ProcedureResultGenericRepo(ProcedureResultBase):
                 lambda role: role.repo_name == self.repo.name, utils.all_roles.values()
             )
         )
-
-    def set_ok_if_none(self) -> None:
-        if self.all_ok is None:
-            self.all_ok = True
-
-    def is_all_ok(self) -> bool:
-        return self.all_ok is True
 
 
 def execute(
