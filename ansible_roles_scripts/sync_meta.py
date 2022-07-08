@@ -5,6 +5,7 @@ from subprocess import CalledProcessError
 import attrs
 import click
 from github import GithubException
+from pydantic import SecretStr
 
 from ansible_roles import utils
 from ansible_roles.utils import console
@@ -17,7 +18,14 @@ class SyncProcedureResult(ProcedureResultRole):
     pass
 
 
-def run_procedure_for(retv: SyncProcedureResult) -> SyncProcedureResult:
+def is_galaxy_api_key_valid(galaxy_api_key: SecretStr) -> bool:
+    # TODO figure out real auth test
+    return len(galaxy_api_key.get_secret_value()) == 40
+
+
+def run_procedure_for(
+    retv: SyncProcedureResult, galaxy_api_key: SecretStr
+) -> SyncProcedureResult:
     console.rule(f"{retv.role.repo_name}")
     logger.verbose(f"Start procedure for '{retv.role.repo_name}'")
     repo = retv.repo
@@ -71,6 +79,15 @@ def run_procedure_for(retv: SyncProcedureResult) -> SyncProcedureResult:
             f"{repo}'s meta.yml does not contain required 'meta/main.yml' information."
         )
 
+    if is_galaxy_api_key_valid(galaxy_api_key):
+        # `create_secret` also updates existing
+        repo.create_secret(
+            secret_name="GALAXY_API_KEY",  # pragma: allowlist secret
+            unencrypted_value=galaxy_api_key.get_secret_value(),
+        )
+        logger.success(f"Successfully updated 'GALAXY_API_KEY' of {repo}...")
+        retv.set_ok_if_none()
+        retv.changed = True
     return retv
 
 
@@ -81,6 +98,7 @@ def run_procedure_for(retv: SyncProcedureResult) -> SyncProcedureResult:
 )
 @click.option(
     "--set-galaxy-api-key",
+    "--galaxy",
     "set_galaxy_api_key",
     default=False,
     is_flag=True,
@@ -104,14 +122,13 @@ def main(set_galaxy_api_key: bool, silent: bool, verbosity: int) -> int:
         )
         return retv
 
-    galaxy_api_key = ""
+    galaxy_api_key: SecretStr = SecretStr("")
     if set_galaxy_api_key:
-        galaxy_api_key = click.prompt(
-            "GALAXY_API_KEY", hide_input=True, confirmation_prompt=True
+        galaxy_api_key = SecretStr(
+            click.prompt("GALAXY_API_KEY", hide_input=True, confirmation_prompt=True)
         )
-        if len(galaxy_api_key) != 40:
+        if not is_galaxy_api_key_valid(galaxy_api_key):
             raise click.BadParameter("Given GALAXY_API_KEY is invalid!")
-        # TODO figure out real auth test
 
     results = {
         role.galaxy_role_name: SyncProcedureResult(role_in=role)
@@ -119,7 +136,9 @@ def main(set_galaxy_api_key: bool, silent: bool, verbosity: int) -> int:
     }
     for result in results.values():
         try:
-            results[result.role.galaxy_role_name] = run_procedure_for(result)
+            results[result.role.galaxy_role_name] = run_procedure_for(
+                result, galaxy_api_key
+            )
         except CalledProcessError:
             retv = 1
             results[result.role.galaxy_role_name].all_ok = False
