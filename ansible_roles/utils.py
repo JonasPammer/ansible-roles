@@ -22,6 +22,9 @@ from rich.traceback import install as install_rich_traceback
 console = Console(width=240)
 logger = verboselogs.VerboseLogger("ansible-roles")
 github_api: Github = None
+"""
+Critical Note! Use this variable using `utils.github_api`, not `github_api`.
+"""
 github_api_used_token: Literal["all-repos", "env", "None"] = "None"
 """See :func:`utils.init_github_api`"""
 
