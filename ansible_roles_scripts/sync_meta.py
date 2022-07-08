@@ -79,9 +79,20 @@ def run_procedure_for(retv: SyncProcedureResult) -> SyncProcedureResult:
         max_content_width=120, help_option_names=["--help", "--usage"]
     )
 )
+@click.option(
+    "--set-galaxy-api-key",
+    "set_galaxy_api_key",
+    default=False,
+    is_flag=True,
+    help="""
+    If this option is given this script will prompt the user
+    for an appropiate key and update the Github Action Secret
+    `GALAXY_API_KEY` of every repository to the given value.
+    """,
+)
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()
-def main(silent: bool, verbosity: int) -> int:
+def main(set_galaxy_api_key: bool, silent: bool, verbosity: int) -> int:
     """Edit GitHub Repository Settings of all ansible roles."""
     utils.init(verbosity=verbosity, silent=silent)
     retv = 1
@@ -92,6 +103,15 @@ def main(silent: bool, verbosity: int) -> int:
             "(for merging and doing things to the PRs). Aborting!"
         )
         return retv
+
+    galaxy_api_key = ""
+    if set_galaxy_api_key:
+        galaxy_api_key = click.prompt(
+            "GALAXY_API_KEY", hide_input=True, confirmation_prompt=True
+        )
+        if len(galaxy_api_key) != 40:
+            raise click.BadParameter("Given GALAXY_API_KEY is invalid!")
+        # TODO figure out real auth test
 
     results = {
         role.galaxy_role_name: SyncProcedureResult(role_in=role)
