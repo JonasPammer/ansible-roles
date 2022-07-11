@@ -4,9 +4,6 @@
   "source_settings": {
     "filename": "all-repos-in.json"
   },
-  "push": "all_repos.push.github_pull_request",
-  "push_settings": {
-    "api_key": "EDIT_ME",
-    "username": "EDIT_ME"
-  }
+  "push": "all_repos.push.merge_to_master",
+  "push_settings": {}
 }
