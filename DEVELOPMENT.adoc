@@ -64,9 +64,9 @@ include::all-repos.example.json[]
 ----
 ====
 
-.example maintenance: alter text manually using sed
+.example maintenance: ensure minimum supported ansible version is correct
 ====
-// TODO add all-repos-sed examples here
+$ all-repos-sed 's/min_ansible_version: ".*"/min_ansible_version: "2.11"/g' 'meta/main.yml' --commit-msg "chore: set min_ansible_version to 2.11 as per JonasPammer/cookiecutter-ansible-roles"
 ====
 
 .example maintenance: update GitHub Secret `GALAXY_API_KEY`
