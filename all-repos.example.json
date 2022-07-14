@@ -5,5 +5,7 @@
     "filename": "all-repos-in.json"
   },
   "push": "all_repos.push.merge_to_master",
-  "push_settings": {}
+  "push_settings": {
+    "fast_forward": true
+  }
 }
