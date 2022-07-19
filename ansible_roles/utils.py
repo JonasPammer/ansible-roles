@@ -211,7 +211,7 @@ def init_github_api() -> None:
         github_api = Github(all_repos["push_settings"]["api_key"])
     except (FileNotFoundError, KeyError):
         logger.notice(
-            "No API key found in `all-repos.json`."
+            "No API key found in `all-repos.json`. "
             "Using Github API without token or login!"
         )
         github_api = Github()
