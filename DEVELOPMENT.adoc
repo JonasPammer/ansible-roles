@@ -48,6 +48,25 @@ include::all-repos.example.json[]
 (venv) ~/dev/ansible-roles$ *all-repos-clone*
 ----
 
+.step 3: configure a GITHUB_TOKEN
+====
+Some Scripts require an appropriately permissioned github token,
+sourced it from the environment variable `GITHUB_TOKEN` or
+a local gitignore'd `.env` file.
+
+1. Go to https://github.com/settings/tokens/new
+2. Add your note (e.g. `ansible-roles mylaptop`)
+   and select your preferred expiration date
+3. Select the required (most-often just `public_repo`)
+4. Generate, Copy and paste the token into your local `.env` file
+   (must be located at the root of the projects' directory)
++
+[source,dotenv]
+----
+GITHUB_TOKEN=LoremipsumLoremipsumLoremipsumLoremipsum
+----
+====
+
 .example maintenance: cruft update / pre-commit run all
 ====
 [subs="quotes"]

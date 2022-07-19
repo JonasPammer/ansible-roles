@@ -12,6 +12,7 @@ import click
 import diskcache
 import verboselogs
 import yaml
+from dotenv import load_dotenv
 from github import BadCredentialsException
 from github import Github
 from github import GithubException
@@ -287,6 +288,7 @@ def init_all_roles() -> None:
 
 def init(verbosity: int = 0, silent: bool = False) -> None:
     """Initialize all Variables global to this module."""
+    load_dotenv()
     init_logger(verbosity, silent)
     init_github_api()
     init_all_roles()
