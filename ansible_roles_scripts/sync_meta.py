@@ -58,8 +58,9 @@ def edit_protection(
            is resolved / i.e. if `Branch.edit_protection`
            has this functionality built-in
 
-    :calls: `PUT /repos/{owner}/{repo}/branches/{branch}/protection
-             <https://docs.github.com/en/rest/reference/repos#branches>`
+    :calls:
+        `PUT /repos/{owner}/{repo}/branches/{branch}/protection`
+        https://docs.github.com/en/rest/reference/repos#branches
 
     NOTE: The GitHub API groups strict and contexts together, both must
     be submitted. Take care to pass both as arguments even if only one is
