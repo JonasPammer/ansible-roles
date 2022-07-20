@@ -83,11 +83,54 @@ class ProcedureResultGenericRepo(ProcedureResultBase):
         )
 
 
+def is_upstream_of_path_github(path: pathlib.Path) -> bool:
+    if not path.is_dir():
+        return False
+
+    # without this, the following git commands
+    # will use any parent git fount (i.e., "ansible-roles"),
+    # resulting in false-positive
+    dotgit = path.joinpath(".git")
+    if not dotgit.exists():
+        return False
+
+    result = execute(["git", "remote", "--verbose"], path)
+    return "github.com" in result and "/ansible-roles" not in result
+
+
+def is_path_ansible_role(path: pathlib.Path) -> bool:
+    if not path.is_dir():
+        return False
+    cruft = path.joinpath(".cruft.json")
+    return cruft.exists() and "cookiecutter-ansible-role.git" in cruft.read_text()
+
+
 def execute(
     args: Sequence[str | os.PathLike[Any]],
     path: pathlib.Path,
     is_real_error: Callable[[subprocess.CalledProcessError], bool] | None = None,
 ) -> str:
+    """Execute given command in the given directory with appropiate of logs,
+    returing the output if all went ok.
+
+    :param args:
+        The actual command to execute.
+    :param path:
+        The `cwd` to execute the subproccess in.
+    :param is_real_error:
+        If the exit code was non-zero, this function is used to determine
+        whether to throw and report about the thrown CalledProcessError
+        or wheter to just log and return the output like normal.
+        None is interpreted as "always True".
+        None by default.
+    :raises subproccess.CalledProcesssError:
+        If the exit code was non-zero and `is_real_error`
+        is either None or returns True,
+        this function raises a CalledProcessError.
+        The CalledProcessError object will have  the return code in the
+        returncode attribute and output in the output attribute.
+    :return: decoded output of command
+    """
     cmd_str = " ".join([str(_) for _ in args])
     logger.verbose(f"Executing '{cmd_str}'...")
 
@@ -153,23 +196,10 @@ def get_all_cloned_github_repositories() -> list[Path]:
     :return: A list of directories of which origin/master points to github
     """
 
-    def __is_upstream_github(path: pathlib.Path) -> bool:
-        if not path.is_dir():
-            return False
-
-        # without this, the following git commands
-        # will use any parent git fount (i.e., "ansible-roles")
-        dotgit = path.joinpath(".git")
-        if not dotgit.exists():
-            return False
-
-        result = execute(["git", "remote", "--verbose"], path)
-        return "github.com" in result and "/ansible-roles" not in result
-
     all_repos = [
         repo
         for repo in pathlib.Path("all-repos").iterdir()
-        if __is_upstream_github(repo)
+        if is_upstream_of_path_github(repo)
     ]
     return all_repos
 
@@ -182,13 +212,9 @@ def get_all_cloned_ansible_repositories() -> list[Path]:
              (i.e. cruft'ed from my cookiecutter).
     """
 
-    def __is_ansible_role(path: pathlib.Path) -> bool:
-        if not path.is_dir():
-            return False
-        cruft = path.joinpath(".cruft.json")
-        return cruft.exists() and "cookiecutter-ansible-role.git" in cruft.read_text()
-
     all_repos = [
-        repo for repo in pathlib.Path("all-repos").iterdir() if __is_ansible_role(repo)
+        repo
+        for repo in pathlib.Path("all-repos").iterdir()
+        if is_path_ansible_role(repo)
     ]
     return all_repos
