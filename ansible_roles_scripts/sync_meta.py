@@ -296,7 +296,21 @@ def run_procedure_for(
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()
 def main(set_galaxy_api_key: bool, silent: bool, verbosity: int) -> int:
-    """Edit GitHub Repository Settings of all ansible roles."""
+    """Script to loop through all ANSIBLE repositories (`all-repos-in.json`)
+    and edit GitHub Repository Settings. This includes.
+
+    * setting allowed merge types
+
+    * setting github project description to `meta/main.yml`'s description
+
+    * setting branch protection controls for `master` (e.g. `required_linear_history`)
+
+    * optionally setting GALAXY_API_KEY action secret if supplied
+
+    This script solely relies on the use of the GitHub API.
+    See DEVELOPMENT.adoc for instructions on how to
+    make your token accessible to the script.
+    """
     utils.init(verbosity=verbosity, silent=silent)
     retv = 1
 

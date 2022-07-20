@@ -152,6 +152,13 @@ def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()
 def main(silent: bool, verbosity: int) -> int:
+    """Script to loop through all GITHUB repositories (`all-repos-in.json`) and
+    squash-merge authentic pre-commit.ci and dependabot pull requests.
+
+    This script solely relies on the use of the GitHub API. See
+    DEVELOPMENT.adoc for instructions on how to make your token
+    accessible to the script.
+    """
     utils.init(verbosity=verbosity, silent=silent)
     retv = 1
 

@@ -121,6 +121,22 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()
 def main(push: bool, silent: bool, verbosity: int) -> int:
+    """Script to loop through all ANSIBLE repositories (`all-repos-in.json`)
+    and execute `cruft update ...`, `pre-commit run ...` and commit the
+    results.
+
+    This script relies on the machine executing this script
+    to have the appropiate command lines tools installed
+    and accessable from the within current PATH.
+
+    To actually push the results you need to add the option `-P`
+    for safety reason.
+
+    This script recognizes cruft- and git-conflicts,
+    aborting the operation for a given repository
+    if any were found and notifies of the required
+    manual intervention needed.
+    """
     utils.init(verbosity=verbosity, silent=silent)
     retv = 1
 
