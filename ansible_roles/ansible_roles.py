@@ -21,13 +21,12 @@ def main(
     verbosity: int,
 ) -> int:
     """Fetch information about all ansible roles (`all-repos-in.json`) using
-    the Github API, compute additional things (dependencies), and render all
+    the Github API, compute additional things (dependencies) and render all
     Jinja2 templates.
 
     Note that this does not execute any command - not even to generate
     the graphs' png/svg. But don't worry, CI does not only run this
-    script but takes care of that and everything else (as a good boy CI
-    should ;).
+    script but takes care of that and everything else ;).
     """
     utils.init(verbosity=verbosity, silent=silent)
     retv = 0
