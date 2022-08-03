@@ -242,14 +242,14 @@ def run_procedure_for(
         master_branch.protected is False
         or master_branch.get_admin_enforcement() is True
         or master_branch.get_required_pull_request_reviews().require_code_owner_reviews
-        is False
+        is True
         or get_required_linear_history(master_branch) is False
     ):
         logger.verbose(f"Updating master branch protection settings of {repo}.")
         edit_protection(
             master_branch,
             enforce_admins=False,
-            require_code_owner_reviews=True,
+            require_code_owner_reviews=False,
             required_linear_history=True,
         )
         retv.set_ok_if_none()
