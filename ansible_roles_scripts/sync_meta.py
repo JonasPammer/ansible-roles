@@ -84,9 +84,7 @@ def run_procedure_for(
         )
 
     master_branch = repo.get_branch("master")
-    if (
-        master_branch.protected is True
-    ):
+    if master_branch.protected is True:
         logger.verbose(f"Updating master branch protection settings of {repo}.")
         master_branch.remove_protection()
     else:
