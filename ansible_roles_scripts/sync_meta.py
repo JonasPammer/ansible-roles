@@ -1,13 +1,9 @@
 from __future__ import annotations
 
 from subprocess import CalledProcessError
-from typing import Any
 
 import attrs
 import click
-import github
-from github import Branch
-from github import Consts
 from github import GithubException
 from pydantic import SecretStr
 
