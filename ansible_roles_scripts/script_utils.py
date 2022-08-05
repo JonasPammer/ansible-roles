@@ -7,7 +7,6 @@ import platform
 import shutil
 import subprocess
 from pathlib import Path
-import sys
 from typing import Any
 from typing import Callable
 from typing import Sequence
@@ -153,9 +152,10 @@ def execute(
 
 
 def check_conflict_files(path: Path) -> bool:
-    """Check if `path` has any unresolved git conflicts and log-inform about them.
-    
-    If merge conflicts (ls-files) exist but have already been resolved 
+    """Check if `path` has any unresolved git conflicts and log-inform about
+    them.
+
+    If merge conflicts (ls-files) exist but have already been resolved
     in the unstaged environment this function returns False too.
 
     :param path: Path to execute the relevant commands in.
@@ -170,12 +170,12 @@ def check_conflict_files(path: Path) -> bool:
         if len(conflict_check_result) == 0:
             logger.verbose(
                 f"'{path}' contains git merge conflicts "
-                f"which have already been resolved but not yet staged. \n" 
+                f"which have already been resolved but not yet staged. \n"
                 f"{unmerged_files_result}"
             )
             return False
         logger.error(
-            f"'{path}' contains git merge conflicts. " 
+            f"'{path}' contains git merge conflicts. "
             f"Please resolve by hand. \n"
             f"{conflict_check_result} \n"
             f"{unmerged_files_result}"
