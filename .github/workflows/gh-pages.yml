@@ -11,6 +11,7 @@ name: re-generate files
       - "templates/README.adoc.jinja2"
       - "all-repos-in.json"
       - "ansible_roles/*.py"
+      - "requirements.txt"
       - "setup.cfg"
       - "setup.py"
   schedule:
