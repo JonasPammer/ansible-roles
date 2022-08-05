@@ -7,6 +7,7 @@ import platform
 import shutil
 import subprocess
 from pathlib import Path
+import sys
 from typing import Any
 from typing import Callable
 from typing import Sequence
@@ -25,7 +26,7 @@ on {platform.node()} by {getpass.getuser()}
 
 
 class ProcedureResultBase:
-    all_ok: bool | None = None
+    all_ok: bool | str | None = None
     """
     Only directly modify this to False!
     Use `set_ok_if_none` for setting it to True.
@@ -152,15 +153,32 @@ def execute(
 
 
 def check_conflict_files(path: Path) -> bool:
-    """Check if `path` has git conflicts and log-inform about them.
+    """Check if `path` has any unresolved git conflicts and log-inform about them.
+    
+    If merge conflicts (ls-files) exist but have already been resolved 
+    in the unstaged environment this function returns False too.
 
     :param path: Path to execute the relevant commands in.
     :return: False if no merge conflicts exist
     """
-    result = execute(["git", "ls-files", "-u"], path)
-    if len(result) > 0:
+    unmerged_files_result = execute(["git", "ls-files", "--unmerged"], path)
+    # --check: Warn if changes introduce conflict markers or whitespace errors.
+    conflict_check_result = execute(["git", "diff", "--check"], path)
+    if len(unmerged_files_result) > 0:
+        # potentially add 'or "conflict" not in conflict_check_result'
+        # to not trigger on whitespace errors which --check also warns about
+        if len(conflict_check_result) == 0:
+            logger.verbose(
+                f"'{path}' contains git merge conflicts "
+                f"which have already been resolved but not yet staged. \n" 
+                f"{unmerged_files_result}"
+            )
+            return False
         logger.error(
-            f"'{path}' contains git merge conflicts." f"Please resolve by hand."
+            f"'{path}' contains git merge conflicts. " 
+            f"Please resolve by hand. \n"
+            f"{conflict_check_result} \n"
+            f"{unmerged_files_result}"
         )
         return True
     return False

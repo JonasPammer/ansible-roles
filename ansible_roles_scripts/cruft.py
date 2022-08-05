@@ -39,6 +39,8 @@ def check_rejected_files(path: Path) -> bool:
     return False
 
 
+
+
 def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureResult:
     def _is_real_commit_error(ex: CalledProcessError) -> bool:
         return not any(
