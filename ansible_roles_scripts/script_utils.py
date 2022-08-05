@@ -102,7 +102,9 @@ def is_path_ansible_role(path: pathlib.Path) -> bool:
     if not path.is_dir():
         return False
     cruft = path.joinpath(".cruft.json")
-    return cruft.exists() and "cookiecutter-ansible-role.git" in cruft.read_text()
+    return (
+        cruft.exists() and "JonasPammer/cookiecutter-ansible-role" in cruft.read_text()
+    )
 
 
 def execute(
