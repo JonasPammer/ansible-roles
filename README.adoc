@@ -23,8 +23,12 @@ toc::[]
 
 == Ansible Roles
 
+[#renovate_dashboard_issue_notice]
+[NOTE]
+1 Issue is always open for the Renovate Dependency Dashboard!
+
 |===
-| Role name | Action Status | Version | Open Issues | Open Pull Requests
+| Role name | Action Status | Version | Open Issues <<renovate_dashboard_issue_notice,*Note>> | Open Pull Requests
 
 | 🍪 https://github.com/JonasPammer/cookiecutter-ansible-role[cookiecutter-ansible-role]
 | https://github.com/JonasPammer/cookiecutter-ansible-role/actions/workflows/ci.yml[image:https://github.com/JonasPammer/cookiecutter-ansible-role/actions/workflows/ci.yml/badge.svg[Testing CI]]
