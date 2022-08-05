@@ -35,7 +35,9 @@ jobs:
         run: sudo apt-get install -y graphviz
 
       - name: Install Project from setup.cfg.
-        run: pip3 install .
+        run: |
+          python3 -m pip install -r requirements.txt
+          python3 -m pip install .
 
       - name: Generate Documents from Jinja2 Templates.
         run: ansible-roles
