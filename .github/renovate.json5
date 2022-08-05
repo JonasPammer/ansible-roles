@@ -33,6 +33,13 @@
   labels: ["kind/dependencies"],
   packageRules: [
     {
+      // pypackage definition describes MINIMUM required version range
+      // (and potentially maxiumum working too), so renovate is not wanted here
+      // (though in requirements* files it is)
+      matchFiles: ["(.*)setup.cfg", "(.*)setup.py"],
+      enabled: false,
+    },
+    {
       matchPackagePatterns: ["eslint"],
       labels: ["kind/dependencies", "priority/low"],
     },
