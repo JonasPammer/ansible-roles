@@ -58,13 +58,7 @@ def close_fake_precommit_ci_request(repo: Repository, pr: PullRequest) -> None:
     pr.edit(status="closed")
 
 
-def merge_dependabot_request(repo: Repository, pr: PullRequest) -> bool:
-    commit_title = pr.title
-    if not commit_title.startswith("chore(deps)"):
-        commit_title = "chore(deps): " + commit_title
-    commit_title += f" (#{pr.number})"
-    commit_title += f"\n {SCRIPT_CO_AUTHOR_COMMIT_MSG}"
-
+def _squash_merge(repo: Repository, pr: PullRequest, commit_title: str) -> bool:
     logger.verbose(f"Attempting to squash-merge {pr} of {repo}...")
     result: PullRequestMergeStatus = pr.merge(
         commit_title=commit_title, merge_method="squash"
@@ -76,11 +70,21 @@ def merge_dependabot_request(repo: Repository, pr: PullRequest) -> bool:
     return True
 
 
+def merge_dependabot_request(repo: Repository, pr: PullRequest) -> bool:
+    commit_title = pr.title
+    if not commit_title.startswith("chore(deps)"):
+        commit_title = "chore(deps): " + commit_title
+    commit_title += f" (#{pr.number})\n {SCRIPT_CO_AUTHOR_COMMIT_MSG}"
+
+    return _squash_merge(repo, pr, commit_title)
+
+
 def merge_precommit_ci_request(repo: Repository, pr: PullRequest) -> bool:
     precommit_yml = yaml.safe_load(
         repo.get_contents(".pre-commit-config.yaml").decoded_content
     )
     autoupdate_commit_msg: str = "chore(pre-commit): autoupdate :arrow_up:"
+
     if "ci" in precommit_yml and "autoupdate_commit_msg" in precommit_yml["ci"]:
         # `.split("\n")[0]` to fix duplicate message body as seen in
         # https://github.com/JonasPammer/ansible-role-shellcheck/commit/75764d4d14f9759f466339308706ab4192bb3530
@@ -88,18 +92,9 @@ def merge_precommit_ci_request(repo: Repository, pr: PullRequest) -> bool:
         autoupdate_commit_msg = precommit_yml["ci"]["autoupdate_commit_msg"].split(
             "\n"
         )[0]
-    autoupdate_commit_msg += f" (#{pr.number})"
-    autoupdate_commit_msg += f"\n {SCRIPT_CO_AUTHOR_COMMIT_MSG}"
+    autoupdate_commit_msg += f" (#{pr.number})\n {SCRIPT_CO_AUTHOR_COMMIT_MSG}"
 
-    logger.verbose(f"Attempting to squash-merge {pr} of {repo}...")
-    result: PullRequestMergeStatus = pr.merge(
-        commit_title=autoupdate_commit_msg, merge_method="squash"
-    )
-    if not result.merged:
-        logger.error(f"{pr} reported that it did not merge! Message: {result.message}")
-        return False
-    logger.success(f"Successfully merged {pr} for {repo}.")
-    return True
+    return _squash_merge(repo, pr, commit_title=autoupdate_commit_msg)
 
 
 def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
@@ -130,7 +125,7 @@ def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
                 retv.set_ok_if_none
                 retv.changed = True
             continue
-        if is_user_dependabot_bot(pr.user):
+        elif is_user_dependabot_bot(pr.user):
             logger.verbose(
                 f"Recognized {pr} of {repo} as an authentic dependabot request!"
             )
