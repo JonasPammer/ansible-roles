@@ -18,9 +18,15 @@ name: re-generate files
     # At 05:00am
     - cron: "0 5 * * *"
 
+permissions:
+  contents: read
+
 jobs:
   gh-pages:
     runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+      pages: write
     steps:
       - name: check out the codebase
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
