@@ -38,7 +38,7 @@ colorama==0.4.5
     #   click
     #   pytest
     #   tox
-cookiecutter==2.1.1
+cookiecutter<2.1.0
     # via cruft
 covdefaults==2.2.0
     # via -r .\requirements-dev.in
