@@ -147,7 +147,7 @@ def execute(
         if is_real_error is not None and not is_real_error(ex):
             logger.verbose(ex.stdout.decode())
             return ex.stdout.decode()
-        logger.error(f"stdout: \n {ex.stdout.decode()}")
+        logger.error(f"stdout: \n {ex.stdout.decode()} \n stderr: \n {ex.stderr.decode(errors='ignore')}")
         logger.error(
             f"'{cmd_str}' for '{path}' returned non-zero exit status {ex.returncode}! "
             f"See above for more information."
