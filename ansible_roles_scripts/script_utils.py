@@ -145,8 +145,8 @@ def execute(
         return result.decode()
     except subprocess.CalledProcessError as ex:
         if is_real_error is not None and not is_real_error(ex):
-            logger.verbose(ex.stdout.decode())
-            return ex.stdout.decode()
+            logger.verbose(ex.output.decode())
+            return ex.output.decode()
         logger.error(
             f"stdout: \n {ex.stdout.decode()} \n"
             f"stderr: \n {ex.stderr.decode(errors='ignore')}"
