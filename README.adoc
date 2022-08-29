@@ -43,6 +43,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/cookiecutter-ansible-rol
 | https://github.com/JonasPammer/ansible-role-bootstrap/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-bootstrap/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-bootstrap/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-bootstrap/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-bootstrap/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-bootstrap/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/bootstrap[image:https://img.shields.io/badge/galaxy-jonaspammer.bootstrap-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-bootstrap/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-bootstrap[issues]]
 | https://github.com/JonasPammer/ansible-role-bootstrap/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-bootstrap[pull requests]]
 
@@ -50,6 +51,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-bootstrap/m
 | https://github.com/JonasPammer/ansible-role-core_dependencies/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-core_dependencies/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-core_dependencies/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-core_dependencies/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-core_dependencies/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/core_dependencies[image:https://img.shields.io/badge/galaxy-jonaspammer.core_dependencies-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-core_dependencies[issues]]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-core_dependencies[pull requests]]
 
@@ -57,6 +59,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-core_depend
 | https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-pip/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-pip/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-pip/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/pip[image:https://img.shields.io/badge/galaxy-jonaspammer.pip-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-pip/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-pip[issues]]
 | https://github.com/JonasPammer/ansible-role-pip/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-pip[pull requests]]
 
@@ -64,6 +67,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[
 | https://github.com/JonasPammer/ansible-role-shellcheck/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-shellcheck/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-shellcheck/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-shellcheck/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-shellcheck/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-shellcheck/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/shellcheck[image:https://img.shields.io/badge/galaxy-jonaspammer.shellcheck-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-shellcheck/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-shellcheck[issues]]
 | https://github.com/JonasPammer/ansible-role-shellcheck/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-shellcheck[pull requests]]
 
@@ -71,6 +75,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-shellcheck/
 | https://github.com/JonasPammer/ansible-role-checkmk_server/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-checkmk_server/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-checkmk_server/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-checkmk_server/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-checkmk_server/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-checkmk_server/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/checkmk_server[image:https://img.shields.io/badge/galaxy-jonaspammer.checkmk_server-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-checkmk_server/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-checkmk_server[issues]]
 | https://github.com/JonasPammer/ansible-role-checkmk_server/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-checkmk_server[pull requests]]
 
@@ -78,6 +83,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-checkmk_ser
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-checkmk_agent/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-checkmk_agent/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-checkmk_agent/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-checkmk_agent/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/checkmk_agent[image:https://img.shields.io/badge/galaxy-jonaspammer.checkmk_agent-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-checkmk_agent[issues]]
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-checkmk_agent[pull requests]]
 
@@ -85,6 +91,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-checkmk_age
 | https://github.com/JonasPammer/ansible-role-openssh/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-openssh/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-openssh/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-openssh/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-openssh/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-openssh/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/openssh[image:https://img.shields.io/badge/galaxy-jonaspammer.openssh-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-openssh/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-openssh[issues]]
 | https://github.com/JonasPammer/ansible-role-openssh/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-openssh[pull requests]]
 
@@ -92,6 +99,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-openssh/mas
 | https://github.com/JonasPammer/ansible-role-motd/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-motd/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-motd/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-motd/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-motd/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-motd/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/motd[image:https://img.shields.io/badge/galaxy-jonaspammer.motd-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-motd/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-motd[issues]]
 | https://github.com/JonasPammer/ansible-role-motd/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-motd[pull requests]]
 
@@ -99,6 +107,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-motd/master
 | https://github.com/JonasPammer/ansible-role-apache2/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-apache2/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-apache2/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-apache2/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-apache2/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-apache2/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/apache2[image:https://img.shields.io/badge/galaxy-jonaspammer.apache2-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-apache2/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-apache2[issues]]
 | https://github.com/JonasPammer/ansible-role-apache2/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-apache2[pull requests]]
 
@@ -106,6 +115,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-apache2/mas
 | https://github.com/JonasPammer/ansible-role-openssl/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-openssl/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-openssl/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-openssl/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-openssl/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-openssl/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/openssl[image:https://img.shields.io/badge/galaxy-jonaspammer.openssl-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-openssl/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-openssl[issues]]
 | https://github.com/JonasPammer/ansible-role-openssl/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-openssl[pull requests]]
 
@@ -113,6 +123,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-openssl/mas
 | https://github.com/JonasPammer/ansible-role-goaccess/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-goaccess/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-goaccess/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-goaccess/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-goaccess/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-goaccess/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/goaccess[image:https://img.shields.io/badge/galaxy-jonaspammer.goaccess-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-goaccess/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-goaccess[issues]]
 | https://github.com/JonasPammer/ansible-role-goaccess/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-goaccess[pull requests]]
 
@@ -120,6 +131,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-goaccess/ma
 | https://github.com/JonasPammer/ansible-role-mediawiki/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-mediawiki/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-mediawiki/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-mediawiki/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-mediawiki/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-mediawiki/latest.svg[version]]
+https://galaxy.ansible.com/jonaspammer/mediawiki[image:https://img.shields.io/badge/galaxy-jonaspammer.mediawiki-brightgreen[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-mediawiki/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-mediawiki[issues]]
 | https://github.com/JonasPammer/ansible-role-mediawiki/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-mediawiki[pull requests]]
 
