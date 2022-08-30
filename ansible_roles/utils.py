@@ -283,7 +283,7 @@ def init_all_roles() -> None:
                 f"{role.galaxy_role_name}'s id. "
             )
             _galaxy_info = execute(
-                ["ansible-galaxy", "info", "jonaspammer.bootstrap"], Path.cwd()
+                ["ansible-galaxy", "info", role.galaxy_role_name], Path.cwd()
             )
             _id_regex = re.search("id: [0-9]*", _galaxy_info)
             if _id_regex:
