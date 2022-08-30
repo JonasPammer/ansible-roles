@@ -10,7 +10,6 @@ from github.NamedUser import NamedUser
 from github.PullRequest import PullRequest
 from github.PullRequestMergeStatus import PullRequestMergeStatus
 from github.Repository import Repository
-from rich import inspect
 
 from ansible_roles import utils
 from ansible_roles.utils import console
@@ -118,11 +117,6 @@ def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
     console.rule(f"{retv}")
     logger.verbose(f"Start procedure for '{retv}'")
     repo = retv.repo
-
-    if repo.name == "ansible-role-bootstrap":
-        inspect(repo.get_pull(59))
-        inspect(repo.get_pull(59).user)
-        return retv
 
     pull_requests = repo.get_pulls()
     if pull_requests.totalCount == 0:
