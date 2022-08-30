@@ -84,6 +84,9 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
         is_real_error=_is_real_commit_error,
     )
 
+    execute(
+        ["pre-commit", "run", "--all-files"], retv.path, is_real_error=lambda _: False
+    )
     execute(["pre-commit", "run", "--all-files"], retv.path)
     execute(["git", "add", "."], retv.path)
     execute(
