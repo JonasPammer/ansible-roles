@@ -8,7 +8,6 @@ digraph hierarchy {
     "jonaspammer.shellcheck" [fillcolor=orange style=filled]
     "jonaspammer.checkmk_server" [fillcolor=orange style=filled]
     "jonaspammer.checkmk_agent" [fillcolor=orange style=filled]
-    "jonaspammer.openssh" [fillcolor=orange style=filled]
     "jonaspammer.motd" [fillcolor=orange style=filled]
     "jonaspammer.apache2" [fillcolor=yellow style=filled]
     "jonaspammer.openssl" [fillcolor=orange style=filled]
@@ -22,7 +21,6 @@ digraph hierarchy {
   "jonaspammer.shellcheck" -> {"jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
   "jonaspammer.checkmk_server" -> {"jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
   "jonaspammer.checkmk_agent" -> {"jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
-  "jonaspammer.openssh" -> {"jonaspammer.bootstrap" "robertdebock.selinux"}
   "jonaspammer.motd" -> {"jonaspammer.bootstrap" "jonaspammer.shellcheck"}
   "jonaspammer.apache2" -> {"jonaspammer.bootstrap"}
   "jonaspammer.openssl" -> {"jonaspammer.pip" "jonaspammer.bootstrap"}
