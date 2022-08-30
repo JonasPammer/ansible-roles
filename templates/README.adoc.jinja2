@@ -44,6 +44,8 @@ https://results.pre-commit.ci/latest/github/JonasPammer/cookiecutter-ansible-rol
 https://results.pre-commit.ci/latest/github/JonasPammer/{{ role.repo_name }}/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/{{ role.repo_name }}/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/{{ role.repo_name }}/releases[image:https://img.shields.io/github/commits-since/JonasPammer/{{ role.repo_name }}/latest.svg[version]]
 https://galaxy.ansible.com/{{ role.galaxy_owner }}/{{ role.role_name }}[image:https://img.shields.io/badge/galaxy-{{ role.galaxy_owner }}.{{ role.role_name }}-brightgreen[Available on Galaxy]]
+image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20downloads&query=%24.download_count&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F{{ role.id|default(0) }}%2F%3Fformat%3Djson[Downloads Count as per Ansible Galaxy]
+image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=latest%20version%20on%20galaxy&query=%24.summary_fields.versions[0].name&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F{{ role.id|default(0) }}%2F%3Fformat%3Djson[Latest Version on Ansible Galaxy]
 | https://github.com/JonasPammer/{{ role.repo_name }}/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/{{ role.repo_name }}[issues]]
 | https://github.com/JonasPammer/{{ role.repo_name }}/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/{{ role.repo_name }}[pull requests]]
 {% endfor %}
