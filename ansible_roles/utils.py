@@ -3,6 +3,9 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
+from pathlib import Path
+from subprocess import CalledProcessError
 from typing import Any
 from typing import Callable
 from typing import Literal
@@ -51,12 +54,15 @@ class AnsibleRole:
     meta_yml: dict[str, Any] = {}
     """ decoded content of this role's `meta/meta.yml` file """
 
+    id: int = 0
+    """ fetched ansible id of this role """
+
     computed_dependencies: list[str] = attrs.field(default=attrs.Factory(list))
     """ list of `galaxy_role_name`'s """
 
     @property
     def role_name(self) -> str:
-        """Utility function to get the actual name of the role.
+        """Utility property which returns the actual name of the role.
 
         :return: `repo_name` with removed slug/repository-prefix (e.g. `ansible-role-`)
         """
@@ -64,7 +70,7 @@ class AnsibleRole:
 
     @property
     def galaxy_role_name(self) -> str:
-        """Utility function to retun this role's fully qualified name.
+        """Utility property which returns this role's fully qualified name.
 
         :return: This role's fully qualified name in format `galaxy_owner.role_name`.
         """
@@ -245,6 +251,7 @@ def init_all_roles() -> None:
             continue
         if __all_roles_cache.get(role.galaxy_role_name) is not None:
             logger.verbose(f"{role.galaxy_role_name} exists in cache, skipping...")
+            logger.spam(role)
             all_roles[role.galaxy_role_name] = __all_roles_cache.get(
                 role.galaxy_role_name
             )
@@ -267,6 +274,36 @@ def init_all_roles() -> None:
         except GithubException as ex:
             if "empty" not in str(ex):
                 raise ex
+
+        from ansible_roles_scripts.script_utils import execute
+
+        try:
+            logger.debug(
+                "Trying to issue `ansible-galaxy` commands to regex find "
+                f"{role.galaxy_role_name}'s id. "
+            )
+            _galaxy_info = execute(
+                ["ansible-galaxy", "info", "jonaspammer.bootstrap"], Path.cwd()
+            )
+            _id_regex = re.search("id: [0-9]*", _galaxy_info)
+            if _id_regex:
+                role.id = int(_id_regex.group(0).split(" ")[1])
+
+            if not _id_regex:
+                logger.notice(
+                    "Could not find id in `ansible-galaxy info`'s command output?"
+                )
+                logger.spam("`ansible-galaxy info` output: " + _galaxy_info)
+            else:
+                logger.verbose(
+                    "Successfully fetched 'id' for "
+                    f"{role.galaxy_role_name}. "
+                    f"({role.id})"
+                )
+        except (CalledProcessError) as ex:
+            logger.warning(
+                f"Could not fetch {role.galaxy_role_name}'s id " f"because of {ex}."
+            )
 
         __all_roles_cache.set(key=role.galaxy_role_name, value=role, expire=60 * 30)
         all_roles[role.galaxy_role_name] = role
