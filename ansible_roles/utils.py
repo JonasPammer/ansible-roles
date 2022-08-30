@@ -304,7 +304,6 @@ def init_all_roles() -> None:
             logger.warning(
                 f"Could not fetch {role.galaxy_role_name}'s id " f"because of {ex}."
             )
-            pass
 
         __all_roles_cache.set(key=role.galaxy_role_name, value=role, expire=60 * 30)
         all_roles[role.galaxy_role_name] = role
