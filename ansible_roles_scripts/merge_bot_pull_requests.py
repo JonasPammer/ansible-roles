@@ -172,6 +172,7 @@ def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
             continue
 
     logger.info(f"Could not find a matching Bot Pull Request in {repo}.")
+    retv.set_ok_if_none()
     return retv
 
 
