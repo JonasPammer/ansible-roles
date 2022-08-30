@@ -99,16 +99,6 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-checkmk_agent[issues]]
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-checkmk_agent[pull requests]]
 
-| https://github.com/JonasPammer/ansible-role-openssh[openssh] +
-https://galaxy.ansible.com/jonaspammer/openssh[image:https://img.shields.io/badge/galaxy-jonaspammer.openssh-blueviolet[Available on Galaxy]]
-| https://github.com/JonasPammer/ansible-role-openssh/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-openssh/actions/workflows/ci.yml/badge.svg[Testing CI]]
-https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-openssh/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-openssh/master.svg[pre-commit.ci status]]
-| https://github.com/JonasPammer/ansible-role-openssh/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-openssh/latest.svg[version]]
-image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=latest%20version%20on%20galaxy&query=%24.summary_fields.versions%5B0%5D.name&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F58997%2F%3Fformat%3Djson[Latest Version on Ansible Galaxy]
-image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20downloads&query=%24.download_count&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F58997%2F%3Fformat%3Djson[Downloads Count as per Ansible Galaxy]
-| https://github.com/JonasPammer/ansible-role-openssh/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-openssh[issues]]
-| https://github.com/JonasPammer/ansible-role-openssh/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-openssh[pull requests]]
-
 | https://github.com/JonasPammer/ansible-role-motd[motd] +
 https://galaxy.ansible.com/jonaspammer/motd[image:https://img.shields.io/badge/galaxy-jonaspammer.motd-blueviolet[Available on Galaxy]]
 | https://github.com/JonasPammer/ansible-role-motd/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-motd/actions/workflows/ci.yml/badge.svg[Testing CI]]
@@ -206,10 +196,6 @@ are described in `meta/main.yml` file of a given role under `dependencies`._
 
 |===
 | Role name | Depends on | Reason
-
-
-
-
 
 
 
