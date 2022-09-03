@@ -85,12 +85,14 @@ GITHUB_TOKEN=LoremipsumLoremipsumLoremipsumLoremipsum
 
 .example maintenance: ensure minimum supported ansible version is correct
 ====
+----
 $ all-repos-sed --commit-msg "chore: set min_ansible_version to 2.11 as per JonasPammer/cookiecutter-ansible-roles" \
      's/min_ansible_version: ".*"/min_ansible_version: "2.11"/g' \
      meta/main.yml
 $ all-repos-sed --commit-msg "chore: set min_ansible_version to 2.11 as per JonasPammer/cookiecutter-ansible-roles" \
      's/min_ansible_version": ".*"/min_ansible_version": "2.11"/g' \
      .cruft.json
+----
 ====
 
 .example maintenance: update GitHub Secret `GALAXY_API_KEY`
