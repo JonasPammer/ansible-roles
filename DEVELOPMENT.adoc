@@ -8,7 +8,7 @@ to clone multiple repositories and apply sweeping changes at once.
 
 link:all-repos-in.json[] is an `all.repos.source.json_file` compatible file
 consisting of all of my ansible roles.
-It can be used in an all-repos configuration file as shown in `all-repos.example.json`:
+It can be used in an all-repos configuration file as shown in `link:all-repos.example.json[]`:
 
 .all-repos.json
 [source%linenums,json,highlight=3..5]
