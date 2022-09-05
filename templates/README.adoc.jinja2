@@ -40,7 +40,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/cookiecutter-ansible-rol
 
 {% for galaxy_role_name, role in all_roles.items() %}
 | https://github.com/JonasPammer/{{ role.repo_name }}[{{ role.role_name }}] +
-https://galaxy.ansible.com/{{ role.galaxy_owner }}/{{ role.role_name }}[image:https://img.shields.io/badge/galaxy-{{ role.galaxy_owner }}.{{ role.role_name }}-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/{{ role.galaxy_owner }}/{{ role.role_name }}[image:https://img.shields.io/badge/galaxy-{{ role.galaxy_owner }}.{{ role.role_name }}-blueviolet[Available on Galaxy,title={{ role.description|default("") }}]]
 | https://github.com/JonasPammer/{{ role.repo_name }}/actions/workflows/ci.yml[image:https://github.com/JonasPammer/{{ role.repo_name }}/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/{{ role.repo_name }}/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/{{ role.repo_name }}/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/{{ role.repo_name }}/releases[image:https://img.shields.io/github/commits-since/JonasPammer/{{ role.repo_name }}/latest.svg[version]]

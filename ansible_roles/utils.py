@@ -76,6 +76,18 @@ class AnsibleRole:
         """
         return self.galaxy_owner + "." + self.role_name
 
+    @property
+    def description(self) -> str | None:
+        """Utility property to return
+        `self.meta_yml["galaxy_info"]["description"]` if exists or None
+        otherwise."""
+        if (
+            "galaxy_info" in self.meta_yml
+            and "description" in self.meta_yml["galaxy_info"]
+        ):
+            return self.meta_yml["galaxy_info"]["description"]
+        return None
+
     def get_dependency_color(self) -> str:
         """
         :return: Named color understood by Graphviz.

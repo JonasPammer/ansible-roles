@@ -49,18 +49,13 @@ def run_procedure_for(
             "with script's definition, doing nothing."
         )
 
-    if (
-        "galaxy_info" in retv.role.meta_yml
-        and "description" in retv.role.meta_yml["galaxy_info"]
-    ):
-        meta_yml_description = retv.role.meta_yml["galaxy_info"]["description"]
-
-        if meta_yml_description != repo.description:
+    if retv.role.description is not None:
+        if retv.role.description != repo.description:
             logger.verbose(
                 f"Updating description of {repo} from '{repo.description}'"
-                "to '{meta_yml_description}'."
+                "to '{retv.role.description}'."
             )
-            repo.edit(description=meta_yml_description)
+            repo.edit(description=retv.role.description)
             retv.set_ok_if_none()
             retv.changed = True
             logger.success(
