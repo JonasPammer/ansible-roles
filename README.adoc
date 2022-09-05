@@ -40,7 +40,7 @@ https://results.pre-commit.ci/latest/github/JonasPammer/cookiecutter-ansible-rol
 
 
 | https://github.com/JonasPammer/ansible-role-bootstrap[bootstrap] +
-https://galaxy.ansible.com/jonaspammer/bootstrap[image:https://img.shields.io/badge/galaxy-jonaspammer.bootstrap-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/bootstrap[image:https://img.shields.io/badge/galaxy-jonaspammer.bootstrap-blueviolet[Available on Galaxy,title=An ansible role for preparing a linux system to be managed by ansible. Based on robertdebock's role.]]
 | https://github.com/JonasPammer/ansible-role-bootstrap/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-bootstrap/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-bootstrap/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-bootstrap/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-bootstrap/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-bootstrap/latest.svg[version]]
@@ -50,7 +50,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-bootstrap/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-bootstrap[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-core_dependencies[core_dependencies] +
-https://galaxy.ansible.com/jonaspammer/core_dependencies[image:https://img.shields.io/badge/galaxy-jonaspammer.core_dependencies-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/core_dependencies[image:https://img.shields.io/badge/galaxy-jonaspammer.core_dependencies-blueviolet[Available on Galaxy,title=An ansible role for installing dependecies to support the Ansible core modules. Based on robertdebock's core_dependencies role.]]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-core_dependencies/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-core_dependencies/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-core_dependencies/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-core_dependencies/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-core_dependencies/latest.svg[version]]
@@ -60,7 +60,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-core_dependencies/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-core_dependencies[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-pip[pip] +
-https://galaxy.ansible.com/jonaspammer/pip[image:https://img.shields.io/badge/galaxy-jonaspammer.pip-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/pip[image:https://img.shields.io/badge/galaxy-jonaspammer.pip-blueviolet[Available on Galaxy,title=An ansible role for installing pip (python package installer) to the system.]]
 | https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-pip/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-pip/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-pip/latest.svg[version]]
@@ -70,7 +70,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-pip/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-pip[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-shellcheck[shellcheck] +
-https://galaxy.ansible.com/jonaspammer/shellcheck[image:https://img.shields.io/badge/galaxy-jonaspammer.shellcheck-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/shellcheck[image:https://img.shields.io/badge/galaxy-jonaspammer.shellcheck-blueviolet[Available on Galaxy,title=An ansible role for installing shellcheck, a static analysis tool for shell scripts.]]
 | https://github.com/JonasPammer/ansible-role-shellcheck/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-shellcheck/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-shellcheck/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-shellcheck/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-shellcheck/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-shellcheck/latest.svg[version]]
@@ -80,7 +80,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-shellcheck/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-shellcheck[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-checkmk_server[checkmk_server] +
-https://galaxy.ansible.com/jonaspammer/checkmk_server[image:https://img.shields.io/badge/galaxy-jonaspammer.checkmk_server-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/checkmk_server[image:https://img.shields.io/badge/galaxy-jonaspammer.checkmk_server-blueviolet[Available on Galaxy,title=An ansible role for installing CheckMK RAW edition, setting up an initial site and configuring vital parameters of that site. Based on kro512' checkmk_server role.]]
 | https://github.com/JonasPammer/ansible-role-checkmk_server/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-checkmk_server/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-checkmk_server/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-checkmk_server/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-checkmk_server/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-checkmk_server/latest.svg[version]]
@@ -90,7 +90,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-checkmk_server/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-checkmk_server[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-checkmk_agent[checkmk_agent] +
-https://galaxy.ansible.com/jonaspammer/checkmk_agent[image:https://img.shields.io/badge/galaxy-jonaspammer.checkmk_agent-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/checkmk_agent[image:https://img.shields.io/badge/galaxy-jonaspammer.checkmk_agent-blueviolet[Available on Galaxy,title=An Ansible role for installing checkmk's agent on a Host (Linux and Windows) by using a standard installation package.]]
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-checkmk_agent/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-checkmk_agent/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-checkmk_agent/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-checkmk_agent/latest.svg[version]]
@@ -100,7 +100,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-checkmk_agent[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-motd[motd] +
-https://galaxy.ansible.com/jonaspammer/motd[image:https://img.shields.io/badge/galaxy-jonaspammer.motd-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/motd[image:https://img.shields.io/badge/galaxy-jonaspammer.motd-blueviolet[Available on Galaxy,title=An ansible role for configuring either static (traditional) or dynamic (using `update-motd` framework) login banners on linux machines.]]
 | https://github.com/JonasPammer/ansible-role-motd/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-motd/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-motd/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-motd/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-motd/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-motd/latest.svg[version]]
@@ -110,7 +110,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-motd/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-motd[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-apache2[apache2] +
-https://galaxy.ansible.com/jonaspammer/apache2[image:https://img.shields.io/badge/galaxy-jonaspammer.apache2-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/apache2[image:https://img.shields.io/badge/galaxy-jonaspammer.apache2-blueviolet[Available on Galaxy,title=An ansible role for installing Apache2, enabling/disabling modules, configuring its defaults and creating virtual hosts. Based on geerlingguy's apache2 role. ]]
 | https://github.com/JonasPammer/ansible-role-apache2/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-apache2/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-apache2/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-apache2/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-apache2/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-apache2/latest.svg[version]]
@@ -120,7 +120,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-apache2/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-apache2[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-openssl[openssl] +
-https://galaxy.ansible.com/jonaspammer/openssl[image:https://img.shields.io/badge/galaxy-jonaspammer.openssl-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/openssl[image:https://img.shields.io/badge/galaxy-jonaspammer.openssl-blueviolet[Available on Galaxy,title=An ansible role for generating OpenSSL Certificate Files.]]
 | https://github.com/JonasPammer/ansible-role-openssl/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-openssl/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-openssl/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-openssl/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-openssl/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-openssl/latest.svg[version]]
@@ -130,7 +130,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-openssl/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-openssl[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-goaccess[goaccess] +
-https://galaxy.ansible.com/jonaspammer/goaccess[image:https://img.shields.io/badge/galaxy-jonaspammer.goaccess-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/goaccess[image:https://img.shields.io/badge/galaxy-jonaspammer.goaccess-blueviolet[Available on Galaxy,title=An ansible role for installing GoAccess, a real-time web log analyzer that runs in a terminal or the browser.]]
 | https://github.com/JonasPammer/ansible-role-goaccess/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-goaccess/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-goaccess/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-goaccess/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-goaccess/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-goaccess/latest.svg[version]]
@@ -140,7 +140,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-goaccess/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-goaccess[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-mediawiki[mediawiki] +
-https://galaxy.ansible.com/jonaspammer/mediawiki[image:https://img.shields.io/badge/galaxy-jonaspammer.mediawiki-blueviolet[Available on Galaxy]]
+https://galaxy.ansible.com/jonaspammer/mediawiki[image:https://img.shields.io/badge/galaxy-jonaspammer.mediawiki-blueviolet[Available on Galaxy,title=An ansible role for downloading mediawiki into specified directory, installing recommended system packages and downloading additional extensions and skins.]]
 | https://github.com/JonasPammer/ansible-role-mediawiki/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-mediawiki/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-mediawiki/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-mediawiki/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-mediawiki/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-mediawiki/latest.svg[version]]
@@ -196,6 +196,8 @@ are described in `meta/main.yml` file of a given role under `dependencies`._
 
 |===
 | Role name | Depends on | Reason
+
+
 
 
 
