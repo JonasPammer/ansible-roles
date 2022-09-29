@@ -53,6 +53,11 @@ class AnsibleRole:
     """ decoded content of this role's `requirements.yml` file """
     meta_yml: dict[str, Any] = {}
     """ decoded content of this role's `meta/meta.yml` file """
+    ansible_roles_yml: dict[str, Any] = {}
+    """
+    decoded content of this role's `meta/ansible-roles.yml` file
+    added in https://github.com/JonasPammer/cookiecutter-ansible-role/pull/52
+    """
 
     id: int = 0
     """ fetched ansible id of this role """
@@ -282,6 +287,9 @@ def init_all_roles() -> None:
             role.meta_yml = yaml.safe_load(
                 repo.get_contents("meta/main.yml").decoded_content
             )
+            role.ansible_roles_yml = yaml.safe_load(
+                repo.get_contents("meta/ansible-roles.yml").decoded_content
+            )
         # allow for yet-just-created / WIP ansible roles of mine
         except GithubException as ex:
             if "empty" not in str(ex):
@@ -326,7 +334,14 @@ def init_all_roles() -> None:
         if "roles" not in role.requirements_yml:
             continue  # no dependencies
         for role_req in role.requirements_yml["roles"]:
-            if "__not_mandatory_to_role_itself" not in role_req:
+            if (
+                "requirements_not_mandatory_to_role_itself"
+                not in role.ansible_roles_yml
+                and role_req["name"]
+                not in role.ansible_roles_yml[
+                    "requirements_not_mandatory_to_role_itself"
+                ]
+            ):
                 role.computed_dependencies.append(role_req["name"])
             # role.dependencies_not_mandatory_to_role_itself.append(role_req["name"])
 
