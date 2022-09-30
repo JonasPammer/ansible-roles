@@ -82,8 +82,8 @@ you have to include them in your playbook yourself
   become: true
 
   roles:
-    - role: jonaspammer.bootstrap
-    - role: jonaspammer.java
+    - name: jonaspammer.bootstrap
+    - name: jonaspammer.java
 ----
 
 ==== Hard Dependencies
@@ -124,8 +124,8 @@ you still *have to* include them in your playbook yourself:
   roles:
     # (preperation roles have been left out for this example)
 
-    - role: jonaspammer.httpd
-    - role: jonaspammer.php
+    - name: jonaspammer.httpd
+    - name: jonaspammer.php
 ----
 
 
