@@ -3,10 +3,8 @@ digraph hierarchy {
   overlap=false
 
   {
-    "jonaspammer.mediawiki" [fillcolor=yellow style=filled penwidth=3]
-    "jonaspammer.bootstrap" [fillcolor=green style=filled ]
+    "jonaspammer.mediawiki" [fillcolor=green style=filled penwidth=3]
   }
 
 
-  "jonaspammer.mediawiki" -> {"jonaspammer.bootstrap"}
 }

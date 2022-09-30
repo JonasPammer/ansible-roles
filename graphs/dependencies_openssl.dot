@@ -3,12 +3,8 @@ digraph hierarchy {
   overlap=false
 
   {
-    "jonaspammer.openssl" [fillcolor=orange style=filled penwidth=3]
-    "jonaspammer.pip" [fillcolor=yellow style=filled ]
-    "jonaspammer.bootstrap" [fillcolor=green style=filled ]
+    "jonaspammer.openssl" [fillcolor=green style=filled penwidth=3]
   }
 
 
-  "jonaspammer.openssl" -> {"jonaspammer.pip" "jonaspammer.bootstrap"}
-  "jonaspammer.pip" -> {"jonaspammer.bootstrap"}
 }

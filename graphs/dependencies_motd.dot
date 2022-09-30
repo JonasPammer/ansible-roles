@@ -3,14 +3,8 @@ digraph hierarchy {
   overlap=false
 
   {
-    "jonaspammer.motd" [fillcolor=orange style=filled penwidth=3]
-    "jonaspammer.bootstrap" [fillcolor=green style=filled ]
-    "jonaspammer.shellcheck" [fillcolor=orange style=filled ]
-    "jonaspammer.core_dependencies" [fillcolor=yellow style=filled ]
+    "jonaspammer.motd" [fillcolor=green style=filled penwidth=3]
   }
 
 
-  "jonaspammer.motd" -> {"jonaspammer.bootstrap" "jonaspammer.shellcheck"}
-  "jonaspammer.shellcheck" -> {"jonaspammer.bootstrap" "jonaspammer.core_dependencies"}
-  "jonaspammer.core_dependencies" -> {"jonaspammer.bootstrap"}
 }
