@@ -26,8 +26,8 @@ on {platform.node()} by {getpass.getuser()}
 
 class ProcedureResultBase:
     all_ok: bool | str | None = None
-    """
-    Only directly modify this to False!
+    """Only directly modify this to False!
+
     Use `set_ok_if_none` for setting it to True.
     """
     changed: bool = False
