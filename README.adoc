@@ -94,8 +94,8 @@ https://galaxy.ansible.com/jonaspammer/checkmk_agent[image:https://img.shields.i
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-checkmk_agent/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-checkmk_agent/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-checkmk_agent/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-checkmk_agent/latest.svg[version]]
-// image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=latest%20version%20on%20galaxy&query=%24.summary_fields.versions%5B0%5D.name&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F59506%2F%3Fformat%3Djson[Latest Version on Ansible Galaxy]
-image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20downloads&query=%24.download_count&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F59506%2F%3Fformat%3Djson[Downloads Count as per Ansible Galaxy]
+// image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=latest%20version%20on%20galaxy&query=%24.summary_fields.versions%5B0%5D.name&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F0%2F%3Fformat%3Djson[Latest Version on Ansible Galaxy]
+image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20downloads&query=%24.download_count&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F0%2F%3Fformat%3Djson[Downloads Count as per Ansible Galaxy]
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/issues[image:https://img.shields.io/github/issues-raw/JonasPammer/ansible-role-checkmk_agent[issues]]
 | https://github.com/JonasPammer/ansible-role-checkmk_agent/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-checkmk_agent[pull requests]]
 
