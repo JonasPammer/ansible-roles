@@ -26,16 +26,16 @@ from rich.traceback import install as install_rich_traceback
 console = Console(width=240)
 logger = verboselogs.VerboseLogger("ansible-roles")
 github_api: Github = None
-"""
-Critical Note! Use this variable using `utils.github_api`, not `github_api`.
+"""Critical Note!
+
+Use this variable using `utils.github_api`, not `github_api`.
 """
 github_api_used_token: Literal["all-repos", "env", "None"] = "None"
 """See :func:`utils.init_github_api`"""
 
 all_roles: dict[str, AnsibleRole] = {}
-"""
-A dictionary of all ansible roles found in `all-repos-in.json`
-in which the key is the `galaxy_role_name`.
+"""A dictionary of all ansible roles found in `all-repos-in.json` in which the
+key is the `galaxy_role_name`.
 
 See :func:`utils.init_all_roles`
 """
@@ -45,25 +45,23 @@ __all_roles_cache = diskcache.Cache(".ansible_roles_diskcache")
 @attrs.define
 class AnsibleRole:
     repo_name: str
-    """ repository name as denoted in all-repos-in.json """
+    """Repository name as denoted in all-repos-in.json."""
     repo_pull_url: str
-    """ repository pull URI as denoted in all-repos-in.json """
+    """Repository pull URI as denoted in all-repos-in.json."""
     galaxy_owner: str = "jonaspammer"
     requirements_yml: dict[str, Any] = {}
-    """ decoded content of this role's `requirements.yml` file """
+    """Decoded content of this role's `requirements.yml` file."""
     meta_yml: dict[str, Any] = {}
-    """ decoded content of this role's `meta/meta.yml` file """
+    """Decoded content of this role's `meta/meta.yml` file."""
     ansible_roles_yml: dict[str, Any] = {}
-    """
-    decoded content of this role's `meta/ansible-roles.yml` file
-    added in https://github.com/JonasPammer/cookiecutter-ansible-role/pull/52
-    """
+    """Decoded content of this role's `meta/ansible-roles.yml` file added in
+    https://github.com/JonasPammer/cookiecutter-ansible-role/pull/52."""
 
     id: int = 0
-    """ fetched ansible id of this role """
+    """Fetched ansible id of this role."""
 
     computed_dependencies: list[str] = attrs.field(default=attrs.Factory(list))
-    """ list of `galaxy_role_name`'s """
+    """List of `galaxy_role_name`'s."""
 
     @property
     def role_name(self) -> str:
