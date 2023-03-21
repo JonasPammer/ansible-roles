@@ -206,7 +206,7 @@ def init_github_api() -> None:
     if "GITHUB_TOKEN" in os.environ:
         github_api = Github(os.environ["GITHUB_TOKEN"])
         try:
-            github_api.get_user().name
+            # github_api.get_user().name
             logger.success("Using API key found `GITHUB_TOKEN` environment variable!")
             github_api_used_token = "env"
         except BadCredentialsException:
