@@ -49,6 +49,8 @@ jobs:
 
       - name: Generate Documents from Jinja2 Templates.
         run: ansible-roles
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate png's from generated dot's.
         run: |
