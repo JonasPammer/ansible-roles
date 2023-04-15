@@ -4,7 +4,7 @@
 repos:
   ### GENERAL ###
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.3.0
+    rev: v9.4.0
     hooks:
       - id: commitlint
         stages: [commit-msg]
@@ -34,12 +34,12 @@ repos:
 
   # opinionated code formatter for all things frontend (also includes Markdown, JSON, YAML)
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.4
+    rev: v3.0.0-alpha.6
     hooks:
       - id: prettier
 
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.28.0
+    rev: v1.30.0
     hooks:
       - id: yamllint
         args: [-c=.yamllint]
@@ -67,14 +67,14 @@ repos:
       - id: setup-cfg-fmt
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.991
+    rev: v1.1.1
     hooks:
       - id: mypy
         additional_dependencies: ["attrs>=21.0,<22", "types-PyYAML"] # as per setup.cfg
 
   # the uncompromising (opinionated / barely configurable) PEP8 Python code formatter.
   - repo: https://github.com/psf/black
-    rev: "22.12.0"
+    rev: "23.3.0"
     hooks:
       - id: black
 
