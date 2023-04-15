@@ -1,14 +1,25 @@
+:toc:
+:toc-placement!:
+
 This documentation contains information used by myself (JonasPammer)
 to maintain all the repos.
+
+This project may only be successfully run from a Linux Machine because of the dependency and use of
+`all-repos` and `ansible-core`.
+
+toc::[]
 
 == all-repos
 
 https://github.com/asottile/all-repos[all-repos] is a project by asotille
 to clone multiple repositories and apply sweeping changes at once.
 
-link:all-repos-in.json[] is an `all.repos.source.json_file` compatible file
-consisting of all of my ansible roles.
-It can be used in an all-repos configuration file as shown in `link:all-repos.example.json[]`:
+=== `all-repos-in.json`
+
+link:all-repos-in.json[] is an `all.repos.source.json_file` compatible file.
+It's used as the single source of truth to determine the *list of all my ansible roles*.
+
+It can be used in an `all-repos` configuration file as shown in `link:all-repos.example.json[]`:
 
 .all-repos.json
 [source%linenums,json,highlight=3..5]
@@ -18,8 +29,9 @@ include::all-repos.example.json[]
 
 
 == Commands
+=== Setup
 
-.step 1: initially configure `all-repos`
+.step 0: setup like any normal python repository
 [subs="quotes"]
 ----
 ~/dev$ *git clone git@github.com:JonasPammer/ansible-roles.git*
@@ -33,7 +45,11 @@ include::all-repos.example.json[]
 #(venv)# ~/dev/ansible-roles$ *pip3 install -e .*
 
 #(venv)# ~/dev/ansible-roles$ *pip3 install -r requirements-dev.txt*
+----
 
+.step 1: configure `all-repos`
+[subs="quotes"]
+----
 (venv) ~/dev/ansible-roles$ *cp all-repos.example.json all-repos.json*
 
 (venv) ~/dev/ansible-roles$ *nano all-repos.json*
@@ -42,22 +58,16 @@ include::all-repos.example.json[]
 (venv) ~/dev/ansible-roles$ *chmod 600 all-repos.json*
 ----
 
-.step 2: clone (execute this command before any maintenance command)
-[subs="quotes"]
-----
-(venv) ~/dev/ansible-roles$ *all-repos-clone*
-----
-
-.step 3: configure a GITHUB_TOKEN
+.step 2: configure a GITHUB_TOKEN
 ====
 Some Scripts require an appropriately permissioned github token,
-sourced it from the environment variable `GITHUB_TOKEN` or
+which is sourced from either the environment variable `GITHUB_TOKEN` or
 a local gitignore'd `.env` file.
 
 1. Go to https://github.com/settings/tokens/new
 2. Add your note (e.g. `ansible-roles mylaptop`)
-   and select your preferred expiration date
-3. Select the required (most-often just `public_repo`)
+   and select a preferred expiration date
+3. Select the required permissions (most-often just `public_repo`)
 4. Generate, Copy and paste the token into your local `.env` file
    (must be located at the root of the projects' directory)
 +
@@ -67,7 +77,16 @@ GITHUB_TOKEN=LoremipsumLoremipsumLoremipsumLoremipsum
 ----
 ====
 
-.example maintenance: cruft update / pre-commit run all
+
+=== Clone (execute this command before any maintenance command!)
+
+[subs="quotes"]
+----
+(venv) ~/dev/ansible-roles$ *all-repos-clone*
+----
+
+
+=== example maintenance: cruft update / pre-commit run all
 ====
 [subs="quotes"]
 ----
@@ -75,7 +94,7 @@ GITHUB_TOKEN=LoremipsumLoremipsumLoremipsumLoremipsum
 ----
 ====
 
-.example maintenance: merge all pre-commit.ci / dependabot pull requests
+=== example maintenance: merge all pre-commit.ci / dependabot pull requests
 ====
 [subs="quotes"]
 ----
@@ -83,7 +102,7 @@ GITHUB_TOKEN=LoremipsumLoremipsumLoremipsumLoremipsum
 ----
 ====
 
-.example maintenance: ensure minimum supported ansible version is correct
+=== example maintenance: ensure minimum supported ansible version is correct
 ====
 ----
 $ all-repos-sed --commit-msg "chore: set min_ansible_version to 2.11 as per JonasPammer/cookiecutter-ansible-roles" \
@@ -95,7 +114,7 @@ $ all-repos-sed --commit-msg "chore: set min_ansible_version to 2.11 as per Jona
 ----
 ====
 
-.example maintenance: update GitHub Secret `GALAXY_API_KEY`
+=== example maintenance: update GitHub Secret `GALAXY_API_KEY`
 ====
 [subs="quotes"]
 ----
