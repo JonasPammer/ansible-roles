@@ -318,7 +318,7 @@ def init_all_roles() -> None:
                     f"{role.galaxy_role_name}. "
                     f"({role.id})"
                 )
-        except (CalledProcessError) as ex:
+        except CalledProcessError as ex:
             logger.warning(
                 f"Could not fetch {role.galaxy_role_name}'s id " f"because of {ex}."
             )
