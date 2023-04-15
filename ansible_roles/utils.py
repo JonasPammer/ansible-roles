@@ -205,7 +205,7 @@ def init_github_api() -> None:
         github_api = Github(os.environ["GITHUB_TOKEN"])
         try:
             # github_api.get_user().name
-            logger.success("Using API key found `GITHUB_TOKEN` environment variable!")
+            logger.success("Using API key from `GITHUB_TOKEN` environment variable!")
             github_api_used_token = "env"
         except BadCredentialsException:
             logger.warning(
@@ -216,7 +216,7 @@ def init_github_api() -> None:
         return
 
     logger.notice(
-        "No `GITHUB_TOKEN` environemnt variable found. "
+        "No `GITHUB_TOKEN` environment variable found. "
         "Trying to look for `all-repos.json`..."
     )
 
@@ -309,7 +309,8 @@ def init_all_roles() -> None:
 
             if not _id_regex:
                 logger.notice(
-                    "Could not find id in `ansible-galaxy info`'s command output?"
+                    "Could not find id in `ansible-galaxy info`'s command output "
+                    f"for {role.galaxy_role_name}?"
                 )
                 logger.spam("`ansible-galaxy info` output: " + _galaxy_info)
             else:
@@ -333,9 +334,7 @@ def init_all_roles() -> None:
             continue  # no dependencies
         for role_req in role.requirements_yml["roles"]:
             if (
-                "requirements_not_mandatory_to_role_itself"
-                not in role.ansible_roles_yml
-                and role_req["name"]
+                role_req["name"]
                 not in role.ansible_roles_yml[
                     "requirements_not_mandatory_to_role_itself"
                 ]

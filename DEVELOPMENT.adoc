@@ -1,7 +1,13 @@
 :toc:
+:toc-placement!:
 
 This documentation contains information used by myself (JonasPammer)
 to maintain all the repos.
+
+This project may only be successfully run from a Linux Machine because of the dependency and use of
+`all-repos` and `ansible-core`.
+
+toc::[]
 
 == all-repos
 
