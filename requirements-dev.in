@@ -2,7 +2,7 @@ all-repos
 bump2version
 covdefaults
 coverage
-cruft
+cruft>2.11
 pip-tools
 pre-commit
 pytest
