@@ -22,6 +22,10 @@ class CruftProcedureResult(ProcedureResultGenericRepo):
     is_something_to_push: bool = False
 
 
+def is_real_commit_error(ex: CalledProcessError) -> bool:
+    return not any(match in ex.stdout.decode() for match in ["nichts zu", "nothing to"])
+
+
 def check_rejected_files(path: Path) -> bool:
     cruft_rejected_files = [f for f in path.glob("**/*") if ".rej" in f.name]
     if len(cruft_rejected_files) > 0:
@@ -40,11 +44,6 @@ def check_rejected_files(path: Path) -> bool:
 
 
 def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureResult:
-    def _is_real_commit_error(ex: CalledProcessError) -> bool:
-        return not any(
-            match in ex.stdout.decode() for match in ["nichts zu", "nothing to"]
-        )
-
     console.rule(f"{retv.role.repo_name}")
     logger.info(f"Start procedure for '{retv.role.repo_name}'")
 
@@ -62,7 +61,7 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
             SCRIPT_CO_AUTHOR_COMMIT_MSG,
         ],
         retv.path,
-        is_real_error=_is_real_commit_error,
+        is_real_error=is_real_commit_error,
     )
 
     execute(["git", "pull", "--rebase"], retv.path)
@@ -81,7 +80,7 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
             SCRIPT_CO_AUTHOR_COMMIT_MSG,
         ],
         retv.path,
-        is_real_error=_is_real_commit_error,
+        is_real_error=is_real_commit_error,
     )
 
     execute(
@@ -92,7 +91,7 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
     execute(
         ["git", "commit", "-m", "chore: pre-commit", "-m", SCRIPT_CO_AUTHOR_COMMIT_MSG],
         retv.path,
-        is_real_error=_is_real_commit_error,
+        is_real_error=is_real_commit_error,
     )
 
     stdout = execute(["git", "status"], retv.path)
@@ -124,13 +123,12 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()
 def main(push: bool, silent: bool, verbosity: int) -> int:
-    """Script to loop through all ANSIBLE repositories (`all-repos-in.json`)
-    and execute `cruft update ...`, `pre-commit run ...` and commit the
-    results.
+    """Script to loop through all ANSIBLE repositories (`all-repos-in.json`),
+    execute `cruft update ...` / `pre-commit run ...` and commit the results.
 
     This script relies on the machine executing this script
     to have the appropiate command lines tools installed
-    and accessable from the within current PATH.
+    and accessible from the within current PATH.
 
     To actually push the results you need to add the option `-P`
     for safety reason.
