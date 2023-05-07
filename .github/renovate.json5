@@ -25,6 +25,7 @@
     enabled: true,
   },
   minimumReleaseAge: "7 days",
+  ignorePaths: ["requirements*.txt", "setup.cfg"],
   labels: ["kind/dependencies"],
   packageRules: [
     {
