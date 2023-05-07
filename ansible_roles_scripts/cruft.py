@@ -148,9 +148,15 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
     )
 )
 @click.option("-P", "--push/--no-push", "push", default=False, help="Default: False")
+@click.option(
+    "--only",
+    "repo_name_filter",
+    default="",
+    help="Only run on the given repository name.",
+)
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()
-def main(push: bool, silent: bool, verbosity: int) -> int:
+def main(push: bool, repo_name_filter: str, silent: bool, verbosity: int) -> int:
     """Script to loop through all ANSIBLE repositories (`all-repos-in.json`),
     execute `cruft update ...` / `pre-commit run ...` and commit the results.
 
@@ -172,9 +178,15 @@ def main(push: bool, silent: bool, verbosity: int) -> int:
     if not check_tools_ok(["git", "cruft", "pre-commit"]):
         return 127
 
+    def repo_name_filter_fn(repo_name_in: str) -> bool:
+        if repo_name_filter is None:
+            return True
+        return repo_name_in == repo_name_filter
+
     results = {
         repo_path.name: CruftProcedureResult(repo_name_in=repo_path.name)
         for repo_path in get_all_cloned_ansible_repositories()
+        if repo_name_filter_fn(repo_path.name)
     }
     for result in results.values():
         try:
