@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from subprocess import CalledProcessError
 
@@ -43,6 +44,27 @@ def check_rejected_files(path: Path) -> bool:
     return False
 
 
+def get_cookiecutter_compare_url(path: Path) -> str:
+    cruft_path = path.joinpath(".cruft.json")
+    cruft_json_after = json.loads(cruft_path.read_text(encoding="utf-8"))
+
+    current_sha = execute(["git", "rev-parse", "HEAD"], path).replace("\n", "")
+    cruft_content_before = execute(["git", "show", f"{current_sha}:.cruft.json"], path)
+    cruft_json_before = json.loads(cruft_content_before)
+
+    cruft_sha_before = cruft_json_before["commit"]
+    cruft_sha_after = cruft_json_after["commit"]
+
+    if cruft_sha_before == cruft_sha_after:
+        return ""
+
+    compare_url = (
+        f"https://github.com/JonasPammer/cookiecutter-ansible-role/compare/"
+        f"{cruft_sha_before}...{cruft_sha_after}"
+    )
+    return compare_url
+
+
 def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureResult:
     console.rule(f"{retv.role.repo_name}")
     logger.info(f"Start procedure for '{retv.role.repo_name}'")
@@ -51,6 +73,7 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
         return retv
 
     execute(["git", "add", "."], retv.path)
+    additional_comment = get_cookiecutter_compare_url(retv.path)
     execute(
         [
             "git",
@@ -59,6 +82,8 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
             "chore: cruft update fix",
             "-m",
             SCRIPT_CO_AUTHOR_COMMIT_MSG,
+            "-m",
+            additional_comment,
         ],
         retv.path,
         is_real_error=is_real_commit_error,
@@ -70,6 +95,7 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
     if check_rejected_files(retv.path) or check_conflict_files(retv.path):
         return retv
     execute(["git", "add", "."], retv.path)
+    additional_comment = get_cookiecutter_compare_url(retv.path)
     execute(
         [
             "git",
@@ -78,6 +104,8 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
             "chore: cruft update",
             "-m",
             SCRIPT_CO_AUTHOR_COMMIT_MSG,
+            "-m",
+            additional_comment,
         ],
         retv.path,
         is_real_error=is_real_commit_error,
