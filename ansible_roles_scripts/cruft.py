@@ -151,7 +151,7 @@ def run_procedure_for(retv: CruftProcedureResult, push: bool) -> CruftProcedureR
 @click.option(
     "--only",
     "repo_name_filter",
-    default="",
+    default=None,
     help="Only run on the given repository name.",
 )
 @utils.get_click_silent_option()
