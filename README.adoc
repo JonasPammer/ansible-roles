@@ -61,7 +61,7 @@ image:https://img.shields.io/badge/dynamic/json?color=blueviolet&label=galaxy%20
 | https://github.com/JonasPammer/ansible-role-core_dependencies/pulls[image:https://img.shields.io/github/issues-pr/JonasPammer/ansible-role-core_dependencies[pull requests]]
 
 | https://github.com/JonasPammer/ansible-role-pip[pip] +
-https://galaxy.ansible.com/jonaspammer/pip[image:https://img.shields.io/badge/galaxy-jonaspammer.pip-blueviolet[Available on Galaxy,title=pass:[An ansible role for installing pip (python package installer) to the system.]]]
+https://galaxy.ansible.com/jonaspammer/pip[image:https://img.shields.io/badge/galaxy-jonaspammer.pip-blueviolet[Available on Galaxy,title=pass:[An ansible role for installing the latest pip (python package installer) to the system.]]]
 | https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml[image:https://github.com/JonasPammer/ansible-role-pip/actions/workflows/ci.yml/badge.svg[Testing CI]]
 https://results.pre-commit.ci/latest/github/JonasPammer/ansible-role-pip/master[image:https://results.pre-commit.ci/badge/github/JonasPammer/ansible-role-pip/master.svg[pre-commit.ci status]]
 | https://github.com/JonasPammer/ansible-role-pip/releases[image:https://img.shields.io/github/commits-since/JonasPammer/ansible-role-pip/latest.svg[version]]
