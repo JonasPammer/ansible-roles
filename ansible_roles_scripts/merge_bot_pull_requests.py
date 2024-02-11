@@ -6,6 +6,7 @@ import attrs
 import click
 import yaml
 from github import GithubException
+from github.Commit import Commit
 from github.NamedUser import NamedUser
 from github.PullRequest import PullRequest
 from github.PullRequestMergeStatus import PullRequestMergeStatus
@@ -56,7 +57,7 @@ def is_user_renovate_bot(user: NamedUser) -> bool:
 
 def close_fake_pull_request(repo: Repository, pr: PullRequest, name: str) -> None:
     # never happened but you never know how sleepy or "ok next" you may one time be
-    logger.warn(f"Closing fake pre-commit.ci pull request {pr} found in {repo}.")
+    logger.warn(f"Closing fake pre-commit.ci pull request {pr}.")
     pr.create_comment(
         f"""
         Closing this '{name}' pull request as it was deemed fake!
@@ -69,14 +70,25 @@ def close_fake_pull_request(repo: Repository, pr: PullRequest, name: str) -> Non
 
 
 def _squash_merge(repo: Repository, pr: PullRequest, commit_title: str) -> bool:
-    logger.verbose(f"Attempting to squash-merge {pr} of {repo}...")
-    result: PullRequestMergeStatus = pr.merge(
-        commit_title=commit_title, merge_method="squash"
-    )
+    logger.verbose("Attempting to squash-merge PR...")
+    try:
+        result: PullRequestMergeStatus = pr.merge(
+            commit_title=commit_title, merge_method="squash"
+        )
+    except GithubException as ex:
+        if (
+            ex.status == 405
+            and "message" in ex.data
+            and "not mergeable" in ex.data["message"]
+        ):
+            logger.error(f"{pr.html_url} is not mergeable (possible conflicts).")
+            return False
+        raise ex
+
     if not result.merged:
         logger.error(f"{pr} reported that it did not merge! Message: {result.message}")
         return False
-    logger.success(f"Successfully merged {pr} for {repo}.")
+    logger.success(f"Successfully merged {pr}.")
     return True
 
 
@@ -113,7 +125,9 @@ def merge_precommit_ci_request(repo: Repository, pr: PullRequest) -> bool:
     return _squash_merge(repo, pr, commit_title=autoupdate_commit_msg)
 
 
-def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
+def run_procedure_for(
+    retv: MergeProcedureResult, dry_run: bool = True, pr_title_filter: str | None = None
+) -> MergeProcedureResult:
     console.rule(f"{retv}")
     logger.verbose(f"Start procedure for '{retv}'")
     repo = retv.repo
@@ -124,23 +138,37 @@ def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
         logger.info(f"{repo} has no pull requests.")
         return retv
 
-    # TODO add check to only merge if all CI checks are ok
-    # PullRequest has no adhoc thing to check for this the way githubs UI warns/does
-
     for pr in pull_requests:
-        logger.verbose(f"Checking pull request {pr} of {repo}...")
+        logger.info(f"Checking {pr.html_url} ...")
+
+        if pr_title_filter is not None and pr_title_filter not in pr.title:
+            logger.verbose(f"{pr.title} does not match title filter, skipping.")
+            continue
+
+        last_commit: Commit = pr.get_commits().reversed[0]
+        last_commit_status = last_commit.get_check_runs()
+        good: int = 0
+        for check in last_commit_status:
+            if check.status == "completed" and check.conclusion == "success":
+                good += 1
+        if good != last_commit_status.totalCount:
+            logger.info(
+                f"Only {good}/{last_commit_status.totalCount} CI checks ok, skipping."
+            )
+            continue
+        logger.verbose(f"All {last_commit_status.totalCount} CI checks ok, continuing.")
+
         if "<!--pre-commit.ci start-->" in pr.body and pr.changed_files == 1:
             if not is_user_precommit_bot(pr.user):
                 close_fake_pull_request(repo, pr, "pre-commit.ci")
                 continue
-            logger.verbose(
-                f"Recognized {pr} of {repo} as an authentic pre-commit.ci request!"
-            )
+            logger.verbose("Authentic pre-commit.ci request!")
+            if dry_run:
+                continue
             merge_result = merge_precommit_ci_request(repo, pr)
             if merge_result:
                 retv.set_ok_if_none()
                 retv.changed = True
-            continue
         elif (
             "You can trigger Dependabot actions by commenting on this PR" in pr.body
             or is_user_dependabot_bot(pr.user)
@@ -148,9 +176,9 @@ def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
             if not is_user_dependabot_bot(pr.user):
                 close_fake_pull_request(repo, pr, "dependabot")
                 continue
-            logger.verbose(
-                f"Recognized {pr} of {repo} as an authentic dependabot request!"
-            )
+            logger.verbose("Authentic dependabot request!")
+            if dry_run:
+                continue
             merge_result = merge_dependabot_request(repo, pr)
             if merge_result:
                 retv.set_ok_if_none()
@@ -162,13 +190,15 @@ def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
             if not is_user_renovate_bot(pr.user):
                 close_fake_pull_request(repo, pr, "renovate")
                 continue
-            logger.verbose(
-                f"Recognized {pr} of {repo} as an authentic renovate request!"
-            )
+            logger.verbose("Authentic renovate request!")
+            if dry_run:
+                continue
             merge_result = merge_renovate_request(repo, pr)
             if merge_result:
                 retv.set_ok_if_none()
                 retv.changed = True
+        else:  # no match (normal PR)
+            logger.info(f'Normal PR, skipping ("{pr.title}" by {pr.user.name})')
             continue
 
     logger.info(f"Could not find a matching Bot Pull Request in {repo}.")
@@ -181,9 +211,33 @@ def run_procedure_for(retv: MergeProcedureResult) -> MergeProcedureResult:
         max_content_width=120, help_option_names=["--help", "--usage"]
     )
 )
+@click.option(
+    "--dry/--dry-run",
+    "dry_run",
+    default=False,
+    help="Don't Actually Merge. Default: False",
+)
+@click.option(
+    "--only",
+    "repo_name_filter",
+    default=None,
+    help="Only run on the given repository name.",
+)
+@click.option(
+    "--only-title",
+    "pr_title_filter",
+    default=None,
+    help="Filter to only PRs with this title (does not bypass other PR checks)",
+)
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()
-def main(silent: bool, verbosity: int) -> int:
+def main(
+    dry_run: bool,
+    repo_name_filter: str,
+    pr_title_filter: str,
+    silent: bool,
+    verbosity: int,
+) -> int:
     """Script to loop through all GITHUB repositories (`all-repos-in.json`) and
     squash-merge authentic pre-commit.ci / dependabot / renovate bot pull
     requests.
@@ -202,13 +256,21 @@ def main(silent: bool, verbosity: int) -> int:
         )
         return retv
 
+    def repo_name_filter_fn(repo_name_in: str) -> bool:
+        if repo_name_filter is None:
+            return True
+        return repo_name_in == repo_name_filter
+
     results = {
         repo_path.name: MergeProcedureResult(repo_name_in=repo_path.name)
         for repo_path in get_all_cloned_github_repositories()
+        if repo_name_filter_fn(repo_path.name)
     }
     for result in results.values():
         try:
-            results[result.path.name] = run_procedure_for(result)
+            results[result.path.name] = run_procedure_for(
+                result, dry_run, pr_title_filter
+            )
         except CalledProcessError:
             retv = 1
             results[result.path.name].all_ok = False

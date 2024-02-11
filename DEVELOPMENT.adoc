@@ -16,9 +16,9 @@ toc::[]
 https://github.com/asottile/all-repos[all-repos] is a project by asotille
 to clone multiple repositories and apply sweeping changes at once.
 
-=== `all-repos-in.json`
+=== all-repos-in.json
 
-link:all-repos-in.json[] is an `all.repos.source.json_file` compatible file.
+`link:all-repos-in.json[]` is an `all.repos.source.json_file` compatible file.
 It's used as the single source of truth to determine the *list of all my ansible roles*.
 
 It can be used in an `all-repos` configuration file as shown in `link:all-repos.example.json[]`:
@@ -74,9 +74,8 @@ which is sourced from either the environment variable `GITHUB_TOKEN` or
 a local gitignore'd `.env` file.
 
 1. Go to https://github.com/settings/tokens/new
-2. Add your note (e.g. `ansible-roles mylaptop`)
-   and select a preferred expiration date
-3. Select the required permissions: `public_repo`
+2. Add your note (e.g. `ansible-roles PC-NAME`) and select preferred expiration date
+3. Select the required permissions: `public_repo` (required), `workflow` (for <<ansible-roles-merge_bot_pull_requests>>)
 4. Generate, Copy and paste the token into your local `.env` file
    (must be located at the root of the projects' directory)
 +
@@ -84,10 +83,12 @@ a local gitignore'd `.env` file.
 ----
 GITHUB_TOKEN=LoremipsumLoremipsumLoremipsumLoremipsum
 ----
-====
+****
 
 
-=== Clone (execute this command before any maintenance command!)
+=== Pull all (execute this command before any maintenance command!)
+
+(Possibly have to execute it multiple times, as sometimes get a `Connection timed out`.)
 
 [subs="quotes"]
 ----
@@ -107,6 +108,7 @@ NOTE: All following scripts support `--help` for General Information and Argumen
 You may be asked asked to modify local clone of repository in `./all-repos/` e.g. because of cruft `.rej` / git conflict files,
 after which you need to run the same command again afterwards
 
+[[ansible-roles-merge_bot_pull_requests]]
 === example maintenance: merge all pre-commit.ci / dependabot pull requests
 ====
 [subs="quotes"]
