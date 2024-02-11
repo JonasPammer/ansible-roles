@@ -349,7 +349,7 @@ def init_all_roles() -> None:
 
 def init(verbosity: int = 0, silent: bool = False) -> None:
     """Initialize all Variables global to this module."""
-    load_dotenv()
+    load_dotenv(override=True)
     init_logger(verbosity, silent)
     init_github_api()
     init_all_roles()
