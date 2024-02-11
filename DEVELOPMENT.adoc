@@ -4,8 +4,10 @@
 This documentation contains information used by myself (JonasPammer)
 to maintain all the repos.
 
-This project may only be successfully run from a Linux Machine because of the dependency and use of
-`all-repos` and `ansible-core`.
+This project may only be successfully run from a Linux Machine
+because of the dependency and use of `all-repos`.
+
+Python Version requirement is same as https://github.com/JonasPammer/cookiecutter-ansible-role/blob/master/%7B%7B%20cookiecutter.project_slug%20%7D%7D/DEVELOPMENT.adoc#-development-machine-dependencies[cookiecutter-ansible-role].
 
 toc::[]
 
@@ -14,9 +16,9 @@ toc::[]
 https://github.com/asottile/all-repos[all-repos] is a project by asotille
 to clone multiple repositories and apply sweeping changes at once.
 
-=== `all-repos-in.json`
+=== all-repos-in.json
 
-link:all-repos-in.json[] is an `all.repos.source.json_file` compatible file.
+`link:all-repos-in.json[]` is an `all.repos.source.json_file` compatible file.
 It's used as the single source of truth to determine the *list of all my ansible roles*.
 
 It can be used in an `all-repos` configuration file as shown in `link:all-repos.example.json[]`:
@@ -31,7 +33,8 @@ include::all-repos.example.json[]
 == Commands
 === Setup
 
-.step 0: setup like any normal python repository
+.step 0: install python project
+****
 [subs="quotes"]
 ----
 ~/dev$ *git clone git@github.com:JonasPammer/ansible-roles.git*
@@ -42,12 +45,17 @@ include::all-repos.example.json[]
 
 ~/dev/ansible-roles$ *_source venv/bin/activate_*
 
+#(venv)# ~/dev/ansible-roles$ *pip3 install -r requirements.txt*
+
 #(venv)# ~/dev/ansible-roles$ *pip3 install -e .*
 
+#(venv)# ~/dev/ansible-roles$ # Optional
 #(venv)# ~/dev/ansible-roles$ *pip3 install -r requirements-dev.txt*
 ----
+****
 
 .step 1: configure `all-repos`
+****
 [subs="quotes"]
 ----
 (venv) ~/dev/ansible-roles$ *cp all-repos.example.json all-repos.json*
@@ -57,17 +65,17 @@ include::all-repos.example.json[]
 
 (venv) ~/dev/ansible-roles$ *chmod 600 all-repos.json*
 ----
+****
 
 .step 2: configure a GITHUB_TOKEN
-====
+****
 Some Scripts require an appropriately permissioned github token,
 which is sourced from either the environment variable `GITHUB_TOKEN` or
 a local gitignore'd `.env` file.
 
 1. Go to https://github.com/settings/tokens/new
-2. Add your note (e.g. `ansible-roles mylaptop`)
-   and select a preferred expiration date
-3. Select the required permissions (most-often just `public_repo`)
+2. Add your note (e.g. `ansible-roles PC-NAME`) and select preferred expiration date
+3. Select the required permissions: `public_repo` (required), `workflow` (for <<ansible-roles-merge_bot_pull_requests>>)
 4. Generate, Copy and paste the token into your local `.env` file
    (must be located at the root of the projects' directory)
 +
@@ -75,25 +83,32 @@ a local gitignore'd `.env` file.
 ----
 GITHUB_TOKEN=LoremipsumLoremipsumLoremipsumLoremipsum
 ----
-====
+****
 
 
-=== Clone (execute this command before any maintenance command!)
+=== Pull all (execute this command before any maintenance command!)
+
+(Possibly have to execute it multiple times, as sometimes get a `Connection timed out`.)
 
 [subs="quotes"]
 ----
 (venv) ~/dev/ansible-roles$ *all-repos-clone*
 ----
 
+NOTE: All following scripts support `--help` for General Information and Arguments.
 
 === example maintenance: cruft update / pre-commit run all
 ====
 [subs="quotes"]
 ----
-(venv) ~/dev/ansible-roles$ *ansible-roles-cruft*
+(venv) ~/dev/ansible-roles$ *ansible-roles-cruft* [--push]
 ----
 ====
 
+You may be asked asked to modify local clone of repository in `./all-repos/` e.g. because of cruft `.rej` / git conflict files,
+after which you need to run the same command again afterwards
+
+[[ansible-roles-merge_bot_pull_requests]]
 === example maintenance: merge all pre-commit.ci / dependabot pull requests
 ====
 [subs="quotes"]

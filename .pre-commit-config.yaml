@@ -70,7 +70,7 @@ repos:
     rev: v1.8.0
     hooks:
       - id: mypy
-        additional_dependencies: ["attrs>=21.0,<22", "types-PyYAML"] # as per setup.cfg
+        additional_dependencies: ["attrs", "types-PyYAML", "types-requests"] # as per setup.cfg
 
   # the uncompromising (opinionated / barely configurable) PEP8 Python code formatter.
   - repo: https://github.com/psf/black

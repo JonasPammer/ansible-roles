@@ -29,7 +29,7 @@
   labels: ["kind/dependencies"],
   packageRules: [
     {
-      matchFiles: ["(.*)setup.cfg", "(.*)setup.py"],
+      matchFileNames: ["(.*)setup.cfg", "(.*)setup.py"],
       enabled: false,
     },
     {

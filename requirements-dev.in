@@ -1,10 +1,12 @@
-all-repos
-bump2version
-covdefaults
-coverage
-cruft>2.11
 pip-tools
-pre-commit
+bump2version
+
+# https://github.com/JonasPammer/cookiecutter-ansible-role/blob/master/%7B%7B%20cookiecutter.project_slug%20%7D%7D/requirements-dev.txt
+cruft>2.11
+tox
+
+# testing
 pytest
 pytest-env
-tox
+covdefaults
+coverage
