@@ -218,7 +218,8 @@ def get_all_cloned_github_repositories() -> list[Path]:
     """Recurse the 'all-repos' directory and return each directory that has
     github info.
 
-    :return: A list of directories of which origin/master points to github
+    :return: A list of directories of which origin/master points to
+        github
     """
 
     all_repos = [
@@ -233,8 +234,8 @@ def get_all_cloned_ansible_repositories() -> list[Path]:
     """Recurse the 'all-repos' directory and return each directory that has
     cookiecutter info.
 
-    :return: A list of directories found to be valid ansible roles
-             (i.e. cruft'ed from my cookiecutter).
+    :return: A list of directories found to be valid ansible roles (i.e.
+        cruft'ed from my cookiecutter).
     """
 
     all_repos = [

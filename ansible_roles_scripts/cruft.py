@@ -160,17 +160,16 @@ def main(push: bool, repo_name_filter: str, silent: bool, verbosity: int) -> int
     """Script to loop through all ANSIBLE repositories (`all-repos-in.json`),
     execute `cruft update ...` / `pre-commit run ...` and commit the results.
 
-    This script relies on the machine executing this script
-    to have the appropiate command lines tools installed
-    and accessible from the within current PATH.
+    This script relies on the machine executing this script to have the
+    appropiate command lines tools installed and accessible from the
+    within current PATH.
 
-    To actually push the results you need to add the option `-P`
-    for safety reason.
+    To actually push the results you need to add the option `-P` for
+    safety reason.
 
-    This script recognizes cruft- and git-conflicts,
-    aborting the operation for a given repository
-    if any were found and notifies of the required
-    manual intervention needed.
+    This script recognizes cruft- and git-conflicts, aborting the
+    operation for a given repository if any were found and notifies of
+    the required manual intervention needed.
     """
     utils.init(verbosity=verbosity, silent=silent)
     retv = 1
