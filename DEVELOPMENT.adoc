@@ -4,8 +4,8 @@
 This documentation contains information used by myself (JonasPammer)
 to maintain all the repos.
 
-This project may only be successfully run from a Linux Machine because of the dependency and use of
-`all-repos` and `ansible-core`.
+This project may only be successfully run from a Linux Machine
+because of the dependency and use of `all-repos`.
 
 Python Version requirement is same as https://github.com/JonasPammer/cookiecutter-ansible-role/blob/master/%7B%7B%20cookiecutter.project_slug%20%7D%7D/DEVELOPMENT.adoc#-development-machine-dependencies[cookiecutter-ansible-role].
 

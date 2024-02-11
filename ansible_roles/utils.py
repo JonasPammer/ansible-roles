@@ -3,9 +3,6 @@ from __future__ import annotations
 import json
 import logging
 import os
-import re
-from pathlib import Path
-from subprocess import CalledProcessError
 from typing import Any
 from typing import Callable
 from typing import Literal
@@ -13,6 +10,7 @@ from typing import Literal
 import attrs
 import click
 import diskcache
+import requests
 import verboselogs
 import yaml
 from dotenv import load_dotenv
@@ -253,6 +251,24 @@ def init_github_api() -> None:
         return
 
 
+def get_role_id(role: AnsibleRole) -> int | None:
+    url = (
+        "https://galaxy.ansible.com/api/v1/roles/"
+        f"?owner__username={role.galaxy_owner}&name={role.role_name}"
+    )
+    response = requests.get(url)
+    data = json.loads(response.text)
+    if "count" not in data:
+        return None
+    if data["count"] > 1:
+        # shouldn't and hasn't happened, but just making sure consumer notices
+        logger.warn("galaxy.ansible.com has multiple results?!")
+    if data["count"] <= 0:
+        return None
+    role_id = data["results"][0]["id"]
+    return int(role_id)
+
+
 def init_all_roles() -> None:
     """Initializes the global module variable `all_roles`."""
     with open("all-repos-in.json") as f:
@@ -293,33 +309,18 @@ def init_all_roles() -> None:
             if "empty" not in str(ex):
                 raise ex
 
-        from ansible_roles_scripts.script_utils import execute
-
         try:
             logger.debug(
-                "Trying to issue `ansible-galaxy` commands to regex find "
-                f"{role.galaxy_role_name}'s id. "
+                "Querying https://galaxy.ansible.com/api/v1 "
+                f"to get {role.galaxy_role_name}'s id"
             )
-            _galaxy_info = execute(
-                ["ansible-galaxy", "info", role.galaxy_role_name], Path.cwd()
-            )
-            _id_regex = re.search("id: [0-9]*", _galaxy_info)
-            if _id_regex:
-                role.id = int(_id_regex.group(0).split(" ")[1])
-
-            if not _id_regex:
-                logger.notice(
-                    "Could not find id in `ansible-galaxy info`'s command output "
-                    f"for {role.galaxy_role_name}?"
-                )
-                logger.spam("`ansible-galaxy info` output: " + _galaxy_info)
+            queried_role_id = get_role_id(role)
+            if queried_role_id is not None:
+                logger.verbose(f"Role ID: {queried_role_id}")
+                role.id = queried_role_id
             else:
-                logger.verbose(
-                    "Successfully fetched 'id' for "
-                    f"{role.galaxy_role_name}. "
-                    f"({role.id})"
-                )
-        except CalledProcessError as ex:
+                logger.verbose("Couldn't query role ID.")
+        except Exception as ex:
             logger.warning(
                 f"Could not fetch {role.galaxy_role_name}'s id " f"because of {ex}."
             )
