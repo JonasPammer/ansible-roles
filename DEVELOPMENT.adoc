@@ -129,7 +129,21 @@ $ all-repos-sed --commit-msg "chore: set min_ansible_version to 2.11 as per Jona
 ----
 ====
 
-=== example maintenance: update GitHub Secret `GALAXY_API_KEY`
+=== example maintenance: Update GitHub Repository settings
+
+allowed merge types, repo description, branch protection rules, ... (see `--help`)
+
+====
+[subs="quotes"]
+----
+(venv) ~/dev/ansible-roles$ *ansible-roles-sync_meta*
+----
+====
+
+=== example maintenance: Update GitHub Repository `GALAXY_API_KEY` Secret
+
+(You will  be prompted to enter the new value for the secret)
+
 ====
 [subs="quotes"]
 ----
