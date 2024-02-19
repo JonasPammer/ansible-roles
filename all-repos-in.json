@@ -8,5 +8,6 @@
   "ansible-role-openssl": "git@github.com:JonasPammer/ansible-role-openssl.git",
   "ansible-role-goaccess": "git@github.com:JonasPammer/ansible-role-goaccess.git",
   "ansible-role-mediawiki": "git@github.com:JonasPammer/ansible-role-mediawiki.git",
+  "ansible-role-gitlab": "git@github.com:JonasPammer/ansible-role-gitlab.git",
   "cookiecutter-ansible-role": "git@github.com:JonasPammer/cookiecutter-ansible-role.git"
 }
