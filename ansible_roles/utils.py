@@ -117,7 +117,7 @@ class AnsibleRole:
             20: "turquoise",
             21: "mediumturquoise",
             22: "lightseagreen",
-            23: "seagreen"
+            23: "seagreen",
         }
         return layer_colors[len(self.computed_dependencies)]
 

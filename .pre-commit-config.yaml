@@ -87,7 +87,8 @@ repos:
 
   # formats docstrings to follow PEP 257.
   - repo: https://github.com/PyCQA/docformatter
-    rev: v1.7.5
+    # https://github.com/PyCQA/docformatter/issues/293
+    rev: 06907d0267368b49b9180eed423fae5697c1e909 # pragma: allowlist secret
     hooks:
       - id: docformatter
         args: [--in-place]
