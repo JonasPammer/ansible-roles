@@ -14,13 +14,13 @@
 <!-- jonaspammer.motd -->
 <g id="node1" class="node">
 <title>jonaspammer.motd</title>
-<ellipse fill="orange" stroke="black" stroke-width="3" cx="155.29" cy="-272" rx="98.28" ry="18"/>
+<ellipse fill="limegreen" stroke="black" stroke-width="3" cx="155.29" cy="-272" rx="98.28" ry="18"/>
 <text text-anchor="middle" x="155.29" y="-268.3" font-family="Open Sans" font-size="14.00">jonaspammer.motd</text>
 </g>
 <!-- jonaspammer.bootstrap -->
 <g id="node2" class="node">
 <title>jonaspammer.bootstrap</title>
-<ellipse fill="green" stroke="black" cx="118.29" cy="-56" rx="118.08" ry="18"/>
+<ellipse fill="darkgreen" stroke="black" cx="118.29" cy="-56" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="118.29" y="-52.3" font-family="Open Sans" font-size="14.00">jonaspammer.bootstrap</text>
 </g>
 <!-- jonaspammer.motd&#45;&gt;jonaspammer.bootstrap -->
@@ -32,7 +32,7 @@
 <!-- jonaspammer.shellcheck -->
 <g id="node3" class="node">
 <title>jonaspammer.shellcheck</title>
-<ellipse fill="orange" stroke="black" cx="230.29" cy="-200" rx="122.38" ry="18"/>
+<ellipse fill="limegreen" stroke="black" cx="230.29" cy="-200" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="230.29" y="-196.3" font-family="Open Sans" font-size="14.00">jonaspammer.shellcheck</text>
 </g>
 <!-- jonaspammer.motd&#45;&gt;jonaspammer.shellcheck -->
@@ -50,7 +50,7 @@
 <!-- jonaspammer.core_dependencies -->
 <g id="node4" class="node">
 <title>jonaspammer.core_dependencies</title>
-<ellipse fill="yellow" stroke="black" cx="307.29" cy="-128" rx="161.37" ry="18"/>
+<ellipse fill="forestgreen" stroke="black" cx="307.29" cy="-128" rx="161.37" ry="18"/>
 <text text-anchor="middle" x="307.29" y="-124.3" font-family="Open Sans" font-size="14.00">jonaspammer.core_dependencies</text>
 </g>
 <!-- jonaspammer.shellcheck&#45;&gt;jonaspammer.core_dependencies -->

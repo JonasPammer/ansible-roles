@@ -14,13 +14,13 @@
 <!-- jonaspammer.core_dependencies -->
 <g id="node1" class="node">
 <title>jonaspammer.core_dependencies</title>
-<ellipse fill="yellow" stroke="black" stroke-width="3" cx="266.5" cy="-128" rx="161.37" ry="18"/>
+<ellipse fill="forestgreen" stroke="black" stroke-width="3" cx="266.5" cy="-128" rx="161.37" ry="18"/>
 <text text-anchor="middle" x="266.5" y="-124.3" font-family="Open Sans" font-size="14.00">jonaspammer.core_dependencies</text>
 </g>
 <!-- jonaspammer.bootstrap -->
 <g id="node2" class="node">
 <title>jonaspammer.bootstrap</title>
-<ellipse fill="green" stroke="black" cx="266.5" cy="-56" rx="118.08" ry="18"/>
+<ellipse fill="darkgreen" stroke="black" cx="266.5" cy="-56" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="266.5" y="-52.3" font-family="Open Sans" font-size="14.00">jonaspammer.bootstrap</text>
 </g>
 <!-- jonaspammer.core_dependencies&#45;&gt;jonaspammer.bootstrap -->
