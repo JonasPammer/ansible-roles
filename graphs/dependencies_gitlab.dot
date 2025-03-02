@@ -4,8 +4,8 @@ digraph hierarchy {
   overlap=false
 
   {
-    "jonaspammer.gitlab" [fillcolor=yellow style=filled penwidth=3]
-    "jonaspammer.bootstrap" [fillcolor=green style=filled ]
+    "jonaspammer.gitlab" [fillcolor=forestgreen style=filled penwidth=3]
+    "jonaspammer.bootstrap" [fillcolor=darkgreen style=filled ]
   }
 
 

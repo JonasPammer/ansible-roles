@@ -14,13 +14,13 @@
 <!-- jonaspammer.goaccess -->
 <g id="node1" class="node">
 <title>jonaspammer.goaccess</title>
-<ellipse fill="yellow" stroke="black" stroke-width="3" cx="232" cy="-128" rx="116.18" ry="18"/>
+<ellipse fill="forestgreen" stroke="black" stroke-width="3" cx="232" cy="-128" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="232" y="-124.3" font-family="Open Sans" font-size="14.00">jonaspammer.goaccess</text>
 </g>
 <!-- jonaspammer.bootstrap -->
 <g id="node2" class="node">
 <title>jonaspammer.bootstrap</title>
-<ellipse fill="green" stroke="black" cx="232" cy="-56" rx="118.08" ry="18"/>
+<ellipse fill="darkgreen" stroke="black" cx="232" cy="-56" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="232" y="-52.3" font-family="Open Sans" font-size="14.00">jonaspammer.bootstrap</text>
 </g>
 <!-- jonaspammer.goaccess&#45;&gt;jonaspammer.bootstrap -->

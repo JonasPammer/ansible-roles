@@ -14,13 +14,13 @@
 <!-- jonaspammer.openssl -->
 <g id="node1" class="node">
 <title>jonaspammer.openssl</title>
-<ellipse fill="orange" stroke="black" stroke-width="3" cx="240.88" cy="-200" rx="109.38" ry="18"/>
+<ellipse fill="limegreen" stroke="black" stroke-width="3" cx="240.88" cy="-200" rx="109.38" ry="18"/>
 <text text-anchor="middle" x="240.88" y="-196.3" font-family="Open Sans" font-size="14.00">jonaspammer.openssl</text>
 </g>
 <!-- jonaspammer.pip -->
 <g id="node2" class="node">
 <title>jonaspammer.pip</title>
-<ellipse fill="yellow" stroke="black" cx="182.88" cy="-128" rx="89.08" ry="18"/>
+<ellipse fill="forestgreen" stroke="black" cx="182.88" cy="-128" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="182.88" y="-124.3" font-family="Open Sans" font-size="14.00">jonaspammer.pip</text>
 </g>
 <!-- jonaspammer.openssl&#45;&gt;jonaspammer.pip -->
@@ -32,7 +32,7 @@
 <!-- jonaspammer.bootstrap -->
 <g id="node3" class="node">
 <title>jonaspammer.bootstrap</title>
-<ellipse fill="green" stroke="black" cx="240.88" cy="-56" rx="118.08" ry="18"/>
+<ellipse fill="darkgreen" stroke="black" cx="240.88" cy="-56" rx="118.08" ry="18"/>
 <text text-anchor="middle" x="240.88" y="-52.3" font-family="Open Sans" font-size="14.00">jonaspammer.bootstrap</text>
 </g>
 <!-- jonaspammer.openssl&#45;&gt;jonaspammer.bootstrap -->
