@@ -94,12 +94,30 @@ class AnsibleRole:
         :return: Named color understood by Graphviz.
         """
         layer_colors = {
-            0: "green",
-            1: "yellow",
-            2: "orange",
-            3: "red",
-            4: "purple",
-            5: "blue",
+            0: "darkgreen",
+            1: "forestgreen",
+            2: "limegreen",
+            3: "greenyellow",
+            4: "yellow",
+            5: "gold",
+            6: "orange",
+            7: "darkorange",
+            8: "orangered",
+            9: "red",
+            10: "firebrick",
+            11: "darkred",
+            12: "mediumvioletred",
+            13: "purple",
+            14: "darkorchid",
+            15: "blueviolet",
+            16: "royalblue",
+            17: "blue",
+            18: "dodgerblue",
+            19: "deepskyblue",
+            20: "turquoise",
+            21: "mediumturquoise",
+            22: "lightseagreen",
+            23: "seagreen"
         }
         return layer_colors[len(self.computed_dependencies)]
 
