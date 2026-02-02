@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: check out the codebase
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: set up python in minimum required version
         uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5
