@@ -28,6 +28,7 @@ github_api: Github = None
 
 Use this variable using `utils.github_api`, not `github_api`.
 """
+
 github_api_used_token: Literal["all-repos", "env", "None"] = "None"
 """See :func:`utils.init_github_api`"""
 
@@ -37,6 +38,7 @@ key is the `galaxy_role_name`.
 
 See :func:`utils.init_all_roles`
 """
+
 __all_roles_cache = diskcache.Cache(".ansible_roles_diskcache")
 
 
@@ -46,15 +48,17 @@ class AnsibleRole:
     """Repository name as denoted in all-repos-in.json."""
     repo_pull_url: str
     """Repository pull URI as denoted in all-repos-in.json."""
+
     galaxy_owner: str = "jonaspammer"
     requirements_yml: dict[str, Any] = {}
     """Decoded content of this role's `requirements.yml` file."""
+
     meta_yml: dict[str, Any] = {}
     """Decoded content of this role's `meta/meta.yml` file."""
+
     ansible_roles_yml: dict[str, Any] = {}
     """Decoded content of this role's `meta/ansible-roles.yml` file added in
     https://github.com/JonasPammer/cookiecutter-ansible-role/pull/52."""
-
     id: int = 0
     """Fetched ansible id of this role."""
 
@@ -65,7 +69,8 @@ class AnsibleRole:
     def role_name(self) -> str:
         """Utility property which returns the actual name of the role.
 
-        :return: `repo_name` with removed slug/repository-prefix (e.g. `ansible-role-`)
+        :return:`repo_name` with removed slug/repository-prefix (e.g.
+            `ansible-role-`)
         """
         return self.repo_name.replace("ansible-role-", "")
 
@@ -73,7 +78,8 @@ class AnsibleRole:
     def galaxy_role_name(self) -> str:
         """Utility property which returns this role's fully qualified name.
 
-        :return: This role's fully qualified name in format `galaxy_owner.role_name`.
+        :return: This role's fully qualified name in format
+            `galaxy_owner.role_name`.
         """
         return self.galaxy_owner + "." + self.role_name
 
@@ -141,12 +147,14 @@ def get_click_verbosity_option() -> Callable[[click.FC], click.FC]:
         "--verbose",
         "verbosity",
         count=True,
-        help="""
+        help=\
+             """
         Can be used up to 3 times (i.e., '-vvv') to
         incrementally increase verbosity of log output (VERBOSE -> DEBUG -> SPAM).
         File Log Output (if existant) is always DEBUG except when verbosity is over 3,
         in which scenario it also shows SPAM logs.
-        """,
+        """
+           ,
     )
 
 
@@ -171,7 +179,6 @@ def get_log_levels_from_verbosity_or_silent_cli_argument(
         1) the determined console log level and
         2) the determined rotating log level.
     """
-
     console_log_level = logging.INFO
     rotate_log_level = verboselogs.VERBOSE
     if verbosity == 1:

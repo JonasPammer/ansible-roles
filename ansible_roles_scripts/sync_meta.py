@@ -112,7 +112,8 @@ def run_procedure_for(
     If this option is given this script will prompt the user
     for an appropiate key and update the Github Action Secret
     `GALAXY_API_KEY` of every repository to the given value.
-    """,
+    """
+       ,
 )
 @utils.get_click_silent_option()
 @utils.get_click_verbosity_option()

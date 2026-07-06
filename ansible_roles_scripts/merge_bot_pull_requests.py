@@ -58,14 +58,12 @@ def is_user_renovate_bot(user: NamedUser) -> bool:
 def close_fake_pull_request(repo: Repository, pr: PullRequest, name: str) -> None:
     # never happened but you never know how sleepy or "ok next" you may one time be
     logger.warn(f"Closing fake pre-commit.ci pull request {pr}.")
-    pr.create_comment(
-        f"""
+    pr.create_comment(f"""
         Closing this '{name}' pull request as it was deemed fake!
         Nice try.
 
         {SCRIPT_CO_AUTHOR_COMMIT_MSG}
-        """
-    )
+        """)
     pr.edit(status="closed")
 
 
