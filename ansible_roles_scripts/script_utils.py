@@ -30,6 +30,7 @@ class ProcedureResultBase:
 
     Use `set_ok_if_none` for setting it to True.
     """
+
     changed: bool = False
 
     def set_ok_if_none(self) -> None:
@@ -115,22 +116,18 @@ def execute(
     """Execute given command in the given directory with appropiate of logs,
     returing the output if all went ok.
 
-    :param args:
-        The actual command to execute.
-    :param path:
-        The `cwd` to execute the subproccess in.
-    :param is_real_error:
-        If the exit code was non-zero, this function is used to determine
-        whether to throw and report about the thrown CalledProcessError
-        or wheter to just log and return the output like normal.
-        None is interpreted as "always True".
-        None by default.
-    :raises subproccess.CalledProcesssError:
-        If the exit code was non-zero and `is_real_error`
-        is either None or returns True,
-        this function raises a CalledProcessError.
-        The CalledProcessError object will have  the return code in the
-        returncode attribute and output in the output attribute.
+    :param args: The actual command to execute.
+    :param path: The `cwd` to execute the subproccess in.
+    :param is_real_error: If the exit code was non-zero, this function
+        is used to determine whether to throw and report about the
+        thrown CalledProcessError or wheter to just log and return the
+        output like normal. None is interpreted as "always True". None
+        by default.
+    :raises subproccess.CalledProcesssError: If the exit code was non-
+        zero and `is_real_error` is either None or returns True, this
+        function raises a CalledProcessError. The CalledProcessError
+        object will have the return code in the returncode attribute
+        and output in the output attribute.
     :return: decoded output of command
     """
     cmd_str = " ".join([str(_) for _ in args])
@@ -221,7 +218,6 @@ def get_all_cloned_github_repositories() -> list[Path]:
     :return: A list of directories of which origin/master points to
         github
     """
-
     all_repos = [
         repo
         for repo in pathlib.Path("all-repos").iterdir()
@@ -237,7 +233,6 @@ def get_all_cloned_ansible_repositories() -> list[Path]:
     :return: A list of directories found to be valid ansible roles (i.e.
         cruft'ed from my cookiecutter).
     """
-
     all_repos = [
         repo
         for repo in pathlib.Path("all-repos").iterdir()
